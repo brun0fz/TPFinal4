@@ -1,6 +1,6 @@
 <?php
 
-namespace clases;
+namespace Models;
 
 class Duenio extends Usuario
 {

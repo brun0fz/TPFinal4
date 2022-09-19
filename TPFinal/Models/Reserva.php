@@ -1,4 +1,4 @@
-<?php namespace clases;
+<?php namespace Models;
 
 use clases\Guardian as Guardian;
 
