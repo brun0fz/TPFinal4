@@ -16,7 +16,12 @@ class HomeController
 
     public function Index($message = "")
     {
+
         require_once(VIEWS_PATH . "home.php");
+    }
+
+    public function ShowRegisterView($type){
+        require_once(VIEWS_PATH . "registro.php");
     }
 
     public function ShowDuenioView()
@@ -28,6 +33,9 @@ class HomeController
 
     public function Login($email, $password)
     {
+        echo $email;
+        echo $password;
+        /*
         $duenio = $this->duenioDAO->Buscar($email);
 
         if (isset($duenio)) {
@@ -35,18 +43,14 @@ class HomeController
 
                 $_SESSION["loggedDuenio"] = $duenio;
             } else {
-                $this->Index("");
+                $this->Index();
             }
 
             $this->ShowDuenioView();
         } else {
             $this->Index("");
-        }
+        }*/
     }
 
-    public function Registro($nombre, $apellido, $telefono, $email, $password){
 
-
-
-    }
 }

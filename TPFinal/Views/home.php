@@ -8,7 +8,7 @@ include('header.php');
         <input type="password" name="password" placeholder="Password" required><br>
         <button type="submit">Login</button>
     </form>
-    <form action="">
+    <form action="<?php echo FRONT_ROOT ?>Home/ShowRegisterView" method="POST">
         <button type="submit">Register</button>
     </form>
 </div>
