@@ -4,7 +4,7 @@ class Guardian extends Usuario{
 
     private $direccion;
     private $tamanioMascotaCuidar;
-    private $reputacion=NULL;
+    private $reputacion = NULL;
     private $diasOcupados = array();
     private $listaReservas = array();
     private $precioXDia;
