@@ -2,8 +2,6 @@
 
 abstract class Usuario{
 
-    protected  static $idInc=0;
-
     protected $id;
     protected $nombre;
     protected $apellido;
@@ -17,7 +15,6 @@ abstract class Usuario{
 
     public function __construct($nombre, $apellido, $telefono, $email, $password)
     {
-        $this->id = self::$idInc+=1;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->telefono = $telefono;
@@ -130,6 +127,24 @@ abstract class Usuario{
     public function setPassword($password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of alta
+     */
+    public function getAlta()
+    {
+        return $this->alta;
+    }
+
+    /**
+     * Set the value of alta
+     */
+    public function setAlta($alta): self
+    {
+        $this->alta = $alta;
 
         return $this;
     }

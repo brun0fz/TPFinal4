@@ -13,11 +13,19 @@ class Duenio extends Usuario
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
     }
 
+   
+
+    /**
+     * Get the value of listaMascotas
+     */
     public function getListaMascotas()
     {
         return $this->listaMascotas;
     }
 
+    /**
+     * Set the value of listaMascotas
+     */
     public function setListaMascotas($listaMascotas): self
     {
         $this->listaMascotas = $listaMascotas;
@@ -25,11 +33,21 @@ class Duenio extends Usuario
         return $this;
     }
 
-    public function crearMascota($nombre, $raza, $tamanio, $observaciones)
+    /**
+     * Get the value of listaReservas
+     */
+    public function getListaReservas()
     {
+        return $this->listaReservas;
+    }
 
-        $mascota = new Mascota($nombre, $raza, $tamanio, $observaciones);
+    /**
+     * Set the value of listaReservas
+     */
+    public function setListaReservas($listaReservas): self
+    {
+        $this->listaReservas = $listaReservas;
 
-        array_push($listaMascotas, $mascota);
+        return $this;
     }
 }
