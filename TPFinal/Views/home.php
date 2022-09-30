@@ -10,9 +10,8 @@ include('header.php');
             <input type="password" name="password" placeholder="Password" required><br>
             <button type="submit">Login</button>
         </form>
-        <form action="">
-            <button type="submit">Register</button>
-        </form>
+        <a href="<?php echo  FRONT_ROOT."Home/Registro/1"?>">Registrarse como Dueño</a><br>
+        <a href="<?php echo  FRONT_ROOT."Home/Registro/2"?>">Registrarse como Guardian</a>
     </div>
 </div>
 
