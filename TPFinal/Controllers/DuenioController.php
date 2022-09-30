@@ -19,9 +19,6 @@ class DuenioController
         $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
         $this->duenioDAO->Add($duenio);
-
-
-
     }
 
 }
