@@ -1,0 +1,32 @@
+[
+    {
+        "id": 2,
+        "nombre": "Bruno",
+        "apellido": "Fabrizio",
+        "telefono": "123123",
+        "email": "bruno@gmail.com",
+        "password": "456",
+        "direccion": "La Rioja",
+        "alta": true,
+        "tamanioMascotaCuidar": null,
+        "reputacion": 0,
+        "diasOcupados": [],
+        "precioXDia": 0,
+        "listaReservas": []
+    },
+    {
+        "id": 1,
+        "nombre": "asd",
+        "apellido": "asd",
+        "telefono": "asd",
+        "email": "123asd@hotmail.com",
+        "password": "123",
+        "direccion": "asdas",
+        "alta": true,
+        "tamanioMascotaCuidar": null,
+        "reputacion": null,
+        "diasOcupados": [],
+        "precioXDia": null,
+        "listaReservas": []
+    }
+]

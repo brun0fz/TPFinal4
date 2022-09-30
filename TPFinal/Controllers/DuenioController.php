@@ -14,14 +14,17 @@ class DuenioController
         $this->duenioDAO = new DuenioDAO();
     }
 
+    public function ShowDuenioHome(){
+
+    }
+
     public function Add($nombre, $apellido, $telefono, $email, $password){
 
         $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
         $this->duenioDAO->Add($duenio);
 
-
-
+        $this->ShowDuenioHome();
     }
 
 }
