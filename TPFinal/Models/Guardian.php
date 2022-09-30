@@ -64,7 +64,7 @@ class Guardian extends Usuario{
      */
     public function setReputacion($reputacion): self
     {
-        $this->reputacion = $reputacion;
+        $this->reputacion = (float)$reputacion;
 
         return $this;
     }
@@ -100,7 +100,7 @@ class Guardian extends Usuario{
      */
     public function setPrecioXDia($precioXDia): self
     {
-        $this->precioXDia = $precioXDia;
+        $this->precioXDia = (float)$precioXDia;
 
         return $this;
     }

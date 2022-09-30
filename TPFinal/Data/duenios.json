@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "nombre": "asd",
+        "apellido": "asd",
+        "telefono": "asd",
+        "email": "asd@gmail.com",
+        "password": "123",
+        "alta": true,
+        "listaMascotas": [],
+        "listaReservas": []
+    }
+]

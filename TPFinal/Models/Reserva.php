@@ -6,6 +6,7 @@ class Reserva{
 
     protected  static $idInc=0;
 
+    private $id;
     private $idGuardian;
     private $idDuenio;
     private $idMascota;
@@ -129,6 +130,24 @@ class Reserva{
     public function setEstado($estado): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId($id): self
+    {
+        $this->id = $id;
 
         return $this;
     }

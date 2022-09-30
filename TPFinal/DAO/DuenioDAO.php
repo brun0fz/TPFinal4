@@ -8,6 +8,12 @@ use Models\Mascota;
 class DuenioDAO implements IDuenioDAO
 {
     private $duenioList = array();
+    private $fileName;
+
+    public function __construct()
+    {
+        $this->fileName = ROOT."Data/duenios.json";
+    }
 
     public function Add(Duenio $duenio)
     {
@@ -38,7 +44,7 @@ class DuenioDAO implements IDuenioDAO
             $valuesArray["apellido"] = $duenio->getApellido();
             $valuesArray["telefono"] = $duenio->getTelefono();
             $valuesArray["email"] = $duenio->getEmail();
-            $valuesArray["password"] = $duenio->getPassowrd();
+            $valuesArray["password"] = $duenio->getPassword();
 
             $valuesArray["alta"] = $duenio->getAlta();
 
@@ -68,16 +74,16 @@ class DuenioDAO implements IDuenioDAO
 
         $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
 
-        file_put_contents("Data/duenio.json", $jsonContent);
+        file_put_contents($this->fileName, $jsonContent);
     }
 
     private function RetrieveData()
     {
         $this->duenioList = array();
 
-        if (file_exists("Data/duenio.json")) {
+        if (file_exists($this->fileName)) {
 
-            $jsonContent = file_get_contents("Data/duenio.json");
+            $jsonContent = file_get_contents($this->fileName);
 
             $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
 
