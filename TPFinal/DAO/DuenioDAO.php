@@ -120,6 +120,20 @@ class DuenioDAO implements IDuenioDAO
         }
     }
 
+    public function Buscar($email)
+    {
+        $this->RetrieveData();
+
+        foreach ($this->duenioList as $duenio) {
+            if ($duenio->getEmail() == $email) {
+                return $duenio;
+            }
+        }
+
+        return NULL;
+    }
+
+    /*
     public function Remove($id)
     {
         $this->RetrieveData();
@@ -136,18 +150,9 @@ class DuenioDAO implements IDuenioDAO
 
         $this->SaveData();
     }
+    /*
 
-    public function Search($id)
-    {
-        $this->RetrieveData();
-
-        foreach ($this->duenioList as $duenio) {
-            if ($duenio->getId() == $id) {
-                return $duenio;
-            }
-        }
-    }
-
+/*
     public function Modify($code, $brand, $model, $price, $id)
     {
         $this->RetrieveData();
@@ -163,7 +168,7 @@ class DuenioDAO implements IDuenioDAO
         }
 
         $this->SaveData();
-    }
+    }*/
 
 
     private function GetNextId()

@@ -1,9 +1,9 @@
-<?php 
- include('header.php');
+<?php
+include('header.php');
 ?>
 
 <div class="login">
-    <form action="">
+    <form action="<?php echo FRONT_ROOT ?>Home/Login" method="POST">
         <input type="text" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required><br>
         <button type="submit">Login</button>
@@ -13,6 +13,6 @@
     </form>
 </div>
 
-<?php 
-  include('footer.php');
+<?php
+include('footer.php');
 ?>
