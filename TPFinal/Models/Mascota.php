@@ -1,8 +1,7 @@
 <?php namespace Models;
 
-class Mascota{
-
-    private static $idInc=0;
+class Mascota
+{
 
     private $id;
     private $nombre;
@@ -14,17 +13,28 @@ class Mascota{
     private $rutaVideo;
     private $rutaPlanVacunas;
 
-    protected $alta=true;
+    protected $alta = true;
 
     public function __construct($nombre, $raza, $tamanio, $observaciones)
     {
-        $this->id = self::$idInc+=1;
-
         $this->nombre = $nombre;
         $this->raza = $raza;
         $this->tamanio = $tamanio;
         $this->observaciones = $observaciones;
     }
+
+
+    public function getAlta()
+    {
+        return $this->alta;
+    }
+
+
+    public function setAlta($alta)
+    {
+        $this->alta = $alta;
+    }
+
 
     /**
      * Get the value of id

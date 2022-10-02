@@ -1,13 +1,34 @@
 [
     {
         "id": 1,
-        "nombre": "asd",
-        "apellido": "asd",
-        "telefono": "asd",
-        "email": "asd@gmail.com",
+        "nombre": "Bruno",
+        "apellido": "Fabrizio",
+        "telefono": "223699858",
+        "email": "bruno@gmail.com",
         "password": "123",
         "alta": true,
-        "listaMascotas": [],
+        "listaMascotas": [
+            {
+                "id": null,
+                "nombre": "Pepe",
+                "raza": "Golden",
+                "obervaciones": "Dorado",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": null,
+                "nombre": "pepita",
+                "raza": "Golden",
+                "obervaciones": "Dorado",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            }
+        ],
         "listaReservas": []
     }
 ]

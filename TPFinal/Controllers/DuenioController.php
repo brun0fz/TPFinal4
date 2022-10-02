@@ -16,6 +16,14 @@ class DuenioController
 
     public function ShowDuenioHome(){
 
+        require_once(VIEWS_PATH . "duenioHome.php");
+    }
+
+    public function ShowMascotaView(){
+
+        $mascotaList = $_SESSION["loggedUser"]->getListaMascotas();
+
+        print_r($mascotaList);
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password){
@@ -25,6 +33,11 @@ class DuenioController
         $this->duenioDAO->Add($duenio);
 
         $this->ShowDuenioHome();
+    }
+
+    public function AddMascota(){
+
+        $this->duenioDAO->AddMascota( $_SESSION["loggedUser"]);
     }
 
 }

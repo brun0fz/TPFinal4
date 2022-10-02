@@ -29,8 +29,6 @@ class HomeController
 
     public function ShowDuenioView()
     {
-        $loggedDuenio = $_SESSION["loggedUser"];
-
         require_once(VIEWS_PATH . "duenioHome.php");
     }
 

@@ -13,7 +13,7 @@ class DuenioDAO implements IDuenioDAO
 
     public function __construct()
     {
-        $this->fileName = ROOT."Data/duenios.json";
+        $this->fileName = ROOT . "Data/duenios.json";
     }
 
     public function Add(Duenio $duenio)
@@ -23,6 +23,21 @@ class DuenioDAO implements IDuenioDAO
         $duenio->setId($this->GetNextId());
 
         array_push($this->duenioList, $duenio);
+
+        $this->SaveData();
+    }
+
+    public function AddMascota(Duenio $duenio)
+    {
+        $duenioAux = $this->Buscar($duenio->getEmail());
+
+        $listaMascotas = $duenioAux->getListaMascotas();
+
+        $newMascota = new Mascota("pepita","Golden","Grande","Dorado");
+
+        array_push($listaMascotas, $newMascota);
+
+        $duenioAux->setListaMascotas($listaMascotas);
 
         $this->SaveData();
     }
@@ -109,13 +124,13 @@ class DuenioDAO implements IDuenioDAO
                     $mascota = new Mascota(NULL, NULL, NULL, NULL);
 
                     $mascota->setId($valuesArrayMascota["id"]);
-                    $mascota->setId($valuesArrayMascota["nombre"]);
-                    $mascota->setId($valuesArrayMascota["raza"]);
-                    $mascota->setId($valuesArrayMascota["obervaciones"]);
-                    $mascota->setId($valuesArrayMascota["rutaFoto"]);
-                    $mascota->setId($valuesArrayMascota["rutaVideo"]);
-                    $mascota->setId($valuesArrayMascota["rutaPlanVacunas"]);
-                    $mascota->setId($valuesArrayMascota["alta"]);
+                    $mascota->setNombre($valuesArrayMascota["nombre"]);
+                    $mascota->setRaza($valuesArrayMascota["raza"]);
+                    $mascota->setObservaciones($valuesArrayMascota["obervaciones"]);
+                    $mascota->setRutaFoto($valuesArrayMascota["rutaFoto"]);
+                    $mascota->setRutaVideo($valuesArrayMascota["rutaVideo"]);
+                    $mascota->setRutaPlanVacunas($valuesArrayMascota["rutaPlanVacunas"]);
+                    $mascota->setAlta($valuesArrayMascota["alta"]);
 
                     array_push($listaMascotas, $mascota);
                 }
@@ -136,7 +151,6 @@ class DuenioDAO implements IDuenioDAO
                 return $duenio;
             }
         }
-
         return NULL;
     }
 

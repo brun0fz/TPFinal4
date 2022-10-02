@@ -4,7 +4,7 @@
         "nombre": "Bruno",
         "apellido": "Fabrizio",
         "telefono": "123123",
-        "email": "bruno@gmail.com",
+        "email": "bru@gmail.com",
         "password": "456",
         "direccion": "La Rioja",
         "alta": true,

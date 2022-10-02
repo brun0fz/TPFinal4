@@ -1,3 +1,12 @@
 <?php
+include('header.php');
+?>
 
-var_dump($loggedDuenio);
+
+    <a href="<?php echo FRONT_ROOT . "Duenio/AddMascota" ?>">Añadir Mascota</a>
+    <a href="<?php echo FRONT_ROOT . "Duenio/ShowMascotaView" ?>">Ver mis Mascotas</a>
+
+
+<?php
+include('footer.php');
+?>
