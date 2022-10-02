@@ -46,29 +46,17 @@ class HomeController
         $duenio = $this->duenioDAO->Buscar($email);
         $guardian = $this->guardianDAO->Buscar($email);
 
-        var_dump($guardian);
+        if (isset($duenio) && $duenio->getPassword() == $password) {
 
-        if (isset($duenio)) {
-            if ($duenio->getPassword() == $password) {
-
-                $_SESSION["loggedUser"] = $duenio;
-
-                $this->ShowDuenioView();
-            } else {
-                $this->Index();
-            }
-
+            $_SESSION["loggedUser"] = $duenio;
             $this->ShowDuenioView();
-        }else if(isset($guardian)){
-            if ($guardian->getPassword() == $password) {
 
-                $_SESSION["loggedUser"] = $guardian;
+        } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
-                $this->ShowGuardianView();
-            } else {
-                $this->Index();
-            }
-        }else{
+            $_SESSION["loggedUser"] = $guardian;
+            $this->ShowGuardianView();
+
+        } else {
             $this->Index();
         }
     }

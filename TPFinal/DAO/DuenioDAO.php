@@ -10,6 +10,7 @@ class DuenioDAO implements IDuenioDAO
     private $duenioList = array();
     private $fileName;
 
+
     public function __construct()
     {
         $this->fileName = ROOT."Data/duenios.json";

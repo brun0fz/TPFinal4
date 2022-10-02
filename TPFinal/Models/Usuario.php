@@ -13,13 +13,28 @@ abstract class Usuario{
 
     protected $alta=true;
 
-    public function __construct($nombre, $apellido, $telefono, $email, $password)
+
+
+
+    /*public function __construct($nombre, $apellido, $telefono, $email, $password)
     {
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->telefono = $telefono;
         $this->email = $email;
         $this->password = $password;
+    }*/
+
+    public function __construct($id, $nombre, $apellido, $telefono, $email, $password, $rutaFoto, $alta)
+    {
+        $this->id = $id;
+        $this->nombre = $nombre;
+        $this->apellido = $apellido;
+        $this->telefono = $telefono;
+        $this->email = $email;
+        $this->password = $password;
+        $this->rutaFoto = $rutaFoto;
+        $this->alta = $alta;
     }
 
 
