@@ -22,7 +22,7 @@ include('header.php');
         <input type="password" name="password" placeholder="Password" required><br>
         <?php if($type==2){ ?>
             <label for="apellido">Direccion:</label>
-            <input type="text" name="direccion" placeholder="Direccion" required>
+            <input type="text" name="direccion" placeholder="Direccion" required><br>
         <?php } ?>
         <button type="submit">Registrarse</button>
     </form>
