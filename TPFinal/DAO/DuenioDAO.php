@@ -27,13 +27,13 @@ class DuenioDAO implements IDuenioDAO
         $this->SaveData();
     }
 
-    public function AddMascota(Duenio $duenio)
+    public function AddMascota(Duenio $duenio, $nombre, $raza, $tamanio, $observaciones)
     {
         $duenioAux = $this->Buscar($duenio->getEmail());
 
         $listaMascotas = $duenioAux->getListaMascotas();
 
-        $newMascota = new Mascota("pepita","Golden","Grande","Dorado");
+        $newMascota = new Mascota($nombre, $raza, $tamanio, $observaciones);
 
         array_push($listaMascotas, $newMascota);
 
