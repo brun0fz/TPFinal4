@@ -1,6 +1,7 @@
 <?php namespace Models;
 
-abstract class Usuario{
+abstract class Usuario
+{
 
     protected $id;
     protected $nombre;
@@ -11,9 +12,7 @@ abstract class Usuario{
 
     protected $rutaFoto;
 
-    protected $alta=true;
-
-
+    protected $alta = true;
 
 
     public function __construct($nombre, $apellido, $telefono, $email, $password)

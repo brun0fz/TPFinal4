@@ -47,15 +47,22 @@ class HomeController
         if (isset($duenio) && $duenio->getPassword() == $password) {
 
             $_SESSION["loggedUser"] = $duenio;
+            //$_SESSION["duenioDao"] = $this->duenioDAO;
             $this->ShowDuenioView();
 
         } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
             $_SESSION["loggedUser"] = $guardian;
+            //$_SESSION["guardianDAO"] = $this->guardianDAO;
             $this->ShowGuardianView();
 
         } else {
             $this->Index();
         }
+    }
+
+    public function  Logout(){
+        session_destroy();
+        $this->Index();
     }
 }

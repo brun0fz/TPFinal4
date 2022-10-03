@@ -1,9 +1,10 @@
 <?php
 include('header.php');
+include('navBar.php');
 ?>
 
 
-    <a href="<?php echo FRONT_ROOT . "Duenio/AddMascota" ?>">Añadir Mascota</a>
+    <a href="<?php echo FRONT_ROOT . "Duenio/ShowAddMascotaView" ?>">Añadir Mascota</a>
     <a href="<?php echo FRONT_ROOT . "Duenio/ShowMascotaView" ?>">Ver mis Mascotas</a>
 
 
