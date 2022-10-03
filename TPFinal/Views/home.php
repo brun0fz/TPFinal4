@@ -2,17 +2,24 @@
 include('header.php');
 ?>
 
-<div class="home">
-    <div class="login">
-        <p>Iniciar Sesion</p>
-        <form action="<?php echo FRONT_ROOT."Home/Login"?>" method="POST">
-            <input type="text" name="email" placeholder="Email" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
-            <button type="submit">Login</button>
-        </form>
-        <a href="<?php echo  FRONT_ROOT."Home/ShowRegisterView/1"?>">Registrarse como Dueño</a><br>
-        <a href="<?php echo  FRONT_ROOT."Home/ShowRegisterView/2"?>">Registrarse como Guardian</a>
+<div class="login container-fluid">
+<main class="form-signin w-100 m-auto text-center">
+  <form class="form-center" action="<?php echo FRONT_ROOT."Home/Login"?>" method="POST">
+    <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <div class="form-floating">
+      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="nombre@example.com">
+      <label for="floatingInput">Email</label>
     </div>
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="contraseña">
+      <label for="floatingPassword">Contraseña</label>
+    </div>
+    <br>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesion</button>
+    <a href="<?php echo  FRONT_ROOT."Home/ShowRegisterView/1"?>">Registrarse como Dueño</a><br>
+    <a href="<?php echo  FRONT_ROOT."Home/ShowRegisterView/2"?>">Registrarse como Guardian</a>
+  </form>
+</main>
 </div>
 
 <?php
