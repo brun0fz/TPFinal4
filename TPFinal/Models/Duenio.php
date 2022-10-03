@@ -8,12 +8,11 @@ class Duenio extends Usuario
     private $listaMascotas = array();
     private $listaReservas = array();
 
+
     public function __construct($nombre, $apellido, $telefono, $email, $password)
     {
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
     }
-
-   
 
     /**
      * Get the value of listaMascotas
