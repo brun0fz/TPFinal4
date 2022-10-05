@@ -20,7 +20,7 @@ class DuenioDAO implements IDuenioDAO
     {
         $this->RetrieveData();
 
-        $duenio->setId($this->GetNextId());
+        $duenio->setId($this->GetNextId($this->duenioList));
 
         array_push($this->duenioList, $duenio);
 
@@ -34,6 +34,8 @@ class DuenioDAO implements IDuenioDAO
         $listaMascotas = $duenioAux->getListaMascotas();
 
         $newMascota = new Mascota($nombre, $raza, $tamanio, $observaciones);
+
+        $newMascota->setId($this->GetNextId($listaMascotas));
 
         array_push($listaMascotas, $newMascota);
 
@@ -72,6 +74,7 @@ class DuenioDAO implements IDuenioDAO
                 $valuesArrayMascota["id"] = $mascota->getId();
                 $valuesArrayMascota["nombre"] = $mascota->getNombre();
                 $valuesArrayMascota["raza"] = $mascota->getRaza();
+                $valuesArrayMascota["tamanio"] = $mascota->getTamanio();
                 $valuesArrayMascota["obervaciones"] = $mascota->getObservaciones();
                 $valuesArrayMascota["rutaFoto"] = $mascota->getRutaFoto();
                 $valuesArrayMascota["rutaVideo"] = $mascota->getRutaVideo();
@@ -126,6 +129,7 @@ class DuenioDAO implements IDuenioDAO
                     $mascota->setId($valuesArrayMascota["id"]);
                     $mascota->setNombre($valuesArrayMascota["nombre"]);
                     $mascota->setRaza($valuesArrayMascota["raza"]);
+                    $mascota->setTamanio($valuesArrayMascota["tamanio"]);
                     $mascota->setObservaciones($valuesArrayMascota["obervaciones"]);
                     $mascota->setRutaFoto($valuesArrayMascota["rutaFoto"]);
                     $mascota->setRutaVideo($valuesArrayMascota["rutaVideo"]);
@@ -191,15 +195,16 @@ class DuenioDAO implements IDuenioDAO
         $this->SaveData();
     }*/
 
-
-    private function GetNextId()
+    private function GetNextId($lista)
     {
         $id = 0;
 
-        foreach ($this->duenioList as $duenio) {
-            $id = ($duenio->getId() > $id) ? $duenio->getId() : $id;
+        foreach ($lista as $value) {
+            $id = ($value->getId() > $id) ? $value->getId() : $id;
         }
 
         return $id + 1;
     }
+
+
 }

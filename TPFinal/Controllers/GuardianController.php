@@ -20,11 +20,14 @@ class GuardianController
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion){
 
+
         $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
 
         $this->guardianDAO->Add($guardian);
 
         $this->ShowGuardianHome();
     }
+
+
 
 }

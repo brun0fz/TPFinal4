@@ -22,9 +22,9 @@ class DuenioController
 
     public function ShowMascotaView()
     {
-        $mascotaList = $_SESSION["loggedUser"]->getListaMascotas();
+        $mascotasList = $_SESSION["loggedUser"]->getListaMascotas(); //////No funciona porque no muestra la lista actualizada
 
-        print_r($mascotaList);
+        require_once(VIEWS_PATH . "list-mascotas.php");
     }
 
     public function ShowAddMascotaView()
@@ -36,6 +36,8 @@ class DuenioController
     {
         $guardianDAO = new GuardianDAO();
         $listaGuardianes = $guardianDAO->GetAll();
+
+        require_once(VIEWS_PATH . "list-guardianes.php");
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password)
@@ -49,8 +51,11 @@ class DuenioController
 
     public function AddMascota($nombre, $raza, $tamanio, $observaciones)
     {
-
         $this->duenioDAO->AddMascota($_SESSION["loggedUser"], $nombre, $raza, $tamanio, $observaciones);
+
+        $this->ShowDuenioHome();
+
     }
+
 
 }
