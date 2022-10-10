@@ -9,6 +9,7 @@ abstract class Usuario
     protected $telefono;
     protected $email;
     protected $password;
+    protected $tipo; //1 - Duenio  2 - Guardian
 
     protected $rutaFoto;
 
@@ -150,4 +151,22 @@ abstract class Usuario
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * @param mixed $tipo
+     */
+    public function setTipo($tipo): void
+    {
+        $this->tipo = $tipo;
+    }
+
+
 }

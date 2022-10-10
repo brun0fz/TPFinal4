@@ -1,2 +1,14 @@
 <?php
-var_dump($loggedGuardian);
+include("header.php");
+include("navBar.php");
+?>
+
+
+
+
+
+
+
+<?php
+include("footer.php");
+?>

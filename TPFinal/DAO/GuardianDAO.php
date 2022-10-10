@@ -51,9 +51,9 @@ class GuardianDAO implements IGuardianDAO
             $valuesArray["reputacion"] = $guardian->getReputacion();
             $valuesArray["diasOcupados"] = $guardian->getDiasOcupados();
             $valuesArray["precioXDia"] = $guardian->getPrecioXDia();
+            $valuesArray["disponibilidad"] = $guardian->getDisponibilidad();
 
             $arrayReservas = array();
-
             foreach ($guardian->getListaReservas() as $reserva) {
                 $valuesArrayReserva = array();
                 array_push($arrayReservas, $valuesArrayReserva);
@@ -94,6 +94,7 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setTamanioMascotaCuidar($valuesArray["tamanioMascotaCuidar"]);
                 $guardian->setReputacion($valuesArray["reputacion"]);
                 $guardian->setDiasOcupados($valuesArray["diasOcupados"]);
+                $guardian->setDisponibilidad($valuesArray["disponibilidad"]);
                 $guardian->setPrecioXDia($valuesArray["precioXDia"]);
 
                 $ArrayReservas = $valuesArray["listaReservas"];
@@ -135,6 +136,15 @@ class GuardianDAO implements IGuardianDAO
         }
 
         return NULL;
+    }
+
+    public function UpdateDisponibilidad($dias, $guardian)
+    {
+        $guardian = $this->Buscar($guardian->getEmail());
+
+        $guardian->setDisponibilidad($dias);
+
+        $this->SaveData();
     }
 
     /*

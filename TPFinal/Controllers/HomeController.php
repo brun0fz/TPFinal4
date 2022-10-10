@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Couchbase\View;
 use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 
@@ -16,10 +17,18 @@ class HomeController
         $this->guardianDAO = new GuardianDAO;
     }
 
-    public function Index($message = "")
+    static function Index()
     {
+        if (isset($_SESSION["loggedUser"])) {
+            if ($_SESSION["loggedUser"]->getTipo() == 1) {
+                require_once(VIEWS_PATH . "duenioHome.php");
+            } else {
+                require_once(VIEWS_PATH . "guardianHome.php");
+            }
+        } else {
+            require_once(VIEWS_PATH . "home.php");
+        }
 
-        require_once(VIEWS_PATH . "home.php");
     }
 
     public function ShowRegisterView($type)
@@ -27,17 +36,6 @@ class HomeController
         require_once(VIEWS_PATH . "registro.php");
     }
 
-    public function ShowDuenioView()
-    {
-        require_once(VIEWS_PATH . "duenioHome.php");
-    }
-
-    public function ShowGuardianView()
-    {
-        $loggedGuardian = $_SESSION["loggedUser"];
-
-        require_once(VIEWS_PATH . "guardianHome.php");
-    }
 
     public function Login($email, $password)
     {
@@ -46,22 +44,27 @@ class HomeController
 
         if (isset($duenio) && $duenio->getPassword() == $password) {
 
+            $duenio->setPassword(NULL);
             $_SESSION["loggedUser"] = $duenio;
-            //$_SESSION["duenioDao"] = $this->duenioDAO;
-            $this->ShowDuenioView();
+
+            require_once(VIEWS_PATH . "duenioHome.php");
+
 
         } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
+            $guardian->setPassword(NULL);
             $_SESSION["loggedUser"] = $guardian;
-            //$_SESSION["guardianDAO"] = $this->guardianDAO;
-            $this->ShowGuardianView();
+
+            require_once(VIEWS_PATH . "guardianHome.php");
 
         } else {
             $this->Index();
         }
     }
 
-    public function  Logout(){
+    public function Logout()
+    {
+        session_unset();
         session_destroy();
         $this->Index();
     }

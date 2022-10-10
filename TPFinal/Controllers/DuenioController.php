@@ -15,45 +15,67 @@ class DuenioController
         $this->duenioDAO = new DuenioDAO();
     }
 
+    private function validateSession()
+    {
+        if (isset($_SESSION["loggedUser"]) && $_SESSION["loggedUser"]->getTipo() == 1) {
+            return true;
+        } else {
+            HomeController::Index();
+        }
+
+    }
+
     public function ShowDuenioHome()
     {
-        require_once(VIEWS_PATH . "duenioHome.php");
+        $this->validateSession() && require_once(VIEWS_PATH . "duenioHome.php");
+
     }
 
     public function ShowMascotaView()
     {
-        $mascotasList = $_SESSION["loggedUser"]->getListaMascotas(); //////No funciona porque no muestra la lista actualizada
+        if ($this->validateSession()) {
+            $mascotasList = $_SESSION["loggedUser"]->getListaMascotas(); //////No funciona porque no muestra la lista actualizada
 
-        require_once(VIEWS_PATH . "list-mascotas.php");
+            require_once(VIEWS_PATH . "list-mascotas.php");
+        }
     }
 
     public function ShowAddMascotaView()
     {
-        require_once(VIEWS_PATH . "addMascota.php");
+        if ($this->validateSession()) {
+            require_once(VIEWS_PATH . "addMascota.php");
+        }
     }
 
     public function ShowListaGuardianesView()
     {
-        $guardianDAO = new GuardianDAO();
-        $listaGuardianes = $guardianDAO->GetAll();
+        if ($this->validateSession()) {
+            $guardianDAO = new GuardianDAO();
+            $listaGuardianes = $guardianDAO->GetAll();
 
-        require_once(VIEWS_PATH . "list-guardianes.php");
+            require_once(VIEWS_PATH . "list-guardianes.php");
+        }
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password)
     {
-        $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+        if ($this->validateSession()) {
+            $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+            $duenio->setTipo(1);
 
-        $this->duenioDAO->Add($duenio);
+            $this->duenioDAO->Add($duenio);
 
-        $this->ShowDuenioHome();
+            $this->ShowDuenioHome();
+        }
     }
 
     public function AddMascota($nombre, $raza, $tamanio, $observaciones)
     {
-        $this->duenioDAO->AddMascota($_SESSION["loggedUser"], $nombre, $raza, $tamanio, $observaciones);
+        if ($this->validateSession()) {
+            $this->duenioDAO->AddMascota($_SESSION["loggedUser"], $nombre, $raza, $tamanio, $observaciones);
 
-        $this->ShowDuenioHome();
+            $this->ShowDuenioHome();
+        }
 
     }
 

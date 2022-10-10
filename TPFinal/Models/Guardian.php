@@ -6,6 +6,7 @@ class Guardian extends Usuario{
     private $tamanioMascotaCuidar;
     private $reputacion = NULL;
     private $diasOcupados = array();
+    private $disponibilidad = array();
     private $listaReservas = array();
     private $precioXDia;
 
@@ -122,4 +123,22 @@ class Guardian extends Usuario{
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getDisponibilidad()
+    {
+        return $this->disponibilidad;
+    }
+
+    /**
+     * @param array $disponibilidad
+     */
+    public function setDisponibilidad($disponibilidad)
+    {
+        $this->disponibilidad = $disponibilidad;
+    }
+
+
 }

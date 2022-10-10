@@ -9,9 +9,14 @@
         "direccion": "Luro 3321",
         "alta": true,
         "tamanioMascotaCuidar": null,
-        "reputacion":  5,
+        "reputacion": 5,
         "diasOcupados": [],
         "precioXDia": 700,
+        "disponibilidad": [
+            "Miercoles",
+            "Sabado",
+            "Domingo"
+        ],
         "listaReservas": []
     },
     {
@@ -27,6 +32,7 @@
         "reputacion": 4,
         "diasOcupados": [],
         "precioXDia": 650,
+        "disponibilidad": null,
         "listaReservas": []
     }
 ]

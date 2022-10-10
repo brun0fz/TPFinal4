@@ -1,5 +1,4 @@
 <?php
-include("validateSession.php");
 include("header.php");
 include("navBar.php");
 ?>

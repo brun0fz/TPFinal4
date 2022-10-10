@@ -63,7 +63,7 @@ class DuenioDAO implements IDuenioDAO
             $valuesArray["telefono"] = $duenio->getTelefono();
             $valuesArray["email"] = $duenio->getEmail();
             $valuesArray["password"] = $duenio->getPassword();
-
+            $valuesArray["tipo"] = $duenio->getTipo();
             $valuesArray["alta"] = $duenio->getAlta();
 
 
@@ -116,6 +116,7 @@ class DuenioDAO implements IDuenioDAO
                 $duenio->setTelefono($valuesArray["telefono"]);
                 $duenio->setEmail($valuesArray["email"]);
                 $duenio->setPassword($valuesArray["password"]);
+                $duenio->setTipo($valuesArray["tipo"]);
                 $duenio->setAlta($valuesArray["alta"]);
 
                 $ArrayMascotas = $valuesArray["listaMascotas"];
