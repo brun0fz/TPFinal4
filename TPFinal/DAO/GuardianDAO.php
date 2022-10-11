@@ -45,6 +45,7 @@ class GuardianDAO implements IGuardianDAO
             $valuesArray["telefono"] = $guardian->getTelefono();
             $valuesArray["email"] = $guardian->getEmail();
             $valuesArray["password"] = $guardian->getPassword();
+            $valuesArray["tipo"] = $guardian->getTipo();
             $valuesArray["direccion"] = $guardian->getDireccion();
             $valuesArray["alta"] = $guardian->getAlta();
             $valuesArray["tamanioMascotaCuidar"] = $guardian->getTamanioMascotaCuidar();

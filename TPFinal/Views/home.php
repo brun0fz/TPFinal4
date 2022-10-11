@@ -5,7 +5,7 @@ include('header.php');
 <div class="login container-fluid">
 <main class="form-signin w-100 m-auto text-center">
   <form class="form-center" action="<?php echo FRONT_ROOT."Home/Login"?>" method="POST">
-    <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <img class="mb-4" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
     <div class="form-floating">
       <input type="email" name="email" class="form-control" id="floatingInput" placeholder="nombre@example.com">
       <label for="floatingInput">Email</label>
@@ -15,7 +15,7 @@ include('header.php');
       <label for="floatingPassword">Contraseña</label>
     </div>
     <br>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesion</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesion</button><br><br>
     <a href="<?php echo  FRONT_ROOT."Home/ShowRegisterView/1"?>">Registrarse como Dueño</a><br>
     <a href="<?php echo  FRONT_ROOT."Home/ShowRegisterView/2"?>">Registrarse como Guardian</a>
   </form>

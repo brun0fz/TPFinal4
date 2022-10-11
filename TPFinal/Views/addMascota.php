@@ -4,20 +4,36 @@ include("navBar.php");
 ?>
 
 
-<div class="add-mascota">
-    <form action="<?php echo FRONT_ROOT . "Duenio/AddMascota" ?>" method="post">
-
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id=""><br>
-        <label for="raza">Raza</label>
-        <input type="text" name="raza" id=""><br>
-        <label for="tamanio">Tamaño</label>
-        <input type="text" name="tamanio" id=""><br>
-        <label for="observaciones">Observaciones</label>
-        <input type="textarea" name="observaciones" id=""><br>
-        <button type="submit">Agregar</button>
-    </form>
+<div class="container-fluid">
+    <main class="add-mascota w-100 m-auto text-center">
+            <form class="form-center" action="<?php echo FRONT_ROOT."Duenio/AddMascota" ?>" method="POST">
+                <h3>Nueva Mascota</h3><br>
+                <div class="form-floating">
+                    <input type="text" name="nombre" class="form-control" id="floatingInput" placeholder="nombre" required>
+                    <label for="floatingInput">Nombre</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="raza" class="form-control" id="floatingInput" placeholder="raza" required>
+                    <label for="floatingInput">Raza</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="tamanio" class="form-control" id="floatingInput" placeholder="tamanio" required pattern="{0,9}">
+                    <label for="floatingInput">Tamaño</label>
+                </div>
+                <div class="form-floating">
+                    <input type="textarea" name="observaciones" class="form-control" id="floatingInput" placeholder="observaciones" required>
+                    <label for="floatingInput">Observaciones</label>
+                </div><!--Mascota Imagen
+                <div class="form-floating imgInput">
+                    <input type="file" name="rutaFoto" class="form-control" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" required>
+                    <label for="floatingInput">Foto</label>
+                </div>-->
+                <br>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Añadir</button>
+            </form>
+    </main>
 </div>
+
 
 <?php
 include("footer.php");

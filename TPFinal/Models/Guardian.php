@@ -14,6 +14,7 @@ class Guardian extends Usuario{
     {
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
         $this->direccion = $direccion;
+        $this->tipo = 2;
     }
 
     /**

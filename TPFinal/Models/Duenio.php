@@ -2,8 +2,7 @@
 
 namespace Models;
 
-class Duenio extends Usuario
-{
+class Duenio extends Usuario{
 
     private $listaMascotas = array();
     private $listaReservas = array();
@@ -12,6 +11,7 @@ class Duenio extends Usuario
     public function __construct($nombre, $apellido, $telefono, $email, $password)
     {
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
+        $this->tipo = 1;
     }
 
     /**

@@ -27,20 +27,15 @@ class DuenioDAO implements IDuenioDAO
         $this->SaveData();
     }
 
-    public function AddMascota(Duenio $duenio, $nombre, $raza, $tamanio, $observaciones)
+    public function AddMascota(Duenio $duenio, Mascota $newMascota)
     {
         $duenioAux = $this->Buscar($duenio->getEmail());
-
         $listaMascotas = $duenioAux->getListaMascotas();
 
-        $newMascota = new Mascota($nombre, $raza, $tamanio, $observaciones);
-
         $newMascota->setId($this->GetNextId($listaMascotas));
-
         array_push($listaMascotas, $newMascota);
 
         $duenioAux->setListaMascotas($listaMascotas);
-
         $this->SaveData();
     }
 
@@ -116,7 +111,6 @@ class DuenioDAO implements IDuenioDAO
                 $duenio->setTelefono($valuesArray["telefono"]);
                 $duenio->setEmail($valuesArray["email"]);
                 $duenio->setPassword($valuesArray["password"]);
-                $duenio->setTipo($valuesArray["tipo"]);
                 $duenio->setAlta($valuesArray["alta"]);
 
                 $ArrayMascotas = $valuesArray["listaMascotas"];

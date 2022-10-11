@@ -14,35 +14,46 @@ class GuardianController
         $this->guardianDAO = new GuardianDAO();
     }
 
+    private function validateSession()
+    {
+        if (isset($_SESSION["loggedUser"]) && $_SESSION["loggedUser"]->getTipo() == 2) {
+            return true;
+        } else {
+            HomeController::Index();
+        }
+
+    }
+
     public function ShowGuardianHome()
     {
-        require_once(VIEWS_PATH . "guardianHome.php");
+        $this->validateSession() && require_once(VIEWS_PATH . "guardianHome.php");
+    }
+
+    public function ShowDisponibilidadView()
+    {
+        if ($this->validateSession()) {
+            require_once(VIEWS_PATH . "set-disponibilidad.php");
+        }
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion)
     {
+        if ($this->validateSession()) {
+            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
+            $this->guardianDAO->Add($guardian);
 
-
-        $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
-
-        $guardian->setTipo(2);
-
-        $this->guardianDAO->Add($guardian);
-
-        $this->ShowGuardianHome();
-    }
-
-
-    public function ShowDisponibilidadView()
-    {
-        require_once(VIEWS_PATH . "set-disponibilidad.php");
+            $_SESSION["loggedUser"] = $guardian;
+            $this->ShowGuardianHome();
+        }
     }
 
     public function setDisponibilidad($dias)
     {
-        $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]);
-        $this->ShowGuardianHome();
+        if ($this->validateSession()) {
+            $_SESSION["loggedUser"]->setDisponibilidad($dias);
+            $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]);
+            $this->ShowDisponibilidadView();
+        }
     }
-
 
 }

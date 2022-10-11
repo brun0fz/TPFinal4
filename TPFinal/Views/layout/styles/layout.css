@@ -8,7 +8,7 @@
 
 .login {
   width: 100%;
-  height: 100vh;
+  height: 90vh;
 }
 
 .text-center {
@@ -43,6 +43,36 @@
 
 main {
   display: block;
+}
+
+.formcheck.label {
+  text-align: center;
+  width: 100%;
+}
+
+.formcheck.items {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  justify-content: left;
+  margin: auto;
+}
+
+.add-mascota {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+
+.imgInput {
+  height: 100px;
+}
+
+#copyright {
+  position: absolute;
+  bottom: 10px;
+  left: 38%;
+  right: 37%;
 }
 
 /*!

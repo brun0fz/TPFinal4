@@ -1,4 +1,3 @@
-<!--Nav Bar del Duenio-->
 
 <nav class="p-3 mb-3 border-bottom">
     <div class="container">
@@ -19,7 +18,7 @@
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                    aria-expanded="false">
                     <!--Insertar IMG de usuario aca abajo-->
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    <img src="<?php echo IMG_PATH . "undefinedProfile.png" ?>" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small">
                     <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>

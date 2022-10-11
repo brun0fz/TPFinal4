@@ -1,48 +1,70 @@
 [
-  {
-    "id": 1,
-    "nombre": "Bruno",
-    "apellido": "Fabrizio",
-    "telefono": "223699858",
-    "email": "bruno@gmail.com",
-    "password": "123",
-    "tipo": 1,
-    "alta": true,
-    "listaMascotas": [
-      {
+    {
         "id": 1,
-        "nombre": "Pepe",
-        "raza": "Golden",
-        "tamanio": "Grande",
-        "obervaciones": "Lindo",
-        "rutaFoto": null,
-        "rutaVideo": null,
-        "rutaPlanVacunas": null,
-        "alta": true
-      },
-      {
-        "id": 2,
-        "nombre": "Yuumi",
-        "raza": "Gato",
-        "tamanio": "chiquita",
-        "obervaciones": "linda",
-        "rutaFoto": null,
-        "rutaVideo": null,
-        "rutaPlanVacunas": null,
-        "alta": true
-      },
-      {
-        "id": 3,
-        "nombre": "Conejo",
-        "raza": "Perro",
-        "tamanio": "Mediano",
-        "obervaciones": "Manchado",
-        "rutaFoto": null,
-        "rutaVideo": null,
-        "rutaPlanVacunas": null,
-        "alta": true
-      }
-    ],
-    "listaReservas": []
-  }
+        "nombre": "Bruno",
+        "apellido": "Fabrizio",
+        "telefono": "223699858",
+        "email": "bruno@gmail.com",
+        "password": "123",
+        "tipo": 1,
+        "alta": true,
+        "listaMascotas": [
+            {
+                "id": 1,
+                "nombre": "Pepe",
+                "raza": "Golden",
+                "tamanio": "Grande",
+                "obervaciones": "Lindo",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": 2,
+                "nombre": "Yuumi",
+                "raza": "Gato",
+                "tamanio": "chiquita",
+                "obervaciones": "linda",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": 3,
+                "nombre": "Conejo",
+                "raza": "Perro",
+                "tamanio": "Mediano",
+                "obervaciones": "Manchado",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": 4,
+                "nombre": "Sasha",
+                "raza": "Breton",
+                "tamanio": "Mediano",
+                "obervaciones": "muy dormilona",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": 5,
+                "nombre": "Bizqui",
+                "raza": "Gato",
+                "tamanio": "Peque\u00f1o",
+                "obervaciones": "Enojon",
+                "rutaFoto": null,
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            }
+        ],
+        "listaReservas": []
+    }
 ]
