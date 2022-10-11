@@ -12,10 +12,32 @@
             {
                 "id": 1,
                 "nombre": "Yuumi",
-                "raza": "Support",
-                "tamanio": "Chico",
-                "obervaciones": "La gata magica",
+                "raza": "Gato",
+                "tamanio": "Peque\u00f1o",
+                "obervaciones": "Muy bonita uwu",
                 "rutaFoto": "1-Yuumi.jpeg",
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": 2,
+                "nombre": "Bizqui",
+                "raza": "Gato",
+                "tamanio": "Mediano",
+                "obervaciones": "Enojon",
+                "rutaFoto": "1-Bizqui.jpeg",
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            },
+            {
+                "id": 3,
+                "nombre": "Sasha",
+                "raza": "Breton",
+                "tamanio": "Mediano",
+                "obervaciones": "Dormilona",
+                "rutaFoto": "1-Sasha.jpeg",
                 "rutaVideo": null,
                 "rutaPlanVacunas": null,
                 "alta": true

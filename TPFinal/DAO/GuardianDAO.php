@@ -186,14 +186,15 @@ class GuardianDAO implements IGuardianDAO
     }*/
 
 
-    private function GetNextId()
+    private function GetNextId($lista)
     {
         $id = 0;
 
-        foreach ($this->GuardianList as $Guardian) {
-            $id = ($Guardian->getId() > $id) ? $Guardian->getId() : $id;
+        foreach ($lista as $value) {
+            $id = ($value->getId() > $id) ? $value->getId() : $id;
         }
 
         return $id + 1;
     }
+
 }

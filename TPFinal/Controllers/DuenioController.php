@@ -60,13 +60,13 @@ class DuenioController
 
     public function Add($nombre, $apellido, $telefono, $email, $password)
     {
-        if ($this->validateSession()) {
-            $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
-            $this->duenioDAO->Add($duenio);
+        $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+        $this->duenioDAO->Add($duenio);
 
-            $_SESSION["loggedUser"] = $duenio;
-            $this->ShowDuenioHome();
-        }
+        $duenio->setPassword(null);
+        $_SESSION["loggedUser"] = $duenio;
+        
+        $this->ShowDuenioHome();
     }
 
     public function AddMascota($nombre, $raza, $tamanio, $observaciones, $rutaFoto)

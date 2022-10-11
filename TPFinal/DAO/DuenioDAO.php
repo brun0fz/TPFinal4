@@ -203,5 +203,4 @@ class DuenioDAO implements IDuenioDAO
         return $id + 1;
     }
 
-
 }
