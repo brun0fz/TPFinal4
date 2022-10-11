@@ -74,6 +74,17 @@ main {
   padding: 10px;
   align-items: center;
   text-align: center;
+  position: relative;
+}
+
+#mis-mascotas {
+  text-align: left;
+}
+
+.btn-mascota {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .card {

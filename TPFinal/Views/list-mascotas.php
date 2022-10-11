@@ -4,6 +4,8 @@ include("navBar.php");
 ?>
 
 <div class="container list-mascotas">
+    <h2 id="mis-mascotas">Mis Mascotas</h2>
+    <a href="<?php echo FRONT_ROOT . "Duenio/ShowAddMascotaView" ?>"><button class="btn btn-primary btn-mascota">Añadir Mascota</button></a><br>
     <div class="row row-cols-3">
     <?php foreach ($mascotasList as $mascota) { ?>
         <div class="card p-3">
