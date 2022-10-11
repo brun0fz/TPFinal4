@@ -24,8 +24,8 @@ include("navBar.php");
                     <input type="textarea" name="observaciones" class="form-control" id="floatingInput" placeholder="observaciones" required>
                     <label for="floatingInput">Observaciones</label>
                 </div>
-                <div class="form-floating imgInput">
-                    <input type="file" name="rutaFoto" class="form-control" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" required>
+                <div class="form-floating" imgInput">
+                    <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" required>
                     <label for="floatingInput">Foto</label>
                 </div>
                 <br>
