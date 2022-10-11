@@ -3,37 +3,18 @@ include("header.php");
 include("navBar.php");
 ?>
 
-
-<div class="wrapper row4">
-    <main class="hoc container clear">
-        <!-- main body -->
-        <div class="content">
-            <div class="scrollable">
-                <table style="text-align:center;">
-                    <thead>
-                    <tr>
-                        <th style="width: 15%;">Nombre</th>
-                        <th style="width: 15%;">Raza</th>
-                        <th style="width: 15%;">Tamaño</th>
-                        <th style="width: 15%;">Observaciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($mascotasList as $mascota) { ?>
-                        <tr>
-                            <td><?php echo $mascota->getNombre(); ?></td>
-                            <td><?php echo $mascota->getRaza(); ?></td>
-                            <td><?php echo $mascota->getTamanio(); ?></td>
-                            <td><?php echo $mascota->getObservaciones(); ?></td>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
-            </div>
+<div class="container list-mascotas">
+    <div class="row row-cols-3">
+    <?php foreach ($mascotasList as $mascota) { ?>
+        <div class="card p-3">
+            <img class="img-mascota" src="<?php echo IMG_PATH . "undefinedMascota.jpg" ?>" alt="<?php echo $mascota->getNombre() ?>">
+            <p class="card-text">Nombre: <b><?php echo $mascota->getNombre() ?></b></p>
+            <p class="card-text">Raza: <b><?php echo $mascota->getRaza() ?></b></p>
+            <p class="card-text">Tamaño: <b><?php echo $mascota->getTamanio() ?></b></p>
+            <p class="card-text">Observaciones: <b><?php echo $mascota->getObservaciones() ?></b></p>
         </div>
-        <!-- / main body -->
-        <div class="clear"></div>
-    </main>
+    <?php } ?>
+    </div>
 </div>
 
 <?php
