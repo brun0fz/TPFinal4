@@ -36,13 +36,12 @@ class GuardianController
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion)
     {
-        if ($this->validateSession()) {
-            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
-            $this->guardianDAO->Add($guardian);
+        $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
+        $this->guardianDAO->Add($guardian);
 
-            $_SESSION["loggedUser"] = $guardian;
-            $this->ShowGuardianHome();
-        }
+        $guardian->setPassword(null);
+        $_SESSION["loggedUser"] = $guardian;
+        $this->ShowGuardianHome();
     }
 
     public function setDisponibilidad($dias)
