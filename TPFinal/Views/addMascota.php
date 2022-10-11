@@ -6,7 +6,7 @@ include("navBar.php");
 
 <div class="container-fluid">
     <main class="add-mascota w-100 m-auto text-center">
-            <form class="form-center" action="<?php echo FRONT_ROOT."Duenio/AddMascota" ?>" method="POST">
+            <form class="form-center" action="<?php echo FRONT_ROOT."Duenio/AddMascota" ?>" method="Post" enctype="multipart/form-data">
                 <h3>Nueva Mascota</h3><br>
                 <div class="form-floating">
                     <input type="text" name="nombre" class="form-control" id="floatingInput" placeholder="nombre" required>
@@ -23,11 +23,11 @@ include("navBar.php");
                 <div class="form-floating">
                     <input type="textarea" name="observaciones" class="form-control" id="floatingInput" placeholder="observaciones" required>
                     <label for="floatingInput">Observaciones</label>
-                </div><!--Mascota Imagen
+                </div>
                 <div class="form-floating imgInput">
                     <input type="file" name="rutaFoto" class="form-control" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" required>
                     <label for="floatingInput">Foto</label>
-                </div>-->
+                </div>
                 <br>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Añadir</button>
             </form>

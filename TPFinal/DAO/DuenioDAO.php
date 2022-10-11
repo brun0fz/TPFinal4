@@ -35,6 +35,8 @@ class DuenioDAO implements IDuenioDAO
         $newMascota->setId($this->GetNextId($listaMascotas));
         array_push($listaMascotas, $newMascota);
 
+        $_SESSION["loggedUser"]->setListaMascotas($listaMascotas);
+
         $duenioAux->setListaMascotas($listaMascotas);
         $this->SaveData();
     }
