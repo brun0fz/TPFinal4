@@ -80,13 +80,11 @@ class DuenioController
             $aux = explode("/", $rutaFoto["type"]);
             $type = $aux[1];
 
-            $name = $rutaFoto["name"];
+            $name = $_SESSION["loggedUser"]->getId() . "-" . $nombre . "." . $type;
 
-            $dest = IMG_PATH . $name;
+            move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
 
-            move_uploaded_file($temp, $dest);
-
-            //chmod(IMG_PATH . $name, 0777);
+            chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
 
             $newMascota->setRutaFoto($name);
