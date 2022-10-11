@@ -99,6 +99,7 @@ main {
   border-radius: 10px;
   color: #384047;
   background-color: #eff3f7;
+  overflow: hidden;
 }
 
 .img-container {
