@@ -69,17 +69,30 @@ class DuenioController
         }
     }
 
-    public function AddMascota($nombre, $raza, $tamanio, $observaciones/*, $rutaFoto*/)
+    public function AddMascota($nombre, $raza, $tamanio, $observaciones, $rutaFoto)
     {
         if ($this->validateSession()) {
             $listaMascotas = $_SESSION["loggedUser"]->getListaMascotas();
 
             $newMascota = new Mascota($nombre, $raza, $tamanio, $observaciones);
-            //$newMascota->setRutaFoto(IMG_PATH . $rutaFoto);
-            //falta setear el ID aca
+
+            $temp = $rutaFoto["tmp_name"];
+            $aux = explode("/", $rutaFoto["type"]);
+            $type = $aux[1];
+
+            $name = $rutaFoto["name"];
+
+            $dest = IMG_PATH . $name;
+
+            move_uploaded_file($temp, $dest);
+
+            //chmod(IMG_PATH . $name, 0777);
+
+
+            $newMascota->setRutaFoto($name);
+
             array_push($listaMascotas, $newMascota);
 
-            $_SESSION["loggedUser"]->setListaMascotas($listaMascotas);
             $this->duenioDAO->AddMascota($_SESSION["loggedUser"], $newMascota);
 
             $this->ShowDuenioHome();

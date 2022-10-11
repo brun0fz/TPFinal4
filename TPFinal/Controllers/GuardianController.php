@@ -31,9 +31,7 @@ class GuardianController
 
     public function ShowDisponibilidadView()
     {
-        if ($this->validateSession()) {
-            require_once(VIEWS_PATH . "set-disponibilidad.php");
-        }
+        $this->validateSession() && require_once(VIEWS_PATH . "set-disponibilidad.php");
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion)
