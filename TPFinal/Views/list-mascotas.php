@@ -8,7 +8,7 @@ include("navBar.php");
     <a href="<?php echo FRONT_ROOT . "Duenio/ShowAddMascotaView" ?>"><button class="btn btn-primary btn-mascota">Añadir Mascota</button></a><br>
     <div class="row row-cols-sm-1 row-cols-md-3">
         <?php foreach ($mascotasList as $mascota) { ?>
-            <div class="card g-3 m-3 p-2 shadow-sm" style="width: 400px">
+            <div class="card g-3 m-3 shadow-sm" style="width: 400px">
                 <div class="img-container">
                     <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="card-img-top img-mascota" alt="<?php echo $mascota->getNombre() ?>">
                 </div>
@@ -23,6 +23,7 @@ include("navBar.php");
                     <button type="button" class="btn btn-sm btn-outline-primary">Ver</button>
                     <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
                     </div>
+                    <br><br>
               </div>
             </div>
         <?php } ?>
