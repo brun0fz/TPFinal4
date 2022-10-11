@@ -10,10 +10,16 @@
         "direccion": "Luro 1123",
         "alta": true,
         "tamanioMascotaCuidar": null,
-        "reputacion": 0,
+        "reputacion": 5,
         "diasOcupados": [],
-        "precioXDia": 0,
-        "disponibilidad": [],
+        "precioXDia": 750,
+        "disponibilidad": [
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes"
+        ],
         "listaReservas": []
     },
     {
@@ -24,12 +30,12 @@
         "email": "clara@gmail.com",
         "password": "123",
         "tipo": 2,
-        "direccion": "Juan b Justo 1120",
+        "direccion": "Juan B Justo 1120",
         "alta": true,
         "tamanioMascotaCuidar": null,
-        "reputacion": null,
+        "reputacion": 5,
         "diasOcupados": [],
-        "precioXDia": null,
+        "precioXDia": 890,
         "disponibilidad": [],
         "listaReservas": []
     }
