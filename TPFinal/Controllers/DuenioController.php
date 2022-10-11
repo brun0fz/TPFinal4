@@ -86,7 +86,6 @@ class DuenioController
 
             chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
-
             $newMascota->setRutaFoto($name);
 
             array_push($listaMascotas, $newMascota);

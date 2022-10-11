@@ -19,7 +19,7 @@ class GuardianDAO implements IGuardianDAO
     {
         $this->RetrieveData();
 
-        $guardian->setId($this->GetNextId());
+        $guardian->setId($this->GetNextId($this->guardianList));
 
         array_push($this->guardianList, $guardian);
 

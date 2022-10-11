@@ -15,43 +15,9 @@
         "precioXDia": 700,
         "disponibilidad": [
             "Lunes",
-            "Jueves",
+            "Miercoles",
             "Viernes"
         ],
-        "listaReservas": []
-    },
-    {
-        "id": 2,
-        "nombre": "Clara",
-        "apellido": "Videla",
-        "telefono": "12312313",
-        "email": "clara@hotmail.com",
-        "password": "123",
-        "tipo": 2,
-        "direccion": "Funes 2213",
-        "alta": true,
-        "tamanioMascotaCuidar": null,
-        "reputacion": 4,
-        "diasOcupados": [],
-        "precioXDia": 650,
-        "disponibilidad": null,
-        "listaReservas": []
-    },
-    {
-        "id": 3,
-        "nombre": "pepito",
-        "apellido": "flores",
-        "telefono": "154387355",
-        "email": "pepito@gmail.com",
-        "password": "123",
-        "tipo": 2,
-        "direccion": "pepitoflores casita",
-        "alta": true,
-        "tamanioMascotaCuidar": null,
-        "reputacion": 0,
-        "diasOcupados": [],
-        "precioXDia": 0,
-        "disponibilidad": [],
         "listaReservas": []
     }
 ]
