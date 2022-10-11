@@ -10,21 +10,15 @@ include("navBar.php");
         <div class="content">
             <div class="scrollable">
                 <table style="text-align:center;">
-                    <thead>
-                    <tr>
-                        <th style="width: 15%;">Nombre</th>
-                        <th style="width: 15%;">Reputacion</th>
-                        <th style="width: 15%;">Precio por dia</th>
-                        <th style="width: 15%;">Direccion</th>
-                    </tr>
-                    </thead>
                     <tbody>
                     <?php foreach ($listaGuardianes as $guardian) { ?>
                         <tr>
-                            <td><?php echo $guardian->getNombre() . " " . $guardian->getApellido(); ?></td>
-                            <td><?php echo $guardian->getReputacion() . "/5"; ?></td>
-                            <td><?php echo "$" . $guardian->getPrecioXDia(); ?></td>
-                            <td><?php echo $guardian->getDireccion(); ?></td>
+                        <div class="card p-3">
+                            <p class="card-text">Nombre: <b><?php echo $guardian->getNombre() . " " . $guardian->getApellido(); ?></b></p>
+                            <p class="card-text">Reputacion: <b><?php echo $guardian->getReputacion() . "/5"; ?></b></p>
+                            <p class="card-text">Precio por Dia: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
+                            <p class="card-text">Direccion: <b><?php echo $guardian->getDireccion(); ?></b></p>
+                    </div>
                         </tr>
                     <?php } ?>
                     </tbody>
