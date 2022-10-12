@@ -63,20 +63,19 @@ class DuenioController
         $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
         if ($rutaFoto["tmp_name"] != "") {
-
-            var_dump($rutaFoto);
-
             $temp = $rutaFoto["tmp_name"];
             $aux = explode("/", $rutaFoto["type"]);
             $type = $aux[1];
 
-            $name = $nombre . "." . $type;
+            $name = $nombre . "-" . $apellido . "." . $type;
 
             move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-
             chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
             $duenio->setRutaFoto($name);
+        }
+        else{
+            $duenio->setRutaFoto("undefinedProfile.png");
         }
 
         $this->duenioDAO->Add($duenio);

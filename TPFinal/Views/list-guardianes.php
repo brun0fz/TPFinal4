@@ -6,7 +6,8 @@ include("navBar.php");
 <div class="container">
     <div class="list-guardianes">
         <h2 id="list-title">Guardianes</h2><br>
-        <?php foreach ($listaGuardianes as $guardian) { ?>
+        <?php foreach ($listaGuardianes as $guardian) { 
+            if($guardian->getDisponibilidad() && $guardian->getPrecioXDia()!=0){ ?> <!--Solo muestra guardianes con Disponibilidad y PrecioxDia seteados-->
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
                     <div class="col-md-4 card-img-guardian">
@@ -42,7 +43,7 @@ include("navBar.php");
                     </div>
                 </div>
             </div>
-        <?php } ?>
+        <?php } } ?>
     </div>
 </div>
 

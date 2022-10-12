@@ -38,17 +38,21 @@ class GuardianController
     {
         $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
 
-        $temp = $rutaFoto["tmp_name"];
-        $aux = explode("/", $rutaFoto["type"]);
-        $type = $aux[1];
+        if ($rutaFoto["tmp_name"] != "") {
+            $temp = $rutaFoto["tmp_name"];
+            $aux = explode("/", $rutaFoto["type"]);
+            $type = $aux[1];
 
-        $name = "-" . $nombre . "." . $type;
+            $name = $nombre . "-" . $apellido . "." . $type;
 
-        move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+            move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+            chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
-        chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
-
-        $guardian->setRutaFoto($name);
+            $guardian->setRutaFoto($name);
+        }
+        else{
+            $guardian->setRutaFoto("undefinedProfile.png");
+        }
 
         $this->guardianDAO->Add($guardian);
 

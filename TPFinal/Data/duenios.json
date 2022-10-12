@@ -7,7 +7,7 @@
         "email": "bruno@gmail.com",
         "password": "123",
         "tipo": 1,
-        "rutaFoto": null,
+        "rutaFoto": "undefinedProfile.png",
         "alta": true,
         "listaMascotas": [
             {

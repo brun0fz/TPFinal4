@@ -1,44 +1,65 @@
 [
-  {
-    "id": 1,
-    "nombre": "Belen",
-    "apellido": "Robledo",
-    "telefono": "2234343454",
-    "email": "belen@gmail.com",
-    "password": "123",
-    "tipo": 2,
-    "rutaFoto": "guardian-1.jpg",
-    "direccion": "Luro 1123",
-    "alta": true,
-    "tamanioMascotaCuidar": null,
-    "reputacion": 3.7,
-    "diasOcupados": [],
-    "precioXDia": 750,
-    "disponibilidad": [
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes"
-    ],
-    "listaReservas": []
-  },
-  {
-    "id": 2,
-    "nombre": "Clara",
-    "apellido": "Videla",
-    "telefono": "223546780",
-    "email": "clara@gmail.com",
-    "password": "123",
-    "tipo": 2,
-    "rutaFoto": "undefinedProfile.png",
-    "direccion": "Juan B Justo 1120",
-    "alta": true,
-    "tamanioMascotaCuidar": null,
-    "reputacion": 4,
-    "diasOcupados": [],
-    "precioXDia": 890,
-    "disponibilidad": [],
-    "listaReservas": []
-  }
+    {
+        "id": 1,
+        "nombre": "Belen",
+        "apellido": "Robledo",
+        "telefono": "2234343454",
+        "email": "belen@gmail.com",
+        "password": "123",
+        "tipo": 2,
+        "rutaFoto": "Belen-Robledo.jpg",
+        "direccion": "Luro 1123",
+        "alta": true,
+        "tamanioMascotaCuidar": null,
+        "reputacion": 3.7,
+        "diasOcupados": [],
+        "precioXDia": 750,
+        "disponibilidad": [
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes"
+        ],
+        "listaReservas": []
+    },
+    {
+        "id": 2,
+        "nombre": "Clara",
+        "apellido": "Videla",
+        "telefono": "223546780",
+        "email": "clara@gmail.com",
+        "password": "123",
+        "tipo": 2,
+        "rutaFoto": "undefinedProfile.png",
+        "direccion": "Juan B Justo 1120",
+        "alta": true,
+        "tamanioMascotaCuidar": null,
+        "reputacion": 4,
+        "diasOcupados": [],
+        "precioXDia": 890,
+        "disponibilidad": [],
+        "listaReservas": []
+    },
+    {
+        "id": 3,
+        "nombre": "Zero",
+        "apellido": "Two",
+        "telefono": "2234389657",
+        "email": "zerotwo@gmail.com",
+        "password": "123",
+        "tipo": 2,
+        "rutaFoto": "Zero-Two.jpeg",
+        "direccion": "Grieta del Invocador 2338",
+        "alta": true,
+        "tamanioMascotaCuidar": null,
+        "reputacion": 1.7,
+        "diasOcupados": [],
+        "precioXDia": 590,
+        "disponibilidad": [
+          "Lunes",
+          "Viernes"
+        ],
+        "listaReservas": []
+    }
 ]
