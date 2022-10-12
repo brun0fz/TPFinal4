@@ -2,31 +2,48 @@
 include("header.php");
 include("navBar.php");
 ?>
- 
-<div class="wrapper row4">
-    <main class="hoc container clear">
-        <!-- main body -->
-        <div class="content">
-            <div class="scrollable">
-                <table style="text-align:center;">
-                    <tbody>
-                    <?php foreach ($listaGuardianes as $guardian) { ?>
-                        <tr>
-                        <div class="card p-3">
-                            <p class="card-text">Nombre: <b><?php echo $guardian->getNombre() . " " . $guardian->getApellido(); ?></b></p>
-                            <p class="card-text">Reputacion: <b><?php echo $guardian->getReputacion() . "/5"; ?></b></p>
-                            <p class="card-text">Precio por Dia: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
-                            <p class="card-text">Direccion: <b><?php echo $guardian->getDireccion(); ?></b></p>
+
+<div class="container">
+    <div class="list-guardianes">
+        <h2 id="list-title">Guardianes</h2><br>
+        <?php foreach ($listaGuardianes as $guardian) { ?>
+            <div class="card mb-3 shadow-sm">
+                <div class="row g-0">
+                    <div class="col-md-4 card-img-guardian">
+                        <img src="<?php echo IMG_PATH . "guardian-1.jpg" ?>" class="img-fluid rounded-start img-guardian">
                     </div>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                </table>
+                    <div class="col-md-8 p-1">
+                        <div class="card-body">
+                            <h3 class="card-title"><b><?php echo $guardian->getNombre() . " " . $guardian->getApellido(); ?></b></h3>
+                            <?php
+                                $n = 0;
+                                for($i = 1; $i <= (int)$guardian->getReputacion(); $i++ ){
+                                    ?><img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
+                                    $n = $i;
+                                }
+                                if(($guardian->getReputacion() - (int)$guardian->getReputacion()) >= 0.5){
+                                    ?><img src="<?php echo IMG_PATH . "pawHalf.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
+                                    $n++;
+                                }
+                                if($i <= 5){
+                                    for($i = $n+1; $i <= 5; $i++){
+                                        ?><img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
+                                    }
+                                }
+                            ?>
+                            <br><br>
+                            <p class="card-text">Precio por día: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
+                            <p class="card-text">Dirección: <b><?php echo $guardian->getDireccion(); ?></b></p>
+                            <p class="card-text">Disponibilidad: <b><?php if($guardian->getDisponibilidad()){echo implode(", ", $guardian->getDisponibilidad());}else{echo "Sin definir.";} ?></b></p>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- / main body -->
-        <div class="clear"></div>
-    </main>
+        <?php } ?>
+    </div>
 </div>
 
 <?php

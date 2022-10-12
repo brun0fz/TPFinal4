@@ -10,7 +10,7 @@
         "direccion": "Luro 1123",
         "alta": true,
         "tamanioMascotaCuidar": null,
-        "reputacion": 5,
+        "reputacion": 3.7,
         "diasOcupados": [],
         "precioXDia": 750,
         "disponibilidad": [
@@ -18,7 +18,7 @@
             "Martes",
             "Miercoles",
             "Jueves",
-            "Viernes"
+            "Sabado"
         ],
         "listaReservas": []
     },
