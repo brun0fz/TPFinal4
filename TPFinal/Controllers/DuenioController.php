@@ -58,14 +58,32 @@ class DuenioController
         }
     }
 
-    public function Add($nombre, $apellido, $telefono, $email, $password)
+    public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)
     {
         $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+
+        if ($rutaFoto["tmp_name"] != "") {
+
+            var_dump($rutaFoto);
+
+            $temp = $rutaFoto["tmp_name"];
+            $aux = explode("/", $rutaFoto["type"]);
+            $type = $aux[1];
+
+            $name = $nombre . "." . $type;
+
+            move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+
+            chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+
+            $duenio->setRutaFoto($name);
+        }
+
         $this->duenioDAO->Add($duenio);
 
         $duenio->setPassword(null);
         $_SESSION["loggedUser"] = $duenio;
-        
+
         $this->ShowDuenioHome();
     }
 

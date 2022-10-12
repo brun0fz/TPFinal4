@@ -34,13 +34,27 @@ class GuardianController
         $this->validateSession() && require_once(VIEWS_PATH . "set-disponibilidad.php");
     }
 
-    public function Add($nombre, $apellido, $telefono, $email, $password, $direccion)
+    public function Add($nombre, $apellido, $telefono, $email, $password, $direccion, $rutaFoto)
     {
         $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
+
+        $temp = $rutaFoto["tmp_name"];
+        $aux = explode("/", $rutaFoto["type"]);
+        $type = $aux[1];
+
+        $name = "-" . $nombre . "." . $type;
+
+        move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+
+        chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+
+        $guardian->setRutaFoto($name);
+
         $this->guardianDAO->Add($guardian);
 
         $guardian->setPassword(null);
         $_SESSION["loggedUser"] = $guardian;
+
         $this->ShowGuardianHome();
     }
 

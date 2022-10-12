@@ -33,9 +33,9 @@ include('header.php');
 <div class="login container-fluid">
     <main class="form-signin w-100 m-auto text-center">
         <?php if ($type == 1) { ?>
-            <form class="form-center" action="<?php echo FRONT_ROOT."Duenio/Add"?>" method="POST">
+            <form class="form-center" action="<?php echo FRONT_ROOT."Duenio/Add"?>" method="Post" enctype="multipart/form-data">
         <?php } else { ?>
-            <form class="form-center" action="<?php echo FRONT_ROOT."Guardian/Add" ?>" method="POST">
+            <form class="form-center" action="<?php echo FRONT_ROOT."Guardian/Add" ?>" method="Post" enctype="multipart/form-data">
         <?php } ?>
                 <img class="mb-4" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="150" height="150">
                 <h3>Nuevo Usuario</h3><br>
@@ -65,7 +65,11 @@ include('header.php');
                         <label for="floatingPassword">Direccion</label>
                     </div>
                  <?php } ?>
-                <br>
+                <div class="form-floating" imgInput">
+                    <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" <?php if ($type == 2) {echo "required";} ?>>
+                    <label for="floatingInput">Foto</label>
+                </div>
+
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Registrarse</button><br><br>
                 <a href="<?php echo  FRONT_ROOT . "Home/Index" ?>">Iniciar Sesion</a>
             </form>
