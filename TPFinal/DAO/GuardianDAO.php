@@ -46,6 +46,7 @@ class GuardianDAO implements IGuardianDAO
             $valuesArray["email"] = $guardian->getEmail();
             $valuesArray["password"] = $guardian->getPassword();
             $valuesArray["tipo"] = $guardian->getTipo();
+            $valuesArray["rutaFoto"] = $guardian->getRutaFoto();
             $valuesArray["direccion"] = $guardian->getDireccion();
             $valuesArray["alta"] = $guardian->getAlta();
             $valuesArray["tamanioMascotaCuidar"] = $guardian->getTamanioMascotaCuidar();
@@ -92,6 +93,8 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setPassword($valuesArray["password"]);
                 $guardian->setDireccion($valuesArray["direccion"]);
                 $guardian->setAlta($valuesArray["alta"]);
+                $guardian->setTipo($valuesArray["tipo"]);
+                $guardian->setRutaFoto($valuesArray["rutaFoto"]);
                 $guardian->setTamanioMascotaCuidar($valuesArray["tamanioMascotaCuidar"]);
                 $guardian->setReputacion($valuesArray["reputacion"]);
                 $guardian->setDiasOcupados($valuesArray["diasOcupados"]);

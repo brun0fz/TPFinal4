@@ -168,5 +168,22 @@ abstract class Usuario
         $this->tipo = $tipo;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRutaFoto()
+    {
+        return $this->rutaFoto;
+    }
+
+    /**
+     * @param mixed $rutaFoto
+     */
+    public function setRutaFoto($rutaFoto): void
+    {
+        $this->rutaFoto = $rutaFoto;
+    }
+
+
 
 }
