@@ -60,30 +60,40 @@ class DuenioController
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)
     {
-        $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+        $guardianDAO = new GuardianDAO();
 
-        if ($rutaFoto["tmp_name"] != "") {
-            $temp = $rutaFoto["tmp_name"];
-            $aux = explode("/", $rutaFoto["type"]);
-            $type = $aux[1];
+        if (($this->duenioDAO->Buscar($email) == null) && ($guardianDAO->Buscar($email) == null)) {
 
-            $name = $nombre . "-" . $apellido . "." . $type;
+            $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
-            move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-            chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+            if ($rutaFoto["tmp_name"] != "") {
+                $temp = $rutaFoto["tmp_name"];
+                $aux = explode("/", $rutaFoto["type"]);
+                $type = $aux[1];
 
-            $duenio->setRutaFoto($name);
+                $name = $email . "." . $type;
+
+                move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+                chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+
+                $duenio->setRutaFoto($name);
+
+            } else {
+                $duenio->setRutaFoto("undefinedProfile.png");
+            }
+
+            $this->duenioDAO->Add($duenio);
+
+            $duenio->setPassword(null);
+            $_SESSION["loggedUser"] = $duenio;
+
+            $this->ShowDuenioHome();
+
+        } else {
+            $type = 1;
+            require_once(VIEWS_PATH . "registro.php");
         }
-        else{
-            $duenio->setRutaFoto("undefinedProfile.png");
-        }
 
-        $this->duenioDAO->Add($duenio);
-
-        $duenio->setPassword(null);
-        $_SESSION["loggedUser"] = $duenio;
-
-        $this->ShowDuenioHome();
     }
 
     public function AddMascota($nombre, $raza, $tamanio, $observaciones, $rutaFoto)

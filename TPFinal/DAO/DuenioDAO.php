@@ -22,6 +22,7 @@ class DuenioDAO implements IDuenioDAO
 
         $duenio->setId($this->GetNextId($this->duenioList));
 
+
         array_push($this->duenioList, $duenio);
 
         $this->SaveData();

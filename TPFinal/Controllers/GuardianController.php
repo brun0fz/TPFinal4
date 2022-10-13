@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use Models\Guardian;
 
@@ -36,30 +37,39 @@ class GuardianController
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion, $rutaFoto)
     {
-        $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
+        $duenioDAO = new DuenioDAO();
 
-        if ($rutaFoto["tmp_name"] != "") {
-            $temp = $rutaFoto["tmp_name"];
-            $aux = explode("/", $rutaFoto["type"]);
-            $type = $aux[1];
+        if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
-            $name = $nombre . "-" . $apellido . "." . $type;
+            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
 
-            move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-            chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+            if ($rutaFoto["tmp_name"] != "") {
+                $temp = $rutaFoto["tmp_name"];
+                $aux = explode("/", $rutaFoto["type"]);
+                $type = $aux[1];
 
-            $guardian->setRutaFoto($name);
+                $name = $email . "." . $type;
+
+                move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+                chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+
+                $guardian->setRutaFoto($name);
+            } else {
+                $guardian->setRutaFoto("undefinedProfile.png");
+            }
+
+            $this->guardianDAO->Add($guardian);
+
+            $guardian->setPassword(null);
+            $_SESSION["loggedUser"] = $guardian;
+
+            $this->ShowGuardianHome();
+
+        } else {
+            $type = 2;
+            require_once(VIEWS_PATH . "registro.php");
         }
-        else{
-            $guardian->setRutaFoto("undefinedProfile.png");
-        }
 
-        $this->guardianDAO->Add($guardian);
-
-        $guardian->setPassword(null);
-        $_SESSION["loggedUser"] = $guardian;
-
-        $this->ShowGuardianHome();
     }
 
     public function setDisponibilidad($dias)
