@@ -10,10 +10,14 @@
         "rutaFoto": "belen@gmail.com.jpg",
         "direccion": "Luro 1123",
         "alta": true,
-        "tamanioMascotaCuidar": null,
+        "tamanioMascotaCuidar": [
+            "S",
+            "M",
+            "L"
+        ],
         "reputacion": 3.7,
         "diasOcupados": [],
-        "precioXDia": 750,
+        "precioXDia": 720,
         "disponibilidad": [
             "Lunes",
             "Martes",
@@ -34,7 +38,10 @@
         "rutaFoto": "clara@gmail.com.jpeg",
         "direccion": "Juan B Justo 1120",
         "alta": true,
-        "tamanioMascotaCuidar": null,
+        "tamanioMascotaCuidar": [
+            "S",
+            "L"
+        ],
         "reputacion": 4,
         "diasOcupados": [],
         "precioXDia": 890,
@@ -42,7 +49,7 @@
             "Lunes",
             "Miercoles",
             "Viernes"
-          ],
+        ],
         "listaReservas": []
     },
     {
@@ -56,13 +63,15 @@
         "rutaFoto": "messi@gmail.com.jpg",
         "direccion": "Guemes 2376",
         "alta": true,
-        "tamanioMascotaCuidar": null,
+        "tamanioMascotaCuidar": [
+            "L"
+        ],
         "reputacion": 5,
         "diasOcupados": [],
         "precioXDia": 1300,
         "disponibilidad": [
-          "Viernes",
-          "Sabados"
+            "Viernes",
+            "Sabados"
         ],
         "listaReservas": []
     },
@@ -77,13 +86,15 @@
         "rutaFoto": "emma@gmail.com.jpg",
         "direccion": "Avellaneda 2100",
         "alta": true,
-        "tamanioMascotaCuidar": null,
+        "tamanioMascotaCuidar": [
+            "S"
+        ],
         "reputacion": 2.7,
         "diasOcupados": [],
         "precioXDia": 980,
         "disponibilidad": [
-          "Domingos"
+            "Domingos"
         ],
         "listaReservas": []
     }
-] 
+]

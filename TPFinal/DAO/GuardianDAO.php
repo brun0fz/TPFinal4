@@ -151,6 +151,24 @@ class GuardianDAO implements IGuardianDAO
         $this->SaveData();
     }
 
+    public function UpdateTamanios($tamanios, $guardian)
+    {
+        $guardian = $this->Buscar($guardian->getEmail());
+
+        $guardian->setTamanioMascotaCuidar($tamanios);
+
+        $this->SaveData();
+    }
+
+    public function UpdatePrecio($precio, $guardian)
+    {
+        $guardian = $this->Buscar($guardian->getEmail());
+
+        $guardian->setPrecioXDia($precio);
+
+        $this->SaveData();
+    }
+
     /*
     public function Remove($id)
     {

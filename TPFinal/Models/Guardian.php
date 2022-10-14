@@ -3,7 +3,7 @@
 class Guardian extends Usuario{
 
     private $direccion;
-    private $tamanioMascotaCuidar;
+    private $tamanioMascotaCuidar = array();
     private $reputacion = NULL;
     private $diasOcupados = array();
     private $disponibilidad = array();
@@ -15,6 +15,22 @@ class Guardian extends Usuario{
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
         $this->direccion = $direccion;
         $this->tipo = 2;
+    }
+
+    public function getTamanioDescripcion(){
+        $tamanioDescripcion = '';
+        switch ($this->tamanio) {
+            case "S":
+                $tamanioDescripcion = 'Pequeño';
+                break;
+            case "M":
+                $tamanioDescripcion = 'Mediano';
+                break;
+            case "L":
+                $tamanioDescripcion = 'Grande';
+                break;
+        }
+        return $tamanioDescripcion;
     }
 
     /**
