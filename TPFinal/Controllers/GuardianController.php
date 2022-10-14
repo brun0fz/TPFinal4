@@ -42,7 +42,7 @@ class GuardianController
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion, $rutaFoto)
     {
         $duenioDAO = new DuenioDAO();
-
+        
         if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
             $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
@@ -62,13 +62,14 @@ class GuardianController
                 $guardian->setRutaFoto("undefinedProfile.png");
             }
 
+            $this->guardianDAO->setGuardianList(array());
             $this->guardianDAO->Add($guardian);
 
             $guardian->setPassword(null);
             $_SESSION["loggedUser"] = $guardian;
 
             $this->ShowGuardianHome();
-
+            
         } else {
             $type = 2;
             require_once(VIEWS_PATH . "registro.php");

@@ -218,4 +218,14 @@ class GuardianDAO implements IGuardianDAO
         return $id + 1;
     }
 
+
+    /**
+     * Set the value of guardianList
+     */
+    public function setGuardianList($guardianList): self
+    {
+        $this->guardianList = $guardianList;
+
+        return $this;
+    }
 }
