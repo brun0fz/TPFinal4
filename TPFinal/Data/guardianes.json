@@ -31,7 +31,7 @@
         "email": "clara@gmail.com",
         "password": "123",
         "tipo": 2,
-        "rutaFoto": "undefinedProfile.png",
+        "rutaFoto": "clara@gmail.com.jpeg",
         "direccion": "Juan B Justo 1120",
         "alta": true,
         "tamanioMascotaCuidar": null,

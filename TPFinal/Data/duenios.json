@@ -12,22 +12,22 @@
         "listaMascotas": [
             {
                 "id": 1,
-                "nombre": "Yuumi",
-                "raza": "Gato",
+                "nombre": "Junior",
+                "raza": "Shihtzu",
                 "tamanio": "Peque\u00f1o",
-                "obervaciones": "Muy bonita uwu",
-                "rutaFoto": "1-Yuumi.jpeg",
+                "obervaciones": "Muy bonito",
+                "rutaFoto": "1-Junior.jpg",
                 "rutaVideo": null,
                 "rutaPlanVacunas": null,
                 "alta": true
             },
             {
                 "id": 2,
-                "nombre": "Bizqui",
-                "raza": "Gato",
-                "tamanio": "Mediano",
-                "obervaciones": "Enojon",
-                "rutaFoto": "1-Bizqui.jpeg",
+                "nombre": "Luna",
+                "raza": "Caniche",
+                "tamanio": "Pequeño",
+                "obervaciones": "Tranquila",
+                "rutaFoto": "1-Luna.jpg",
                 "rutaVideo": null,
                 "rutaPlanVacunas": null,
                 "alta": true
