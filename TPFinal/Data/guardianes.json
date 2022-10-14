@@ -7,7 +7,7 @@
         "email": "belen@gmail.com",
         "password": "123",
         "tipo": 2,
-        "rutaFoto": "Belen-Robledo.jpg",
+        "rutaFoto": "belen@gmail.com.jpg",
         "direccion": "Luro 1123",
         "alta": true,
         "tamanioMascotaCuidar": null,
@@ -31,35 +31,59 @@
         "email": "clara@gmail.com",
         "password": "123",
         "tipo": 2,
-        "rutaFoto": "undefinedProfile.png",
+        "rutaFoto": "clara@gmail.com.jpeg",
         "direccion": "Juan B Justo 1120",
         "alta": true,
         "tamanioMascotaCuidar": null,
         "reputacion": 4,
         "diasOcupados": [],
         "precioXDia": 890,
-        "disponibilidad": [],
+        "disponibilidad": [
+            "Lunes",
+            "Miercoles",
+            "Viernes"
+          ],
         "listaReservas": []
     },
     {
         "id": 3,
-        "nombre": "Zero",
-        "apellido": "Two",
+        "nombre": "Lionel",
+        "apellido": "Messi",
         "telefono": "2234389657",
-        "email": "zerotwo@gmail.com",
+        "email": "messi@gmail.com",
         "password": "123",
         "tipo": 2,
-        "rutaFoto": "Zero-Two.jpeg",
-        "direccion": "Grieta del Invocador 2338",
+        "rutaFoto": "messi@gmail.com.jpg",
+        "direccion": "Guemes 2376",
         "alta": true,
         "tamanioMascotaCuidar": null,
-        "reputacion": 1.7,
+        "reputacion": 5,
         "diasOcupados": [],
-        "precioXDia": 590,
+        "precioXDia": 1300,
         "disponibilidad": [
-          "Lunes",
-          "Viernes"
+          "Viernes",
+          "Sabados"
+        ],
+        "listaReservas": []
+    },
+    {
+        "id": 3,
+        "nombre": "Emma",
+        "apellido": "Watson",
+        "telefono": "2234389665",
+        "email": "emma@gmail.com",
+        "password": "123",
+        "tipo": 2,
+        "rutaFoto": "emma@gmail.com.jpg",
+        "direccion": "Avellaneda 2100",
+        "alta": true,
+        "tamanioMascotaCuidar": null,
+        "reputacion": 2.7,
+        "diasOcupados": [],
+        "precioXDia": 980,
+        "disponibilidad": [
+          "Domingos"
         ],
         "listaReservas": []
     }
-]
+] 
