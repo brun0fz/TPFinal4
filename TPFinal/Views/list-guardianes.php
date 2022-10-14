@@ -36,6 +36,7 @@ include("navBar.php");
                             <p class="card-text">Precio por día: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
                             <p class="card-text">Dirección: <b><?php echo $guardian->getDireccion(); ?></b></p>
                             <p class="card-text">Disponibilidad: <b><?php if($guardian->getDisponibilidad()){echo implode(", ", $guardian->getDisponibilidad());}else{echo "Sin definir.";} ?></b></p>
+                            <p class="card-text">Tamaño de Mascota: <b><?php if($guardian->getTamanioMascotaCuidar()){echo implode(", ", $guardian->getTamanioMascotaCuidar());}else{echo "Sin definir.";} ?></b></p>
                             <div class="text-end">
                                 <button type="button" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Ver</button>
                             </div>

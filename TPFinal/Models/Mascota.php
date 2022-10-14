@@ -35,6 +35,21 @@ class Mascota
         $this->alta = $alta;
     }
 
+    public function getTamanioDescripcion(){
+        $tamanioDescripcion = '';
+        switch ($this->tamanio) {
+            case "S":
+                $tamanioDescripcion = 'Pequeño';
+                break;
+            case "M":
+                $tamanioDescripcion = 'Mediano';
+                break;
+            case "L":
+                $tamanioDescripcion = 'Grande';
+                break;
+        }
+        return $tamanioDescripcion;
+    }
 
     /**
      * Get the value of id

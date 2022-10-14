@@ -9,7 +9,7 @@
                     <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowListaGuardianesView"; ?>" class="nav-link px-2 link-dark">Guardianes</a></li>
                     <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowMascotaView"; ?>" class="nav-link px-2 link-dark">Mascotas</a></li>
                 <?php } else { ?>
-                    <li><a href="<?php echo FRONT_ROOT . "Guardian/ShowDisponibilidadView"; ?>" class="nav-link px-2 link-dark">Disponibilidad</a></li>
+                    <li><a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView"; ?>" class="nav-link px-2 link-dark">Configuración</a></li>
                 <?php } ?>
             </ul>
 

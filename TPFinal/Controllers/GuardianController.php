@@ -30,15 +30,19 @@ class GuardianController
         $this->validateSession() && require_once(VIEWS_PATH . "guardianHome.php");
     }
 
-    public function ShowDisponibilidadView()
+    public function ShowConfiguracionView()
     {
-        $this->validateSession() && require_once(VIEWS_PATH . "set-disponibilidad.php");
+        if($this->validateSession()){
+            $disponibilidad = $_SESSION["loggedUser"]->getDisponibilidad();
+            $tamanioArray = $_SESSION["loggedUser"]->getTamanioMascotaCuidar();
+            require_once(VIEWS_PATH . "set-configuracion.php");
+        }
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion, $rutaFoto)
     {
         $duenioDAO = new DuenioDAO();
-
+        
         if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
             $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
@@ -58,13 +62,14 @@ class GuardianController
                 $guardian->setRutaFoto("undefinedProfile.png");
             }
 
+            $this->guardianDAO->setGuardianList(array());
             $this->guardianDAO->Add($guardian);
 
             $guardian->setPassword(null);
             $_SESSION["loggedUser"] = $guardian;
 
             $this->ShowGuardianHome();
-
+            
         } else {
             $type = 2;
             require_once(VIEWS_PATH . "registro.php");
@@ -72,12 +77,30 @@ class GuardianController
 
     }
 
-    public function setDisponibilidad($dias)
+    public function setDisponibilidad($dias = array())
     {
         if ($this->validateSession()) {
             $_SESSION["loggedUser"]->setDisponibilidad($dias);
             $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]);
-            $this->ShowDisponibilidadView();
+            $this->ShowConfiguracionView();
+        }
+    }
+
+    public function setTamanios($tamanios = array())
+    {
+        if ($this->validateSession()) {
+            $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
+            $this->guardianDAO->UpdateTamanios($tamanios, $_SESSION["loggedUser"]);
+            $this->ShowConfiguracionView();
+        }
+    }
+
+    public function setPrecio($precio = null)
+    {
+        if ($this->validateSession()) {
+            $_SESSION["loggedUser"]->setPrecioXDia($precio);
+            $this->guardianDAO->UpdatePrecio($precio, $_SESSION["loggedUser"]);
+            $this->ShowConfiguracionView();
         }
     }
 

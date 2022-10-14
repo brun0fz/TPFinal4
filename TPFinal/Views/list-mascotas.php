@@ -15,7 +15,7 @@ include("navBar.php");
                 <div class="card-body">
                     <h5 class="card-title"><b><?php echo $mascota->getNombre() ?></b></h5>
                     <p class="card-text">Raza: <b><?php echo $mascota->getRaza() ?></b></p>
-                    <p class="card-text">Tamaño: <b><?php echo $mascota->getTamanio() ?></b></p>
+                    <p class="card-text">Tamaño: <b><?php echo $mascota->getTamanioDescripcion() ?></b></p>
                     <p class="card-text">Observaciones: <b><?php echo $mascota->getObservaciones() ?></b></p>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
