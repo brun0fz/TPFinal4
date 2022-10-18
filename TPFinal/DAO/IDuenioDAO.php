@@ -9,4 +9,3 @@
         function Add(Duenio $duenio);
         function GetAll();
     }
-?>

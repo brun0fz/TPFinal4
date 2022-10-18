@@ -9,4 +9,3 @@
         function Add(Mascota $mascota);
         function GetAll();
     }
-?>

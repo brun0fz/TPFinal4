@@ -23,16 +23,14 @@ class DuenioController
         } else {
             HomeController::Index();
         }
-
     }
 
     public function ShowDuenioHome()
     {
         $this->validateSession() && require_once(VIEWS_PATH . "duenioHome.php");
-
     }
 
-   
+
 
     public function ShowListaGuardianesView()
     {
@@ -63,25 +61,21 @@ class DuenioController
                 chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
                 $duenio->setRutaFoto($name);
-
             } else {
                 $duenio->setRutaFoto("undefinedProfile.png");
             }
 
             $this->duenioDAO->Add($duenio);
 
-            $duenio=$this->duenioDAO->Buscar($duenio->getEmail());
+            $duenio = $this->duenioDAO->Buscar($duenio->getEmail());
 
             $duenio->setPassword(null);
             $_SESSION["loggedUser"] = $duenio;
 
             $this->ShowDuenioHome();
-
         } else {
             $type = 1;
             require_once(VIEWS_PATH . "registro.php");
         }
-
     }
-
 }

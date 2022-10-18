@@ -26,7 +26,7 @@ class MascotaController
         }
     }
 
-    public function ShowMascotaView($alert="")
+    public function ShowMascotaView($alert = "")
     {
         if ($this->validateSession()) {
 
@@ -64,10 +64,8 @@ class MascotaController
                 $this->mascotaDAO->Add($newMascota);
 
                 $alert = "Mascota agregada con exito";
-
             } catch (Exception $ex) {
                 $alert = $ex->getMessage();
-
             } finally {
                 $this->ShowMascotaView($alert);
             }

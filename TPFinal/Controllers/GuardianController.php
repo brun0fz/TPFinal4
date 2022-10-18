@@ -22,7 +22,6 @@ class GuardianController
         } else {
             HomeController::Index();
         }
-
     }
 
     public function ShowGuardianHome()
@@ -32,7 +31,7 @@ class GuardianController
 
     public function ShowConfiguracionView()
     {
-        if($this->validateSession()){
+        if ($this->validateSession()) {
             $disponibilidad = $_SESSION["loggedUser"]->getDisponibilidad();
             $tamanioArray = $_SESSION["loggedUser"]->getTamanioMascotaCuidar();
             require_once(VIEWS_PATH . "set-configuracion.php");
@@ -42,7 +41,7 @@ class GuardianController
     public function Add($nombre, $apellido, $telefono, $email, $password, $direccion, $rutaFoto)
     {
         $duenioDAO = new DuenioDAO();
-        
+
         if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
             $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
@@ -69,12 +68,10 @@ class GuardianController
             $_SESSION["loggedUser"] = $guardian;
 
             $this->ShowGuardianHome();
-            
         } else {
             $type = 2;
             require_once(VIEWS_PATH . "registro.php");
         }
-
     }
 
     public function setDisponibilidad($dias = array())
@@ -103,5 +100,4 @@ class GuardianController
             $this->ShowConfiguracionView();
         }
     }
-
 }
