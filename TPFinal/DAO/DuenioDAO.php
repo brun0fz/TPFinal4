@@ -17,7 +17,6 @@ class DuenioDAO implements IDuenioDAO
         try {
             $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta);";
 
-            //$parameters["id"] = $duenio->getId();
             $parameters["nombre"] = $duenio->getNombre();
             $parameters["apellido"] = $duenio->getApellido();
             $parameters["telefono"] = $duenio->getTelefono();
@@ -27,10 +26,10 @@ class DuenioDAO implements IDuenioDAO
             $parameters["rutaFoto"] = $duenio->getRutaFoto();
             $parameters["alta"] = $duenio->getAlta();
 
-
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
+            
         } catch (Exception $ex) {
             throw $ex;
         }
