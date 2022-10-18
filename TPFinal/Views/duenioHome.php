@@ -29,7 +29,7 @@ include('navBar.php');
             </div>
             <h3 class="fs-2">Mascotas</h3>
             <p>Ve tu listado de mascotas, añade nuevas mascotas, visualiza sus perfiles y modificalos.</p>
-            <a href="<?php echo FRONT_ROOT . "Duenio/ShowMascotaView" ?>">Mis Mascotas</a>
+            <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaView" ?>">Mis Mascotas</a>
         </div>
     </div>
     <img class="background-img" src="<?php echo IMG_PATH . "background.png" ?>" alt="">

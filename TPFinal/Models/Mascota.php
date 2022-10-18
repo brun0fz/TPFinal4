@@ -4,8 +4,9 @@ class Mascota
 {
 
     private $id;
-    private $nombre;
+    private $animal;
     private $raza;
+    private $nombre;
     private $tamanio;
     private $observaciones;
 
@@ -13,14 +14,19 @@ class Mascota
     private $rutaVideo;
     private $rutaPlanVacunas;
 
-    protected $alta = true;
+    private $idDuenio; //FK
 
-    public function __construct($nombre, $raza, $tamanio, $observaciones)
+    private $alta = true;
+
+    public function __construct($animal, $raza, $nombre, $tamanio, $observaciones, $rutaFoto, $idDuenio)
     {
+        $this->animal = $animal;
         $this->nombre = $nombre;
         $this->raza = $raza;
         $this->tamanio = $tamanio;
         $this->observaciones = $observaciones;
+        $this->rutaFoto = $rutaFoto;
+        $this->idDuenio = $idDuenio;
     }
 
 
@@ -191,6 +197,42 @@ class Mascota
     public function setRutaPlanVacunas($rutaPlanVacunas): self
     {
         $this->rutaPlanVacunas = $rutaPlanVacunas;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idDuenio
+     */
+    public function getIdDuenio()
+    {
+        return $this->idDuenio;
+    }
+
+    /**
+     * Set the value of idDuenio
+     */
+    public function setIdDuenio($idDuenio): self
+    {
+        $this->idDuenio = $idDuenio;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of animal
+     */
+    public function getAnimal()
+    {
+        return $this->animal;
+    }
+
+    /**
+     * Set the value of animal
+     */
+    public function setAnimal($animal): self
+    {
+        $this->animal = $animal;
 
         return $this;
     }

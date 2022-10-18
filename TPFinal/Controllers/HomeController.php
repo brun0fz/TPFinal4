@@ -19,6 +19,9 @@ class HomeController
 
     static function Index()
     {
+
+        //require_once(VIEWS_PATH . "indexDAO.php");
+        
         if (isset($_SESSION["loggedUser"])) {
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
                 require_once(VIEWS_PATH . "duenioHome.php");
@@ -28,7 +31,6 @@ class HomeController
         } else {
             require_once(VIEWS_PATH . "home.php");
         }
-
     }
 
     public function ShowRegisterView($type)

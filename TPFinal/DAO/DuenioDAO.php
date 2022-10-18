@@ -2,209 +2,112 @@
 
 namespace DAO;
 
-use Models\Duenio;
-use Models\Mascota;
+use \Exception as Exception;
+use DAO\IDuenioDAO as IDuenioDAO;
+use Models\Duenio as Duenio;
+use DAO\Connection as Connection;
 
 class DuenioDAO implements IDuenioDAO
 {
-    private $duenioList = array();
-    private $fileName;
-
-
-    public function __construct()
-    {
-        $this->fileName = ROOT . "Data/duenios.json";
-    }
+    private $connection;
+    private $tableName = "Duenios";
 
     public function Add(Duenio $duenio)
     {
-        $this->RetrieveData();
+        try {
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta);";
 
-        $duenio->setId($this->GetNextId($this->duenioList));
+            //$parameters["id"] = $duenio->getId();
+            $parameters["nombre"] = $duenio->getNombre();
+            $parameters["apellido"] = $duenio->getApellido();
+            $parameters["telefono"] = $duenio->getTelefono();
+            $parameters["email"] = $duenio->getEmail();
+            $parameters["password"] = $duenio->getPassword();
+            $parameters["tipo"] = $duenio->getTipo();
+            $parameters["rutaFoto"] = $duenio->getRutaFoto();
+            $parameters["alta"] = $duenio->getAlta();
 
 
-        array_push($this->duenioList, $duenio);
+            $this->connection = Connection::GetInstance();
 
-        $this->SaveData();
-    }
-
-    public function AddMascota(Duenio $duenio, Mascota $newMascota)
-    {
-        $duenioAux = $this->Buscar($duenio->getEmail());
-        $listaMascotas = $duenioAux->getListaMascotas();
-
-        $newMascota->setId($this->GetNextId($listaMascotas));
-        array_push($listaMascotas, $newMascota);
-
-        $_SESSION["loggedUser"]->setListaMascotas($listaMascotas);
-
-        $duenioAux->setListaMascotas($listaMascotas);
-        $this->SaveData();
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 
     public function GetAll()
     {
-        $this->RetrieveData();
+        try {
+            $duenioList = array();
 
-        return $this->duenioList;
-    }
+            $query = "SELECT * FROM " . $this->tableName;
 
-    private function SaveData()
-    {
-        $arrayToEncode = array();
+            $this->connection = Connection::GetInstance();
 
-        foreach ($this->duenioList as $duenio) {
+            $resultSet = $this->connection->Execute($query);
 
-            $valuesArray["id"] = $duenio->getId();
-            $valuesArray["nombre"] = $duenio->getNombre();
-            $valuesArray["apellido"] = $duenio->getApellido();
-            $valuesArray["telefono"] = $duenio->getTelefono();
-            $valuesArray["email"] = $duenio->getEmail();
-            $valuesArray["password"] = $duenio->getPassword();
-            $valuesArray["tipo"] = $duenio->getTipo();
-            $valuesArray["rutaFoto"] = $duenio->getRutaFoto();
-            $valuesArray["alta"] = $duenio->getAlta();
+            foreach ($resultSet as $row) {
 
+                $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
 
-            $arrayMascotas = array();
+                $duenio->setId($row["id"]);
+                $duenio->setNombre($row["nombre"]);
+                $duenio->setApellido($row["apellido"]);
+                $duenio->setTelefono($row["telefono"]);
+                $duenio->setEmail($row["email"]);
+                $duenio->setPassword($row["password"]);
+                $duenio->setTipo($row["tipo"]);
+                $duenio->setRutaFoto($row["rutaFoto"]);
+                $duenio->setAlta($row["alta"]);
 
-
-            foreach ($duenio->getListaMascotas() as $mascota) {
-                $valuesArrayMascota["id"] = $mascota->getId();
-                $valuesArrayMascota["nombre"] = $mascota->getNombre();
-                $valuesArrayMascota["raza"] = $mascota->getRaza();
-                $valuesArrayMascota["tamanio"] = $mascota->getTamanio();
-                $valuesArrayMascota["obervaciones"] = $mascota->getObservaciones();
-                $valuesArrayMascota["rutaFoto"] = $mascota->getRutaFoto();
-                $valuesArrayMascota["rutaVideo"] = $mascota->getRutaVideo();
-                $valuesArrayMascota["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
-                $valuesArrayMascota["alta"] = $mascota->getAlta();
-
-                array_push($arrayMascotas, $valuesArrayMascota);
+                array_push($dueniosList, $duenio);
             }
 
-            $valuesArray["listaMascotas"] = $arrayMascotas;
-
-            $valuesArray["listaReservas"] = array();
-
-            array_push($arrayToEncode, $valuesArray);
-        }
-
-        $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-        file_put_contents($this->fileName, $jsonContent);
-    }
-
-    private function RetrieveData()
-    {
-        $this->duenioList = array();
-
-        if (file_exists($this->fileName)) {
-
-            $jsonContent = file_get_contents($this->fileName);
-
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-            foreach ($arrayToDecode as $valuesArray) {
-
-                $duenio = new duenio(NULL, NULL, NULL, NULL, NULL);
-
-                $duenio->setId($valuesArray["id"]);
-                $duenio->setNombre($valuesArray["nombre"]);
-                $duenio->setApellido($valuesArray["apellido"]);
-                $duenio->setTelefono($valuesArray["telefono"]);
-                $duenio->setEmail($valuesArray["email"]);
-                $duenio->setPassword($valuesArray["password"]);
-                $duenio->setTipo($valuesArray["tipo"]);
-                $duenio->setRutaFoto($valuesArray["rutaFoto"]);
-                $duenio->setAlta($valuesArray["alta"]);
-
-                $ArrayMascotas = $valuesArray["listaMascotas"];
-
-                $listaMascotas = array();
-
-                foreach ($ArrayMascotas as $valuesArrayMascota) {
-
-                    $mascota = new Mascota(NULL, NULL, NULL, NULL);
-
-                    $mascota->setId($valuesArrayMascota["id"]);
-                    $mascota->setNombre($valuesArrayMascota["nombre"]);
-                    $mascota->setRaza($valuesArrayMascota["raza"]);
-                    $mascota->setTamanio($valuesArrayMascota["tamanio"]);
-                    $mascota->setObservaciones($valuesArrayMascota["obervaciones"]);
-                    $mascota->setRutaFoto($valuesArrayMascota["rutaFoto"]);
-                    $mascota->setRutaVideo($valuesArrayMascota["rutaVideo"]);
-                    $mascota->setRutaPlanVacunas($valuesArrayMascota["rutaPlanVacunas"]);
-                    $mascota->setAlta($valuesArrayMascota["alta"]);
-
-                    array_push($listaMascotas, $mascota);
-                }
-
-                $duenio->setListaMascotas($listaMascotas);
-
-                array_push($this->duenioList, $duenio);
-            }
+            return $dueniosList;
+        } catch (Exception $ex) {
+            throw $ex;
         }
     }
+
 
     public function Buscar($email)
     {
-        $this->RetrieveData();
+        try {
+            $duenio = NULL;
 
-        foreach ($this->duenioList as $duenio) {
-            if ($duenio->getEmail() == $email) {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
+
+            $parameters["email"] = $email;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
+
+                    $duenio->setId($row["id"]);
+                    $duenio->setNombre($row["nombre"]);
+                    $duenio->setApellido($row["apellido"]);
+                    $duenio->setTelefono($row["telefono"]);
+                    $duenio->setEmail($row["email"]);
+                    $duenio->setPassword($row["password"]);
+                    $duenio->setTipo($row["tipo"]);
+                    $duenio->setRutaFoto($row["rutaFoto"]);
+                    $duenio->setAlta($row["alta"]);
+                }
+
                 return $duenio;
+            } else {
+
+                return null;
             }
+        } catch (Exception $ex) {
+            throw $ex;
         }
-        return NULL;
     }
-
-    /*
-    public function Remove($id)
-    {
-        $this->RetrieveData();
-
-        echo "DAO ID=" . $id;
-
-        foreach ($this->duenioList as $index => $duenio) {
-            echo "ID CELL=" . $duenio->getId();
-            if ($duenio->getId() == $id) {
-                unset($this->duenioList[$index]);
-                break;
-            }
-        }
-
-        $this->SaveData();
-    }
-    /*
-
-/*
-    public function Modify($code, $brand, $model, $price, $id)
-    {
-        $this->RetrieveData();
-
-        foreach ($this->duenioList as $duenio) {
-            if ($duenio->getId() == $id) {
-
-                $duenio->setCode($code);
-                $duenio->setBrand($brand);
-                $duenio->setModel($model);
-                $duenio->setPrice($price);
-            }
-        }
-
-        $this->SaveData();
-    }*/
-
-    private function GetNextId($lista)
-    {
-        $id = 0;
-
-        foreach ($lista as $value) {
-            $id = ($value->getId() > $id) ? $value->getId() : $id;
-        }
-
-        return $id + 1;
-    }
-
 }

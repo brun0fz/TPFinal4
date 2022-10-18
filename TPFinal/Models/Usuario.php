@@ -13,7 +13,7 @@ abstract class Usuario
 
     protected $rutaFoto;
 
-    protected $alta = true;
+    protected $alta = 1;
 
 
     public function __construct($nombre, $apellido, $telefono, $email, $password)

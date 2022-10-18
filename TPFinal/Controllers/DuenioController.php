@@ -32,21 +32,7 @@ class DuenioController
 
     }
 
-    public function ShowMascotaView()
-    {
-        if ($this->validateSession()) {
-            $mascotasList = $_SESSION["loggedUser"]->getListaMascotas();
-
-            require_once(VIEWS_PATH . "list-mascotas.php");
-        }
-    }
-
-    public function ShowAddMascotaView()
-    {
-        if ($this->validateSession()) {
-            require_once(VIEWS_PATH . "addMascota.php");
-        }
-    }
+   
 
     public function ShowListaGuardianesView()
     {
@@ -84,6 +70,8 @@ class DuenioController
 
             $this->duenioDAO->Add($duenio);
 
+            $duenio=$this->duenioDAO->Buscar($duenio->getEmail());
+
             $duenio->setPassword(null);
             $_SESSION["loggedUser"] = $duenio;
 
@@ -95,34 +83,5 @@ class DuenioController
         }
 
     }
-
-    public function AddMascota($nombre, $raza, $tamanio, $observaciones, $rutaFoto)
-    {
-        if ($this->validateSession()) {
-            $listaMascotas = $_SESSION["loggedUser"]->getListaMascotas();
-
-            $newMascota = new Mascota($nombre, $raza, $tamanio, $observaciones);
-
-            $temp = $rutaFoto["tmp_name"];
-            $aux = explode("/", $rutaFoto["type"]);
-            $type = $aux[1];
-
-            $name = $_SESSION["loggedUser"]->getId() . "-" . $nombre . "." . $type;
-
-            move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-
-            chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
-
-            $newMascota->setRutaFoto($name);
-
-            array_push($listaMascotas, $newMascota);
-
-            $this->duenioDAO->AddMascota($_SESSION["loggedUser"], $newMascota);
-
-            $this->ShowDuenioHome();
-        }
-
-    }
-
 
 }

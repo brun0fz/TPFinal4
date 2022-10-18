@@ -1,12 +1,12 @@
 <?php
     namespace DAO;
 
-    use Models\Duenio as Duenio;
     use DAO\Connection as Connection;
+    use Models\Mascota;
 
-    interface IDuenioDAO
+    interface IMascotaDAO
     {
-        function Add(Duenio $duenio);
+        function Add(Mascota $mascota);
         function GetAll();
     }
 ?>
