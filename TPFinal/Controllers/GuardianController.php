@@ -38,13 +38,13 @@ class GuardianController
         }
     }
 
-    public function Add($nombre, $apellido, $telefono, $email, $password, $direccion, $rutaFoto)
+    public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $rutaFoto)
     {
         $duenioDAO = new DuenioDAO();
 
         if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
-            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $direccion);
+            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero);
 
             if ($rutaFoto["tmp_name"] != "") {
                 $temp = $rutaFoto["tmp_name"];
@@ -61,8 +61,9 @@ class GuardianController
                 $guardian->setRutaFoto("undefinedProfile.png");
             }
 
-            $this->guardianDAO->setGuardianList(array());
             $this->guardianDAO->Add($guardian);
+
+            $guardian = $this->guardianDAO->Buscar($guardian->getEmail());
 
             $guardian->setPassword(null);
             $_SESSION["loggedUser"] = $guardian;
@@ -74,6 +75,8 @@ class GuardianController
         }
     }
 
+
+    /*
     public function setDisponibilidad($dias = array())
     {
         if ($this->validateSession()) {
@@ -100,4 +103,6 @@ class GuardianController
             $this->ShowConfiguracionView();
         }
     }
+
+    */
 }

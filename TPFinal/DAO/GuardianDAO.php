@@ -15,7 +15,9 @@ class GuardianDAO implements IGuardianDAO
     public function Add(Guardian $guardian)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta);";
+            echo "holaa en add";
+
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, calle, numero, precioXDia, reputacion) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, :calle, :numero, :precioXDia, :reputacion);";
 
             $parameters["nombre"] = $guardian->getNombre();
             $parameters["apellido"] = $guardian->getApellido();
@@ -24,13 +26,19 @@ class GuardianDAO implements IGuardianDAO
             $parameters["password"] = $guardian->getPassword();
             $parameters["tipo"] = $guardian->getTipo();
             $parameters["rutaFoto"] = $guardian->getRutaFoto();
-            $parameters["direccion"] = $guardian->getDireccion();
+            
             $parameters["alta"] = $guardian->getAlta();
-            $parameters["tamanioMascotaCuidar"] = $guardian->getTamanioMascotaCuidar();
-            $parameters["reputacion"] = $guardian->getReputacion();
-            $parameters["diasOcupados"] = $guardian->getDiasOcupados();
+
+            $parameters["calle"] = $guardian->getCalle();
+            $parameters["numero"] = $guardian->getNumero();
             $parameters["precioXDia"] = $guardian->getPrecioXDia();
+            $parameters["reputacion"] = $guardian->getReputacion();
+
+            /*
+            $parameters["tamanioMascotaCuidar"] = $guardian->getTamanioMascotaCuidar();
+            $parameters["diasOcupados"] = $guardian->getDiasOcupados();
             $parameters["disponibilidad"] = $guardian->getDisponibilidad();
+            */
 
             $this->connection = Connection::GetInstance();
 
@@ -53,7 +61,7 @@ class GuardianDAO implements IGuardianDAO
 
             foreach ($resultSet as $row) {
 
-                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL);
+                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                 $guardian->setId($row["id"]);
                 $guardian->setNombre($row["nombre"]);
@@ -61,15 +69,21 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setTelefono($row["telefono"]);
                 $guardian->setEmail($row["email"]);
                 $guardian->setPassword($row["password"]);
-                $guardian->setDireccion($row["direccion"]);
+                
                 $guardian->setAlta($row["alta"]);
                 $guardian->setTipo($row["tipo"]);
                 $guardian->setRutaFoto($row["rutaFoto"]);
-                $guardian->setTamanioMascotaCuidar($row["tamanioMascotaCuidar"]);
+
+                $guardian->setCalle($row["calle"]);
+                $guardian->setNumero($row["numero"]);
+                $guardian->setPrecioXDia($row["precioXDia"]);
                 $guardian->setReputacion($row["reputacion"]);
+
+                /*
+                $guardian->setTamanioMascotaCuidar($row["tamanioMascotaCuidar"]);
                 $guardian->setDiasOcupados($row["diasOcupados"]);
                 $guardian->setDisponibilidad($row["disponibilidad"]);
-                $guardian->setPrecioXDia($row["precioXDia"]);
+                */
 
                 array_push($guardianesList, $guardian);
             }
@@ -84,7 +98,7 @@ class GuardianDAO implements IGuardianDAO
     public function Buscar($email)
     {
         try {
-            $duenio = NULL;
+            $guardian = null;
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
 
@@ -98,7 +112,7 @@ class GuardianDAO implements IGuardianDAO
 
                 foreach ($resultSet as $row) {
 
-                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL);
+                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                     $guardian->setId($row["id"]);
                     $guardian->setNombre($row["nombre"]);
@@ -106,18 +120,26 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
                     $guardian->setPassword($row["password"]);
-                    $guardian->setDireccion($row["direccion"]);
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
-                    $guardian->setTamanioMascotaCuidar($row["tamanioMascotaCuidar"]);
+
+
+                    $guardian->setCalle($row["calle"]);
+                    $guardian->setNumero($row["numero"]);
+                    $guardian->setPrecioXDia($row["precioXDia"]);
                     $guardian->setReputacion($row["reputacion"]);
+
+                    /*
+                    $guardian->setTamanioMascotaCuidar($row["tamanioMascotaCuidar"]);
                     $guardian->setDiasOcupados($row["diasOcupados"]);
                     $guardian->setDisponibilidad($row["disponibilidad"]);
-                    $guardian->setPrecioXDia($row["precioXDia"]);
+                    */
+                    
                 }
 
                 return $guardian;
+
             } else {
 
                 return null;
