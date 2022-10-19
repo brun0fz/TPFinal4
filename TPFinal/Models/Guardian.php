@@ -7,7 +7,6 @@ class Guardian extends Usuario{
     private $reputacion = NULL;
     private $diasOcupados = array();
     private $disponibilidad = array();
-    private $listaReservas = array();
     private $precioXDia;
 
     public function __construct($nombre, $apellido, $telefono, $email, $password, $direccion)
@@ -119,24 +118,6 @@ class Guardian extends Usuario{
     public function setPrecioXDia($precioXDia): self
     {
         $this->precioXDia = (float)$precioXDia;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of listaReservas
-     */
-    public function getListaReservas()
-    {
-        return $this->listaReservas;
-    }
-
-    /**
-     * Set the value of listaReservas
-     */
-    public function setListaReservas($listaReservas): self
-    {
-        $this->listaReservas = $listaReservas;
 
         return $this;
     }
