@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 18, 2022 at 10:04 AM
+-- Generation Time: Oct 19, 2022 at 08:00 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.6
 
@@ -34,9 +34,9 @@ CREATE TABLE `Duenios` (
   `telefono` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `tipo` int(2) NOT NULL DEFAULT 1,
-  `rutaFoto` varchar(100) NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT 1
+  `tipo` int(11) DEFAULT 1,
+  `rutaFoto` varchar(100) DEFAULT 'undefinedProfile.png',
+  `alta` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -73,7 +73,8 @@ INSERT INTO `Mascotas` (`id`, `animal`, `raza`, `nombre`, `tamanio`, `observacio
 (1, 'Perro', 'Shihtzu', 'Junior', 'S', 'Muy bonito', '1-Junior.jpeg', 1, 1),
 (2, 'Perro', 'Caniche', 'Luna', 'S', 'Tranquila', '1-Luna.jpeg', 1, 1),
 (3, 'Perro', 'Breton', 'Sasha', 'M', 'Dormilona', '8-Sasha.jpeg', 8, 1),
-(4, 'Perro', 'Husky', 'Snow', 'L', 'Tranquilo y bueno', '8-Snow.jpeg', 8, 1);
+(4, 'Perro', 'Husky', 'Snow', 'L', 'Tranquilo y bueno', '8-Snow.jpeg', 8, 1),
+(7, 'Perro', 'Golden', 'Pepito', 'M', 'muy lindo', '1-Pepito.jpeg', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -101,13 +102,13 @@ ALTER TABLE `Mascotas`
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
