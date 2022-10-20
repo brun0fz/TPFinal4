@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com:3306
--- Generation Time: Oct 19, 2022 at 08:27 PM
+-- Generation Time: Oct 20, 2022 at 04:47 AM
 -- Server version: 8.0.22-13
 -- PHP Version: 7.2.34
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `bumivsrscryp1fqpzsmn`
 --
-CREATE DATABASE IF NOT EXISTS `bumivsrscryp1fqpzsmn` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `bumivsrscryp1fqpzsmn`;
 
 -- --------------------------------------------------------
 
@@ -69,15 +67,17 @@ CREATE TABLE `Guardianes` (
   `calle` varchar(100) NOT NULL,
   `numero` varchar(100) NOT NULL,
   `precioXDia` float DEFAULT '0',
-  `reputacion` float DEFAULT '0'
+  `reputacion` float DEFAULT '0',
+  `tamanioMascota` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `disponibilidad` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Guardianes`
 --
 
-INSERT INTO `Guardianes` (`id`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `calle`, `numero`, `precioXDia`, `reputacion`) VALUES
-(1, 'Belen', 'Robledo', '2236658582', 'belen@gmail.com', '123', 2, 'belen@gmail.com.jpeg', 1, 'Luro', '2365', 799, 4.5);
+INSERT INTO `Guardianes` (`id`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `calle`, `numero`, `precioXDia`, `reputacion`, `tamanioMascota`, `disponibilidad`) VALUES
+(1, 'Belen', 'Robledo', '2236658582', 'belen@gmail.com', '123', 2, 'belen@gmail.com.jpeg', 1, 'Luro', '2365', 799, 4.5, 'Pequeño,Mediano', 'Lunes,Miercoles,Viernes');
 
 -- --------------------------------------------------------
 
@@ -93,6 +93,7 @@ CREATE TABLE `Mascotas` (
   `tamanio` varchar(100) NOT NULL,
   `observaciones` varchar(100) NOT NULL,
   `rutaFoto` varchar(100) NOT NULL,
+  `rutaPlanVacunas` varchar(100) NOT NULL,
   `idDuenio` int NOT NULL,
   `alta` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -101,12 +102,13 @@ CREATE TABLE `Mascotas` (
 -- Dumping data for table `Mascotas`
 --
 
-INSERT INTO `Mascotas` (`id`, `animal`, `raza`, `nombre`, `tamanio`, `observaciones`, `rutaFoto`, `idDuenio`, `alta`) VALUES
-(1, 'Perro', 'Shihtzu', 'Junior', 'S', 'Muy bonito', '1-Junior.jpeg', 1, 1),
-(2, 'Perro', 'Caniche', 'Luna', 'S', 'Tranquila', '1-Luna.jpeg', 1, 1),
-(3, 'Perro', 'Breton', 'Sasha', 'M', 'Dormilona', '8-Sasha.jpeg', 8, 1),
-(4, 'Perro', 'Husky', 'Snow', 'L', 'Tranquilo y bueno', '8-Snow.jpeg', 8, 1),
-(7, 'Perro', 'Golden', 'Pepito', 'M', 'muy lindo', '1-Pepito.jpeg', 1, 1);
+INSERT INTO `Mascotas` (`id`, `animal`, `raza`, `nombre`, `tamanio`, `observaciones`, `rutaFoto`, `rutaPlanVacunas`, `idDuenio`, `alta`) VALUES
+(1, 'Perro', 'Shihtzu', 'Junior', 'S', 'Muy bonito', '1-Junior.jpeg', '', 1, 1),
+(2, 'Perro', 'Caniche', 'Luna', 'S', 'Tranquila', '1-Luna.jpeg', '', 1, 1),
+(3, 'Perro', 'Breton', 'Sasha', 'M', 'Dormilona', '8-Sasha.jpeg', '', 8, 1),
+(4, 'Perro', 'Husky', 'Snow', 'L', 'Tranquilo y bueno', '8-Snow.jpeg', '', 8, 1),
+(7, 'Perro', 'Golden', 'Pepito', 'M', 'muy lindo', '1-Pepito.jpeg', '', 1, 1),
+(8, 'Perro', 'Caniche', 'Lolo', 'S', 'Chiquito', '1-Lolo.png', '1-Vacunas.png', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -152,7 +154,7 @@ ALTER TABLE `Guardianes`
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
