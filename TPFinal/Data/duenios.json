@@ -56,5 +56,30 @@
             }
         ],
         "listaReservas": []
+    },
+    {
+        "id": 2,
+        "nombre": "Moni",
+        "apellido": "Argento",
+        "telefono": "223778899",
+        "email": "moni@gmail.com",
+        "password": "123",
+        "tipo": 1,
+        "rutaFoto": "undefinedProfile.png",
+        "alta": true,
+        "listaMascotas": [
+            {
+                "id": 1,
+                "nombre": "Fatiga",
+                "raza": "Perro",
+                "tamanio": "M",
+                "obervaciones": "perezoso",
+                "rutaFoto": "2-Fatiga.jpeg",
+                "rutaVideo": null,
+                "rutaPlanVacunas": null,
+                "alta": true
+            }
+        ],
+        "listaReservas": []
     }
 ]

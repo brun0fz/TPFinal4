@@ -96,5 +96,28 @@
             "Domingos"
         ],
         "listaReservas": []
+    },
+    {
+        "id": 4,
+        "nombre": "Pepe",
+        "apellido": "Argento",
+        "telefono": "223443322",
+        "email": "pepe@gmail.com",
+        "password": "123",
+        "tipo": 2,
+        "rutaFoto": "pepe@gmail.com.jpeg",
+        "direccion": "Luro 700",
+        "alta": true,
+        "tamanioMascotaCuidar": [
+            "M"
+        ],
+        "reputacion": 0,
+        "diasOcupados": [],
+        "precioXDia": 500,
+        "disponibilidad": [
+            "Jueves",
+            "Viernes"
+        ],
+        "listaReservas": []
     }
 ]
