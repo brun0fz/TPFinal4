@@ -76,21 +76,11 @@ class GuardianController
     }
 
 
-    /*
-    public function setDisponibilidad($dias = array())
-    {
-        if ($this->validateSession()) {
-            $_SESSION["loggedUser"]->setDisponibilidad($dias);
-            $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]);
-            $this->ShowConfiguracionView();
-        }
-    }
-
     public function setTamanios($tamanios = array())
     {
         if ($this->validateSession()) {
             $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
-            $this->guardianDAO->UpdateTamanios($tamanios, $_SESSION["loggedUser"]);
+            $this->guardianDAO->UpdateTamanios($tamanios, $_SESSION["loggedUser"]->getId());
             $this->ShowConfiguracionView();
         }
     }
@@ -99,10 +89,19 @@ class GuardianController
     {
         if ($this->validateSession()) {
             $_SESSION["loggedUser"]->setPrecioXDia($precio);
-            $this->guardianDAO->UpdatePrecio($precio, $_SESSION["loggedUser"]);
+            $this->guardianDAO->UpdatePrecio($precio, $_SESSION["loggedUser"]->getId());
             $this->ShowConfiguracionView();
         }
     }
 
-    */
+    public function setDisponibilidad($dias = array())
+    {
+        if ($this->validateSession()) {
+
+            print_r($dias);
+            $_SESSION["loggedUser"]->setDisponibilidad($dias);
+            $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]->getId());
+            $this->ShowConfiguracionView();
+        }
+    }
 }

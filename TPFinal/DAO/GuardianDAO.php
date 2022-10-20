@@ -15,9 +15,8 @@ class GuardianDAO implements IGuardianDAO
     public function Add(Guardian $guardian)
     {
         try {
-            echo "holaa en add";
 
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, calle, numero, precioXDia, reputacion) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, :calle, :numero, :precioXDia, :reputacion);";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, calle, numero, precioXDia, reputacion, tamanioMascota, disponibilidad) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, :calle, :numero, :precioXDia, :reputacion, :tamanioMascota, :disponibilidad);";
 
             $parameters["nombre"] = $guardian->getNombre();
             $parameters["apellido"] = $guardian->getApellido();
@@ -26,7 +25,7 @@ class GuardianDAO implements IGuardianDAO
             $parameters["password"] = $guardian->getPassword();
             $parameters["tipo"] = $guardian->getTipo();
             $parameters["rutaFoto"] = $guardian->getRutaFoto();
-            
+
             $parameters["alta"] = $guardian->getAlta();
 
             $parameters["calle"] = $guardian->getCalle();
@@ -34,10 +33,11 @@ class GuardianDAO implements IGuardianDAO
             $parameters["precioXDia"] = $guardian->getPrecioXDia();
             $parameters["reputacion"] = $guardian->getReputacion();
 
+            $parameters["tamanioMascota"] = implode(",", $guardian->getTamanioMascotaCuidar());
+            $parameters["disponibilidad"] = implode(",", $guardian->getDisponibilidad());
+
             /*
-            $parameters["tamanioMascotaCuidar"] = $guardian->getTamanioMascotaCuidar();
             $parameters["diasOcupados"] = $guardian->getDiasOcupados();
-            $parameters["disponibilidad"] = $guardian->getDisponibilidad();
             */
 
             $this->connection = Connection::GetInstance();
@@ -69,7 +69,7 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setTelefono($row["telefono"]);
                 $guardian->setEmail($row["email"]);
                 $guardian->setPassword($row["password"]);
-                
+
                 $guardian->setAlta($row["alta"]);
                 $guardian->setTipo($row["tipo"]);
                 $guardian->setRutaFoto($row["rutaFoto"]);
@@ -79,10 +79,11 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setPrecioXDia($row["precioXDia"]);
                 $guardian->setReputacion($row["reputacion"]);
 
+                $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
+                $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+
                 /*
-                $guardian->setTamanioMascotaCuidar($row["tamanioMascotaCuidar"]);
                 $guardian->setDiasOcupados($row["diasOcupados"]);
-                $guardian->setDisponibilidad($row["disponibilidad"]);
                 */
 
                 array_push($guardianesList, $guardian);
@@ -130,16 +131,16 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setPrecioXDia($row["precioXDia"]);
                     $guardian->setReputacion($row["reputacion"]);
 
+                    $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
+                    $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+
                     /*
-                    $guardian->setTamanioMascotaCuidar($row["tamanioMascotaCuidar"]);
                     $guardian->setDiasOcupados($row["diasOcupados"]);
-                    $guardian->setDisponibilidad($row["disponibilidad"]);
-                    */
                     
+                    */
                 }
 
                 return $guardian;
-
             } else {
 
                 return null;
@@ -149,37 +150,52 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-
-    /*PASAR A MYSQL*/
-    /*
-    
-     public function UpdateDisponibilidad($dias, $guardian)
+    public function UpdateTamanios($tamanioMascota, $id)
     {
-        $guardian = $this->Buscar($guardian->getEmail());
+        try {
+            $query = "UPDATE " . $this->tableName . " SET tamanioMascota = :tamanioMascota WHERE id = :id;";
 
-        $guardian->setDisponibilidad($dias);
+            $parameters["tamanioMascota"] = implode(",", $tamanioMascota);
+            $parameters["id"] = $id;
 
-        $this->SaveData();
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 
-    public function UpdateTamanios($tamanios, $guardian)
+    public function UpdatePrecio($precioXDia, $id)
     {
-        $guardian = $this->Buscar($guardian->getEmail());
+        try {
+            $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE id = :id;";
 
-        $guardian->setTamanioMascotaCuidar($tamanios);
+            $parameters["precioXDia"] = $precioXDia;
+            $parameters["id"] = $id;
 
-        $this->SaveData();
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 
-    public function UpdatePrecio($precio, $guardian)
+
+    public function UpdateDisponibilidad($disponibilidad, $id)
     {
-        $guardian = $this->Buscar($guardian->getEmail());
+        try {
+            $query = "UPDATE " . $this->tableName . " SET disponibilidad = :disponibilidad WHERE id = :id;";
 
-        $guardian->setPrecioXDia($precio);
+            $parameters["disponibilidad"] = implode(",", $disponibilidad);
+            $parameters["id"] = $id;
 
-        $this->SaveData();
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
-    
-    
-    */
 }
