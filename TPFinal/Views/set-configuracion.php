@@ -27,9 +27,9 @@ include("navBar.php");
             <form class="formcheck" action="<?php echo FRONT_ROOT ?>Guardian/setTamanios" method="Post">
                 <label class="formcheck label" for="checkbox"><h3>Tamaño de Mascotas</h3></label><br>
                 <div class="formcheck form-switch items">
-                    <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="S" <?php if(in_array("S", $tamanioArray)){echo 'checked="checked"';} ?>> Pequeño
-                    <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="M" <?php if(in_array("M", $tamanioArray)){echo 'checked="checked"';} ?>> Mediano
-                    <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="L" <?php if(in_array("L", $tamanioArray)){echo 'checked="checked"';} ?>> Grande
+                    <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Pequeño" <?php if(in_array("Pequeño", $tamanioArray)){echo 'checked="checked"';} ?>> Pequeño
+                    <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Mediano" <?php if(in_array("Mediano", $tamanioArray)){echo 'checked="checked"';} ?>> Mediano
+                    <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Grande" <?php if(in_array("Grande", $tamanioArray)){echo 'checked="checked"';} ?>> Grande
 
                     <input class="btn btn-sm btn-primary ms-3" type="submit" value="Guardar">
                 </div>

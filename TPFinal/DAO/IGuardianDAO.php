@@ -6,6 +6,6 @@ use Models\Guardian;
 
 interface IGuardianDAO
 {
-    function Add(Guardian $usuario);
+    function Add(Guardian $guardian);
     function GetAll();
 }

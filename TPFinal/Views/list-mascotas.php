@@ -3,9 +3,11 @@ include("header.php");
 include("navBar.php");
 ?>
 
+<div class="alert"><center><?php echo $alert ?></center></div>
+
 <div class="container list-mascotas">
     <h2 id="list-title">Mis Mascotas</h2>
-    <a href="<?php echo FRONT_ROOT . "Duenio/ShowAddMascotaView" ?>"><button class="btn btn-primary btn-mascota">Añadir Mascota</button></a><br>
+    <a href="<?php echo FRONT_ROOT . "Mascota/ShowAddMascotaView" ?>"><button class="btn btn-primary btn-mascota">Añadir Mascota</button></a><br>
     <div class="row row-cols-sm-1 row-cols-md-3">
         <?php foreach ($mascotasList as $mascota) { ?>
             <div class="card g-3 m-3 shadow-sm" style="width: 400px">

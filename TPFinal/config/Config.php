@@ -7,6 +7,21 @@ define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "layout/styles/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
+
+//DATABASE LOCAL
+/*
+define("DB_HOST", "localhost");
+define("DB_NAME", "PetHero");
+define("DB_USER", "root");
+define("DB_PASS", "");
+*/
+
+//DATABASE ONLINE
+define("DB_HOST", "bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com");
+define("DB_NAME", "bumivsrscryp1fqpzsmn");
+define("DB_USER", "u1x4he9n7ufecekv");
+define("DB_PASS", "0ILV8Bkh48BjAsMBlf7E");
+
 ?>
 
 

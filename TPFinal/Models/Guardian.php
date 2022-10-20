@@ -2,53 +2,20 @@
 
 class Guardian extends Usuario{
 
-    private $direccion;
+    private $calle;
+    private $numero;
     private $tamanioMascotaCuidar = array();
     private $reputacion = NULL;
     private $diasOcupados = array();
     private $disponibilidad = array();
-    private $listaReservas = array();
     private $precioXDia;
 
-    public function __construct($nombre, $apellido, $telefono, $email, $password, $direccion)
+    public function __construct($nombre, $apellido, $telefono, $email, $password, $calle, $numero)
     {
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
-        $this->direccion = $direccion;
+        $this->calle = $calle;
+        $this->numero = $numero;
         $this->tipo = 2;
-    }
-
-    public function getTamanioDescripcion(){
-        $tamanioDescripcion = '';
-        switch ($this->tamanio) {
-            case "S":
-                $tamanioDescripcion = 'Pequeño';
-                break;
-            case "M":
-                $tamanioDescripcion = 'Mediano';
-                break;
-            case "L":
-                $tamanioDescripcion = 'Grande';
-                break;
-        }
-        return $tamanioDescripcion;
-    }
-
-    /**
-     * Get the value of direccion
-     */
-    public function getDireccion()
-    {
-        return $this->direccion;
-    }
-
-    /**
-     * Set the value of direccion
-     */
-    public function setDireccion($direccion): self
-    {
-        $this->direccion = $direccion;
-
-        return $this;
     }
 
     /**
@@ -124,24 +91,6 @@ class Guardian extends Usuario{
     }
 
     /**
-     * Get the value of listaReservas
-     */
-    public function getListaReservas()
-    {
-        return $this->listaReservas;
-    }
-
-    /**
-     * Set the value of listaReservas
-     */
-    public function setListaReservas($listaReservas): self
-    {
-        $this->listaReservas = $listaReservas;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getDisponibilidad()
@@ -158,4 +107,40 @@ class Guardian extends Usuario{
     }
 
 
+
+    /**
+     * Get the value of numero
+     */
+    public function getNumero()
+    {
+        return $this->numero;
+    }
+
+    /**
+     * Set the value of numero
+     */
+    public function setNumero($numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of calle
+     */
+    public function getCalle()
+    {
+        return $this->calle;
+    }
+
+    /**
+     * Set the value of calle
+     */
+    public function setCalle($calle): self
+    {
+        $this->calle = $calle;
+
+        return $this;
+    }
 }

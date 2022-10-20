@@ -2,230 +2,200 @@
 
 namespace DAO;
 
-use Models\Guardian;
-use Models\Reserva;
+use \Exception as Exception;
+use DAO\IGuardianDAO as IGuardianDAO;
+use Models\Guardian as Guardian;
+use DAO\Connection as Connection;
 
 class GuardianDAO implements IGuardianDAO
 {
-    private $guardianList = array();
-    private $fileName;
-
-    public function __construct()
-    {
-        $this->fileName = ROOT . "Data/guardianes.json";
-    }
+    private $connection;
+    private $tableName = "Guardianes";
 
     public function Add(Guardian $guardian)
     {
-        $this->RetrieveData();
+        try {
 
-        $guardian->setId($this->GetNextId($this->guardianList));
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, calle, numero, precioXDia, reputacion, tamanioMascota, disponibilidad) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, :calle, :numero, :precioXDia, :reputacion, :tamanioMascota, :disponibilidad);";
 
-        array_push($this->guardianList, $guardian);
+            $parameters["nombre"] = $guardian->getNombre();
+            $parameters["apellido"] = $guardian->getApellido();
+            $parameters["telefono"] = $guardian->getTelefono();
+            $parameters["email"] = $guardian->getEmail();
+            $parameters["password"] = $guardian->getPassword();
+            $parameters["tipo"] = $guardian->getTipo();
+            $parameters["rutaFoto"] = $guardian->getRutaFoto();
 
-        $this->SaveData();
+            $parameters["alta"] = $guardian->getAlta();
+
+            $parameters["calle"] = $guardian->getCalle();
+            $parameters["numero"] = $guardian->getNumero();
+            $parameters["precioXDia"] = $guardian->getPrecioXDia();
+            $parameters["reputacion"] = $guardian->getReputacion();
+
+            $parameters["tamanioMascota"] = implode(",", $guardian->getTamanioMascotaCuidar());
+            $parameters["disponibilidad"] = implode(",", $guardian->getDisponibilidad());
+
+            /*
+            $parameters["diasOcupados"] = $guardian->getDiasOcupados();
+            */
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 
     public function GetAll()
     {
-        $this->RetrieveData();
+        try {
+            $guardianesList = array();
 
-        return $this->guardianList;
-    }
+            $query = "SELECT * FROM " . $this->tableName;
 
-    private function SaveData()
-    {
-        $arrayToEncode = array();
+            $this->connection = Connection::GetInstance();
 
-        foreach ($this->guardianList as $guardian) {
+            $resultSet = $this->connection->Execute($query);
 
-            $valuesArray["id"] = $guardian->getId();
-            $valuesArray["nombre"] = $guardian->getNombre();
-            $valuesArray["apellido"] = $guardian->getApellido();
-            $valuesArray["telefono"] = $guardian->getTelefono();
-            $valuesArray["email"] = $guardian->getEmail();
-            $valuesArray["password"] = $guardian->getPassword();
-            $valuesArray["tipo"] = $guardian->getTipo();
-            $valuesArray["rutaFoto"] = $guardian->getRutaFoto();
-            $valuesArray["direccion"] = $guardian->getDireccion();
-            $valuesArray["alta"] = $guardian->getAlta();
-            $valuesArray["tamanioMascotaCuidar"] = $guardian->getTamanioMascotaCuidar();
-            $valuesArray["reputacion"] = $guardian->getReputacion();
-            $valuesArray["diasOcupados"] = $guardian->getDiasOcupados();
-            $valuesArray["precioXDia"] = $guardian->getPrecioXDia();
-            $valuesArray["disponibilidad"] = $guardian->getDisponibilidad();
+            foreach ($resultSet as $row) {
 
-            $arrayReservas = array();
-            foreach ($guardian->getListaReservas() as $reserva) {
-                $valuesArrayReserva = array();
-                array_push($arrayReservas, $valuesArrayReserva);
-            }
+                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-            $valuesArray["listaReservas"] = $arrayReservas;
+                $guardian->setId($row["id"]);
+                $guardian->setNombre($row["nombre"]);
+                $guardian->setApellido($row["apellido"]);
+                $guardian->setTelefono($row["telefono"]);
+                $guardian->setEmail($row["email"]);
+                $guardian->setPassword($row["password"]);
 
-            array_push($arrayToEncode, $valuesArray);
-        }
+                $guardian->setAlta($row["alta"]);
+                $guardian->setTipo($row["tipo"]);
+                $guardian->setRutaFoto($row["rutaFoto"]);
 
-        $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+                $guardian->setCalle($row["calle"]);
+                $guardian->setNumero($row["numero"]);
+                $guardian->setPrecioXDia($row["precioXDia"]);
+                $guardian->setReputacion($row["reputacion"]);
 
-        file_put_contents($this->fileName, $jsonContent);
-    }
-
-    private function RetrieveData()
-    {
-        $this->GuardianList = array();
-
-        if (file_exists($this->fileName)) {
-
-            $jsonContent = file_get_contents($this->fileName);
-
-            $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-            foreach ($arrayToDecode as $valuesArray) {
-
-                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                $guardian->setId($valuesArray["id"]);
-                $guardian->setNombre($valuesArray["nombre"]);
-                $guardian->setApellido($valuesArray["apellido"]);
-                $guardian->setTelefono($valuesArray["telefono"]);
-                $guardian->setEmail($valuesArray["email"]);
-                $guardian->setPassword($valuesArray["password"]);
-                $guardian->setDireccion($valuesArray["direccion"]);
-                $guardian->setAlta($valuesArray["alta"]);
-                $guardian->setTipo($valuesArray["tipo"]);
-                $guardian->setRutaFoto($valuesArray["rutaFoto"]);
-                $guardian->setTamanioMascotaCuidar($valuesArray["tamanioMascotaCuidar"]);
-                $guardian->setReputacion($valuesArray["reputacion"]);
-                $guardian->setDiasOcupados($valuesArray["diasOcupados"]);
-                $guardian->setDisponibilidad($valuesArray["disponibilidad"]);
-                $guardian->setPrecioXDia($valuesArray["precioXDia"]);
-
-                $ArrayReservas = $valuesArray["listaReservas"];
-
-                $listaReservas = array();
+                $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
+                $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
 
                 /*
-                foreach ($ArrayReservas as $valuesArrayReserva) {
+                $guardian->setDiasOcupados($row["diasOcupados"]);
+                */
 
-                    $reserva = new Reserva(NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setId($valuesArrayReserva["id"]);
-                    $reserva->setId($valuesArrayReserva["nombre"]);
-                    $reserva->setId($valuesArrayReserva["raza"]);
-                    $reserva->setId($valuesArrayReserva["obervaciones"]);
-                    $reserva->setId($valuesArrayReserva["rutaFoto"]);
-                    $reserva->setId($valuesArrayReserva["rutaVideo"]);
-                    $reserva->setId($valuesArrayReserva["rutaPlanVacunas"]);
-                    $reserva->setId($valuesArrayReserva["alta"]);
-
-                    array_push($listaReservas, $reserva);
-                }*/
-
-                $guardian->setListaReservas($listaReservas);
-
-                array_push($this->guardianList, $guardian);
+                array_push($guardianesList, $guardian);
             }
+
+            return $guardianesList;
+        } catch (Exception $ex) {
+            throw $ex;
         }
     }
+
 
     public function Buscar($email)
     {
-        $this->RetrieveData();
+        try {
+            $guardian = null;
 
-        foreach ($this->guardianList as $guardian) {
-            if ($guardian->getEmail() == $email) {
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
+
+            $parameters["email"] = $email;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $guardian->setId($row["id"]);
+                    $guardian->setNombre($row["nombre"]);
+                    $guardian->setApellido($row["apellido"]);
+                    $guardian->setTelefono($row["telefono"]);
+                    $guardian->setEmail($row["email"]);
+                    $guardian->setPassword($row["password"]);
+                    $guardian->setAlta($row["alta"]);
+                    $guardian->setTipo($row["tipo"]);
+                    $guardian->setRutaFoto($row["rutaFoto"]);
+
+
+                    $guardian->setCalle($row["calle"]);
+                    $guardian->setNumero($row["numero"]);
+                    $guardian->setPrecioXDia($row["precioXDia"]);
+                    $guardian->setReputacion($row["reputacion"]);
+
+                    $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
+                    $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+
+                    /*
+                    $guardian->setDiasOcupados($row["diasOcupados"]);
+                    
+                    */
+                }
+
                 return $guardian;
+            } else {
+
+                return null;
             }
+        } catch (Exception $ex) {
+            throw $ex;
         }
-
-        return NULL;
     }
 
-    public function UpdateDisponibilidad($dias, $guardian)
+    public function UpdateTamanios($tamanioMascota, $id)
     {
-        $guardian = $this->Buscar($guardian->getEmail());
+        try {
+            $query = "UPDATE " . $this->tableName . " SET tamanioMascota = :tamanioMascota WHERE id = :id;";
 
-        $guardian->setDisponibilidad($dias);
+            $parameters["tamanioMascota"] = implode(",", $tamanioMascota);
+            $parameters["id"] = $id;
 
-        $this->SaveData();
-    }
+            $this->connection = Connection::GetInstance();
 
-    public function UpdateTamanios($tamanios, $guardian)
-    {
-        $guardian = $this->Buscar($guardian->getEmail());
-
-        $guardian->setTamanioMascotaCuidar($tamanios);
-
-        $this->SaveData();
-    }
-
-    public function UpdatePrecio($precio, $guardian)
-    {
-        $guardian = $this->Buscar($guardian->getEmail());
-
-        $guardian->setPrecioXDia($precio);
-
-        $this->SaveData();
-    }
-
-    /*
-    public function Remove($id)
-    {
-        $this->RetrieveData();
-
-        echo "DAO ID=" . $id;
-
-        foreach ($this->GuardianList as $index => $Guardian) {
-            echo "ID CELL=" . $Guardian->getId();
-            if ($Guardian->getId() == $id) {
-                unset($this->GuardianList[$index]);
-                break;
-            }
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
         }
-
-        $this->SaveData();
     }
-    /*
 
-/*
-    public function Modify($code, $brand, $model, $price, $id)
+    public function UpdatePrecio($precioXDia, $id)
     {
-        $this->RetrieveData();
+        try {
+            $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE id = :id;";
 
-        foreach ($this->GuardianList as $Guardian) {
-            if ($Guardian->getId() == $id) {
+            $parameters["precioXDia"] = $precioXDia;
+            $parameters["id"] = $id;
 
-                $Guardian->setCode($code);
-                $Guardian->setBrand($brand);
-                $Guardian->setModel($model);
-                $Guardian->setPrice($price);
-            }
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
         }
-
-        $this->SaveData();
-    }*/
-
-
-    private function GetNextId($lista)
-    {
-        $id = 0;
-
-        foreach ($lista as $value) {
-            $id = ($value->getId() > $id) ? $value->getId() : $id;
-        }
-
-        return $id + 1;
     }
 
 
-    /**
-     * Set the value of guardianList
-     */
-    public function setGuardianList($guardianList): self
+    public function UpdateDisponibilidad($disponibilidad, $id)
     {
-        $this->guardianList = $guardianList;
+        try {
+            $query = "UPDATE " . $this->tableName . " SET disponibilidad = :disponibilidad WHERE id = :id;";
 
-        return $this;
+            $parameters["disponibilidad"] = implode(",", $disponibilidad);
+            $parameters["id"] = $id;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
     }
 }

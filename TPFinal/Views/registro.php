@@ -33,8 +33,12 @@ include('header.php');
                 </div>
                 <?php if ($type == 2) { ?>
                     <div class="form-floating">
-                        <input type="text" name="direccion" class="form-control" id="floatingPassword" placeholder="direccion" required>
-                        <label for="floatingPassword">Direccion</label>
+                        <input type="text" name="calle" class="form-control" id="floatingPassword" placeholder="calle" required>
+                        <label for="floatingPassword">Calle</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" name="numero" class="form-control" id="floatingPassword" placeholder="numero" required>
+                        <label for="floatingPassword">Numero</label>
                     </div>
                  <?php } ?>
                 <div class="form-floating">
