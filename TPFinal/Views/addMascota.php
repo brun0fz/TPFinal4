@@ -36,6 +36,10 @@ include("navBar.php");
                 <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" required>
                 <label for="floatingInput">Foto</label>
             </div>
+            <div class="form-floating" imgInput>
+                <input type="file" name="rutaPlanVacunas" class="form-control form-control-sm" id="floatingInput" placeholder="Plan de Vacunas" accept=".png, .jpg, .jpeg" required>
+                <label for="floatingInput">Plan de Vacunas</label>
+            </div>
             <br>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Añadir</button>
         </form>

@@ -43,12 +43,13 @@ class MascotaController
         }
     }
 
-    public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto)
+    public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas)
     {
         if ($this->validateSession()) {
 
             try {
 
+                ///Foto
                 $temp = $rutaFoto["tmp_name"];
                 $aux = explode("/", $rutaFoto["type"]);
                 $type = $aux[1];
@@ -59,11 +60,25 @@ class MascotaController
 
                 chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
-                $newMascota = new Mascota($animal, $raza, $nombre, $tamanio, $observaciones, $name, $_SESSION["loggedUser"]->getId());
+
+                ///Plan de vacunas
+                $temp2 = $rutaPlanVacunas["tmp_name"];
+                $aux2 = explode("/", $rutaPlanVacunas["type"]);
+                $type2 = $aux2[1];
+
+                $namePlanVacunas = $_SESSION["loggedUser"]->getId() . "-" . "Vacunas" . "." . $type2;
+
+                move_uploaded_file($temp2, ROOT . VIEWS_PATH . "/img/" . $namePlanVacunas);
+
+                chmod(ROOT . VIEWS_PATH . "/img/" . $namePlanVacunas, 0777);
+
+
+                $newMascota = new Mascota($animal, $raza, $nombre, $tamanio, $observaciones, $name, $namePlanVacunas, $_SESSION["loggedUser"]->getId());
 
                 $this->mascotaDAO->Add($newMascota);
 
                 $alert = "Mascota agregada con exito";
+
             } catch (Exception $ex) {
                 $alert = $ex->getMessage();
             } finally {

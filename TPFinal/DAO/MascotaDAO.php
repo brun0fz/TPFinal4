@@ -15,7 +15,7 @@ class MascotaDAO implements IMascotaDAO
     public function Add(Mascota $mascota)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (animal, raza, nombre, tamanio, observaciones, rutaFoto, idDuenio, alta) VALUES (:animal, :raza, :nombre, :tamanio, :observaciones, :rutaFoto, :idDuenio, :alta);";
+            $query = "INSERT INTO " . $this->tableName . " (animal, raza, nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, idDuenio, alta) VALUES (:animal, :raza, :nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :idDuenio, :alta);";
 
             $parameters["animal"] = $mascota->getAnimal();
             $parameters["raza"] = $mascota->getRaza();
@@ -23,6 +23,7 @@ class MascotaDAO implements IMascotaDAO
             $parameters["tamanio"] = $mascota->getTamanio();
             $parameters["observaciones"] = $mascota->getObservaciones();
             $parameters["rutaFoto"] = $mascota->getRutaFoto();
+            $parameters["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
             $parameters["idDuenio"] = $mascota->getIdDuenio();
             $parameters["alta"] = $mascota->getAlta();
 
@@ -48,7 +49,7 @@ class MascotaDAO implements IMascotaDAO
 
             foreach ($resultSet as $row) {
 
-                $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                 $mascota->setId($row["id"]);
                 $mascota->setAnimal($row["animal"]);
@@ -57,6 +58,7 @@ class MascotaDAO implements IMascotaDAO
                 $mascota->setTamanio($row["tamanio"]);
                 $mascota->setObservaciones($row["observaciones"]);
                 $mascota->setRutaFoto($row["rutaFoto"]);
+                $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
                 $mascota->setIdDuenio($row["idDuenio"]);
                 $mascota->setAlta($row["alta"]);
 
@@ -87,7 +89,7 @@ class MascotaDAO implements IMascotaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                    $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                     $mascota->setId($row["id"]);
                     $mascota->setAnimal($row["animal"]);
@@ -96,6 +98,7 @@ class MascotaDAO implements IMascotaDAO
                     $mascota->setTamanio($row["tamanio"]);
                     $mascota->setObservaciones($row["observaciones"]);
                     $mascota->setRutaFoto($row["rutaFoto"]);
+                    $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
                     $mascota->setIdDuenio($row["idDuenio"]);
                     $mascota->setAlta($row["alta"]);
 

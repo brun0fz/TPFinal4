@@ -40,6 +40,7 @@ class GuardianController
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $rutaFoto)
     {
+
         $duenioDAO = new DuenioDAO();
 
         if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
