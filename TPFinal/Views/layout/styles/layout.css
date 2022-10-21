@@ -64,6 +64,12 @@ main {
   height: 100px;
 }
 
+.add-reserva {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+
 .list-guardianes {
   padding: 10px;
 }
