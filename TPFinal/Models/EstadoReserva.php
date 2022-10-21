@@ -1,7 +1,7 @@
 <?php namespace Models;
 
 enum EstadoReserva : string{
-    case PENDIENTE = "Pendiente";
+    case SOLICITADA = "Solicitada";
     case CONFIRMADA = "Confirmada";
     case RECHAZADA = "Rechazada";
     case EN_CURSO = "En curso";

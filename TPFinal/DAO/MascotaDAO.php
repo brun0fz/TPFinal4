@@ -15,7 +15,7 @@ class MascotaDAO implements IMascotaDAO
     public function Add(Mascota $mascota)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (animal, raza, nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, idDuenio, alta) VALUES (:animal, :raza, :nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :idDuenio, :alta);";
+            $query = "INSERT INTO " . $this->tableName . " (animal, raza, nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, fk_idDuenio, alta) VALUES (:animal, :raza, :nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :fk_idDuenio, :alta);";
 
             $parameters["animal"] = $mascota->getAnimal();
             $parameters["raza"] = $mascota->getRaza();
@@ -24,7 +24,7 @@ class MascotaDAO implements IMascotaDAO
             $parameters["observaciones"] = $mascota->getObservaciones();
             $parameters["rutaFoto"] = $mascota->getRutaFoto();
             $parameters["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
-            $parameters["idDuenio"] = $mascota->getIdDuenio();
+            $parameters["fk_idDuenio"] = $mascota->getIdDuenio();
             $parameters["alta"] = $mascota->getAlta();
 
 
@@ -39,7 +39,7 @@ class MascotaDAO implements IMascotaDAO
     public function GetAll()
     {
         try {
-            $duenioList = array();
+            $mascotasList = array();
 
             $query = "SELECT * FROM " . $this->tableName;
 
@@ -51,7 +51,7 @@ class MascotaDAO implements IMascotaDAO
 
                 $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-                $mascota->setId($row["id"]);
+                $mascota->setId($row["idMascota"]);
                 $mascota->setAnimal($row["animal"]);
                 $mascota->setRaza($row["raza"]);
                 $mascota->setNombre($row["nombre"]);
@@ -59,7 +59,7 @@ class MascotaDAO implements IMascotaDAO
                 $mascota->setObservaciones($row["observaciones"]);
                 $mascota->setRutaFoto($row["rutaFoto"]);
                 $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
-                $mascota->setIdDuenio($row["idDuenio"]);
+                $mascota->setIdDuenio($row["fk_idDuenio"]);
                 $mascota->setAlta($row["alta"]);
 
                 array_push($mascotasList, $mascota);
@@ -77,9 +77,9 @@ class MascotaDAO implements IMascotaDAO
         try {
             $mascotasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (idDuenio = :idDuenio)";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio)";
 
-            $parameters["idDuenio"] = $idDuenio;
+            $parameters["fk_idDuenio"] = $idDuenio;
 
             $this->connection = Connection::GetInstance();
 
@@ -91,7 +91,7 @@ class MascotaDAO implements IMascotaDAO
 
                     $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-                    $mascota->setId($row["id"]);
+                    $mascota->setId($row["idMascota"]);
                     $mascota->setAnimal($row["animal"]);
                     $mascota->setRaza($row["raza"]);
                     $mascota->setNombre($row["nombre"]);
@@ -99,7 +99,7 @@ class MascotaDAO implements IMascotaDAO
                     $mascota->setObservaciones($row["observaciones"]);
                     $mascota->setRutaFoto($row["rutaFoto"]);
                     $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
-                    $mascota->setIdDuenio($row["idDuenio"]);
+                    $mascota->setIdDuenio($row["fk_idDuenio"]);
                     $mascota->setAlta($row["alta"]);
 
 

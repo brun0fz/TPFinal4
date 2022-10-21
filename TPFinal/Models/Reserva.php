@@ -1,117 +1,135 @@
-<?php namespace Models;
+<?php
+
+namespace Models;
 
 use clases\Guardian as Guardian;
 
-class Reserva{
+class Reserva
+{
+    private $idReserva;
+    private $fk_idGuardian;
+    private $fk_idMascota;
 
-    protected  static $idInc=0;
+    private $fechaInicio;
+    private $fechaFin;
+    private $precioTotal;
 
-    private $id;
-    private $idGuardian;
-    private $idDuenio;
-    private $idMascota;
+    private $estado = EstadoReserva::SOLICITADA;
 
-    private $fechaInicial;
-    private $cantidadDias;
-
-    private $estado = EstadoReserva::PENDIENTE;
-
-    public function __construct($idGuardian, $idDuenio, $idMascota, $fechaInicial, $cantidadDias)
+    public function __construct($fk_idGuardian, $fk_idMascota, $fechaInicio, $fechaFin, $precioTotal)
     {
-        $this->idGuardian = $idGuardian;
-        $this->idDuenio = $idDuenio;
-        $this->idMascota = $idMascota;
-        $this->fechaInicial = $fechaInicial;
-        $this->cantidadDias = $cantidadDias;
+        $this->fk_idGuardian = $fk_idGuardian;
+        $this->fk_idMascota = $fk_idMascota;
+        $this->fechaInicio = $fechaInicio;
+        $this->fechaFin = $fechaFin;
+        $this->precioTotal = $precioTotal;
     }
-    
+
 
     /**
-     * Get the value of idGuardian
+     * Get the value of idReserva
      */
-    public function getIdGuardian()
+    public function getIdReserva()
     {
-        return $this->idGuardian;
+        return $this->idReserva;
     }
 
     /**
-     * Set the value of idGuardian
+     * Set the value of idReserva
      */
-    public function setIdGuardian($idGuardian): self
+    public function setIdReserva($idReserva): self
     {
-        $this->idGuardian = $idGuardian;
+        $this->idReserva = $idReserva;
 
         return $this;
     }
 
     /**
-     * Get the value of idDuenio
+     * Get the value of fk_idGuardian
      */
-    public function getIdDuenio()
+    public function getFkIdGuardian()
     {
-        return $this->idDuenio;
+        return $this->fk_idGuardian;
     }
 
     /**
-     * Set the value of idDuenio
+     * Set the value of fk_idGuardian
      */
-    public function setIdDuenio($idDuenio): self
+    public function setFkIdGuardian($fk_idGuardian): self
     {
-        $this->idDuenio = $idDuenio;
+        $this->fk_idGuardian = $fk_idGuardian;
 
         return $this;
     }
 
     /**
-     * Get the value of idMascota
+     * Get the value of fk_idMascota
      */
-    public function getIdMascota()
+    public function getFkIdMascota()
     {
-        return $this->idMascota;
+        return $this->fk_idMascota;
     }
 
     /**
-     * Set the value of idMascota
+     * Set the value of fk_idMascota
      */
-    public function setIdMascota($idMascota): self
+    public function setFkIdMascota($fk_idMascota): self
     {
-        $this->idMascota = $idMascota;
+        $this->fk_idMascota = $fk_idMascota;
 
         return $this;
     }
 
     /**
-     * Get the value of fechaInicial
+     * Get the value of fechaInicio
      */
-    public function getFechaInicial()
+    public function getFechaInicio()
     {
-        return $this->fechaInicial;
+        return $this->fechaInicio;
     }
 
     /**
-     * Set the value of fechaInicial
+     * Set the value of fechaInicio
      */
-    public function setFechaInicial($fechaInicial): self
+    public function setFechaInicio($fechaInicio): self
     {
-        $this->fechaInicial = $fechaInicial;
+        $this->fechaInicio = $fechaInicio;
 
         return $this;
     }
 
     /**
-     * Get the value of cantidadDias
+     * Get the value of fechaFin
      */
-    public function getCantidadDias()
+    public function getFechaFin()
     {
-        return $this->cantidadDias;
+        return $this->fechaFin;
     }
 
     /**
-     * Set the value of cantidadDias
+     * Set the value of fechaFin
      */
-    public function setCantidadDias($cantidadDias): self
+    public function setFechaFin($fechaFin): self
     {
-        $this->cantidadDias = $cantidadDias;
+        $this->fechaFin = $fechaFin;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of precioTotal
+     */
+    public function getPrecioTotal()
+    {
+        return $this->precioTotal;
+    }
+
+    /**
+     * Set the value of precioTotal
+     */
+    public function setPrecioTotal($precioTotal): self
+    {
+        $this->precioTotal = $precioTotal;
 
         return $this;
     }
@@ -130,24 +148,6 @@ class Reserva{
     public function setEstado($estado): self
     {
         $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     */
-    public function setId($id): self
-    {
-        $this->id = $id;
 
         return $this;
     }

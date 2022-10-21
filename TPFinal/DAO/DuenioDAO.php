@@ -50,7 +50,7 @@ class DuenioDAO implements IDuenioDAO
 
                 $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
 
-                $duenio->setId($row["id"]);
+                $duenio->setId($row["idDuenio"]);
                 $duenio->setNombre($row["nombre"]);
                 $duenio->setApellido($row["apellido"]);
                 $duenio->setTelefono($row["telefono"]);
@@ -89,7 +89,7 @@ class DuenioDAO implements IDuenioDAO
 
                     $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
 
-                    $duenio->setId($row["id"]);
+                    $duenio->setId($row["idDuenio"]);
                     $duenio->setNombre($row["nombre"]);
                     $duenio->setApellido($row["apellido"]);
                     $duenio->setTelefono($row["telefono"]);
