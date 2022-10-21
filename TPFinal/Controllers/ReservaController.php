@@ -17,11 +17,10 @@ class ReservaController
         $this->guardianDAO = new GuardianDAO();
     }
 
-    public function ShowAddReservaView($idGuardian)
+    public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin)
     {
-        $guardian = $this->guardianDAO->Buscar($idGuardian);
+        $guardian = $this->guardianDAO->BuscarId($idGuardian);
         $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-
         require_once(VIEWS_PATH . "add-reserva.php");
     }
 
