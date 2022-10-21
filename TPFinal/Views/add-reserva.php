@@ -9,7 +9,7 @@ include("navBar.php");
         <form class="form-center" action="<?php echo FRONT_ROOT . "Reserva/Add" ?>" method="Post">
             <h3>Nueva Reserva</h3><br>
             <div class="form-floating">
-                <input type="text" name="fechaInicio" class="form-control" id="floatingInput" placeholder="Fecha de Entrada" required readonly>
+                <input type="text" name="fechaInicio" value="<?php echo $fechaInicio ?>" class="form-control" id="floatingInput" placeholder="Fecha de Entrada" required readonly>
                 <label for="floatingInput">Fecha de Entrada</label>
             </div>
             <div class="form-floating">
