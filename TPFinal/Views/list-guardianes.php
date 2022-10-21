@@ -3,15 +3,6 @@ include("header.php");
 include("navBar.php");
 ?>
 
-
-<div>
-    <form action="<?php echo FRONT_ROOT ?>Duenio/FiltrarGuardianes" method="Post">
-        <input type="date" name="fechaInicio" id="">
-        <input type="date" name="fechaFin" id="">
-        <input type="submit" value="Enviar">
-    </form>
-</div>
-
 <div class="container">
     <div class="list-guardianes">
         <h2 id="list-title">Guardianes</h2><br>
@@ -56,7 +47,12 @@ include("navBar.php");
                                                                                 echo "Sin definir.";
                                                                             } ?></b></p>
                                 <div class="text-end">
-                                    <a href="<?php echo FRONT_ROOT ?>Reserva/ShowAddReservaView/<?php echo $guardian->getId(); ?>"><button type="button" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Reservar</button></a>
+                                    <form action="">
+                                        <input type="hidden" name="idGuardian" value="<?php echo $fechaInicio ?>">
+                                        <input type="hidden" name="fechaInicio" value="<?php echo $fechaFin ?>">
+                                        <input type="hidden" name="fechaFin" value="<?php echo $guardian->getId() ?>">
+                                        <button type="submit" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Reservar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
