@@ -19,9 +19,8 @@ class ReservaController
 
     public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin)
     {
-        $guardian = $this->guardianDAO->Buscar($idGuardian);
+        $guardian = $this->guardianDAO->BuscarId($idGuardian);
         $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-
         require_once(VIEWS_PATH . "add-reserva.php");
     }
 

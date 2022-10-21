@@ -32,7 +32,7 @@ class DuenioController
 
 
 
-    public function ShowListaGuardianesView($listaGuardianes = null)
+    public function ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianes = null)
     {
         if ($this->validateSession()) {
 
@@ -42,6 +42,13 @@ class DuenioController
             }
 
             require_once(VIEWS_PATH . "list-guardianes.php");
+        }
+    }
+
+    public function ShowSelectFechasReserva()
+    {
+        if ($this->validateSession()) {
+            require_once(VIEWS_PATH . "select-fechas-reserva.php");
         }
     }
 
@@ -117,7 +124,9 @@ class DuenioController
             }
         }
 
-        $this->ShowListaGuardianesView($listaGuardianesDisponibles);
+        echo $fechaFin;
+
+        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianesDisponibles);
     }
 
 

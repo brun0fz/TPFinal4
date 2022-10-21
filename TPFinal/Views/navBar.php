@@ -6,7 +6,7 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowDuenioHome"; ?>" class="nav-link px-2 link-secondary">Home</a></li>
                 <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
-                    <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowListaGuardianesView"; ?>" class="nav-link px-2 link-dark">Guardianes</a></li>
+                    <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva"; ?>" class="nav-link px-2 link-dark">Guardianes</a></li>
                     <li><a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaView"; ?>" class="nav-link px-2 link-dark">Mascotas</a></li>
                 <?php } else { ?>
                     <li><a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView"; ?>" class="nav-link px-2 link-dark">Configuración</a></li>

@@ -21,7 +21,7 @@ include('navBar.php');
             </div>
             <h3 class="fs-2">Guardianes</h3>
             <p>Visualiza el listado de guardianes, filtralos por ubicacion, reputacion y disponibilidad, busca un guardian para realizar una reserva.</p>
-            <a href="<?php echo FRONT_ROOT . "Duenio/ShowListaGuardianesView" ?>">Ver listado de Guardianes</a>
+            <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>">Ver listado de Guardianes</a>
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
