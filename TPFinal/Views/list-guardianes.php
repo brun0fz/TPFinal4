@@ -56,7 +56,14 @@ include("navBar.php");
                                                                                 echo "Sin definir.";
                                                                             } ?></b></p>
                                 <div class="text-end">
-                                    <a href="<?php echo FRONT_ROOT ?>Reserva/ShowAddReservaView/<?php echo $guardian->getId(); ?>"><button type="button" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Reservar</button></a>
+                                <form action="<?php echo FRONT_ROOT ?>Reserva/ShowAddReservaView">
+
+                                <input type="hidden" name="idGuardian" value="<?php echo $guardian->getId(); ?>">
+                                <input type="hidden" name="fechaInicio " value="">
+                                <input type="hidden" name="fechaFin" value="">
+
+                                <button type="submit" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Reservar</button>
+                                </form>
                                 </div>
                             </div>
                         </div>

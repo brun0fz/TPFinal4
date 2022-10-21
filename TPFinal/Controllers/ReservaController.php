@@ -17,7 +17,7 @@ class ReservaController
         $this->guardianDAO = new GuardianDAO();
     }
 
-    public function ShowAddReservaView($idGuardian)
+    public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin)
     {
         $guardian = $this->guardianDAO->Buscar($idGuardian);
         $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
