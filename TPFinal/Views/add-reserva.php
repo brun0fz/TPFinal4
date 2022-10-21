@@ -7,7 +7,7 @@ include("navBar.php");
 
 <div class="container-fluid">
     <main class="add-reserva w-100 m-auto text-center">
-        <form class="form-center" action="<?php echo FRONT_ROOT . "Reserva/Add" ?>" method="Post">
+        <form class="form-center" action="<?php echo     . "Reserva/Add" ?>" method="Post">
 
             <h3>Nueva Reserva</h3><br>
             <div class="form-floating">
