@@ -32,11 +32,14 @@ class DuenioController
 
 
 
-    public function ShowListaGuardianesView()
+    public function ShowListaGuardianesView($listaGuardianes = null)
     {
         if ($this->validateSession()) {
-            $guardianDAO = new GuardianDAO();
-            $listaGuardianes = $guardianDAO->GetAll();
+
+            if (!isset($listaGuardianes)) {
+                $guardianDAO = new GuardianDAO();
+                $listaGuardianes = $guardianDAO->GetAll();
+            }
 
             require_once(VIEWS_PATH . "list-guardianes.php");
         }
@@ -77,5 +80,74 @@ class DuenioController
             $type = 1;
             require_once(VIEWS_PATH . "registro.php");
         }
+    }
+
+
+    public function FiltrarGuardianes($fechaInicio, $fechaFin)
+    {
+        $guardianDAO = new GuardianDAO();
+        $listaGuardianes = $guardianDAO->GetAll();
+
+        $timeInicio = strtotime($fechaInicio);
+
+        while ($timeInicio <= strtotime($fechaFin)) {
+
+            $dias[] = $this->traducirDias(date("l", $timeInicio));
+
+            $timeInicio += 86400;
+        }
+
+        $listaGuardianesDisponibles = array();
+
+
+        foreach ($listaGuardianes as $guardian) {
+
+            $disponibilidad = $guardian->getDisponibilidad();
+
+            $flag = 1;
+
+            foreach ($dias as $dia) {
+                if (!in_array($dia, $disponibilidad)) {
+                    $flag = 0;
+                }
+            }
+
+            if ($flag) {
+                array_push($listaGuardianesDisponibles, $guardian);
+            }
+        }
+
+        $this->ShowListaGuardianesView($listaGuardianesDisponibles);
+    }
+
+
+    private function traducirDias($diaSemana)
+    {
+
+        switch ($diaSemana) {
+            case "Monday":
+                $diaSemana = "Lunes";
+                break;
+            case "Tuesday":
+                $diaSemana = "Martes";
+                break;
+            case "Wednesday":
+                $diaSemana = "Miercoles";
+                break;
+            case "Thursday":
+                $diaSemana = "Jueves";
+                break;
+            case "Friday":
+                $diaSemana = "Viernes";
+                break;
+            case "Saturday":
+                $diaSemana = "Sabado";
+                break;
+            case "Sunday":
+                $diaSemana = "Domingo";
+                break;
+        }
+
+        return $diaSemana;
     }
 }

@@ -63,7 +63,7 @@ class GuardianDAO implements IGuardianDAO
 
                 $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-                $guardian->setId($row["id"]);
+                $guardian->setId($row["idGuardian"]);
                 $guardian->setNombre($row["nombre"]);
                 $guardian->setApellido($row["apellido"]);
                 $guardian->setTelefono($row["telefono"]);
@@ -115,7 +115,7 @@ class GuardianDAO implements IGuardianDAO
 
                     $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-                    $guardian->setId($row["id"]);
+                    $guardian->setId($row["idGuardian"]);
                     $guardian->setNombre($row["nombre"]);
                     $guardian->setApellido($row["apellido"]);
                     $guardian->setTelefono($row["telefono"]);
@@ -150,13 +150,13 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function UpdateTamanios($tamanioMascota, $id)
+    public function UpdateTamanios($tamanioMascota, $idGuardian)
     {
         try {
-            $query = "UPDATE " . $this->tableName . " SET tamanioMascota = :tamanioMascota WHERE id = :id;";
+            $query = "UPDATE " . $this->tableName . " SET tamanioMascota = :tamanioMascota WHERE idGuardian = :idGuardian;";
 
             $parameters["tamanioMascota"] = implode(",", $tamanioMascota);
-            $parameters["id"] = $id;
+            $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
 
@@ -166,13 +166,13 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function UpdatePrecio($precioXDia, $id)
+    public function UpdatePrecio($precioXDia, $idGuardian)
     {
         try {
-            $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE id = :id;";
+            $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE idGuardian = :idGuardian;";
 
             $parameters["precioXDia"] = $precioXDia;
-            $parameters["id"] = $id;
+            $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
 
@@ -183,13 +183,13 @@ class GuardianDAO implements IGuardianDAO
     }
 
 
-    public function UpdateDisponibilidad($disponibilidad, $id)
+    public function UpdateDisponibilidad($disponibilidad, $idGuardian)
     {
         try {
-            $query = "UPDATE " . $this->tableName . " SET disponibilidad = :disponibilidad WHERE id = :id;";
+            $query = "UPDATE " . $this->tableName . " SET disponibilidad = :disponibilidad WHERE idGuardian = :idGuardian;";
 
             $parameters["disponibilidad"] = implode(",", $disponibilidad);
-            $parameters["id"] = $id;
+            $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
 

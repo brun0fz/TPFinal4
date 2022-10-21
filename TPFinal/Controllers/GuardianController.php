@@ -98,8 +98,6 @@ class GuardianController
     public function setDisponibilidad($dias = array())
     {
         if ($this->validateSession()) {
-
-            print_r($dias);
             $_SESSION["loggedUser"]->setDisponibilidad($dias);
             $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]->getId());
             $this->ShowConfiguracionView();
