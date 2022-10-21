@@ -34,14 +34,14 @@ include("navBar.php");
                                                                                                                             }
                                                                                                                             if (($guardian->getReputacion() - (int)$guardian->getReputacion()) >= 0.5) {
                                                                                                                                 ?><img src="<?php echo IMG_PATH . "pawHalf.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
-                                                                                                                                                                                                                                    $n++;
-                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                if ($i <= 5) {
-                                                                                                                                                                                                                                    for ($i = $n + 1; $i <= 5; $i++) {
-                                                                                                                                                                                                                                    ?><img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
-                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                    ?>
+                                                                                                                                                                                                                                $n++;
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                            if ($i <= 5) {
+                                                                                                                                                                                                                                for ($i = $n + 1; $i <= 5; $i++) {
+                                                                                                                                                                                                                                ?><img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
+                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                ?>
                                 <br><br>
                                 <p class="card-text">Precio por día: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
                                 <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero(); ?></b></p>
@@ -56,7 +56,7 @@ include("navBar.php");
                                                                                 echo "Sin definir.";
                                                                             } ?></b></p>
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Ver</button>
+                                    <a href="<?php echo FRONT_ROOT ?>Reserva/ShowAddReservaView/<?php echo $guardian->getId(); ?>"><button type="button" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Reservar</button></a>
                                 </div>
                             </div>
                         </div>

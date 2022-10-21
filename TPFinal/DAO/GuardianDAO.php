@@ -150,6 +150,60 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
+    public function BuscarId($idGuardian)
+    {
+        try {
+            $guardian = null;
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (idGuardian = :idGuardian)";
+
+            $parameters["idGuardian"] = $idGuardian;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $guardian->setId($row["idGuardian"]);
+                    $guardian->setNombre($row["nombre"]);
+                    $guardian->setApellido($row["apellido"]);
+                    $guardian->setTelefono($row["telefono"]);
+                    $guardian->setEmail($row["email"]);
+                    $guardian->setPassword($row["password"]);
+                    $guardian->setAlta($row["alta"]);
+                    $guardian->setTipo($row["tipo"]);
+                    $guardian->setRutaFoto($row["rutaFoto"]);
+
+
+                    $guardian->setCalle($row["calle"]);
+                    $guardian->setNumero($row["numero"]);
+                    $guardian->setPrecioXDia($row["precioXDia"]);
+                    $guardian->setReputacion($row["reputacion"]);
+
+                    $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
+                    $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+
+                    /*
+                    $guardian->setDiasOcupados($row["diasOcupados"]);
+                    
+                    */
+                }
+
+                return $guardian;
+            } else {
+
+                return null;
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
     public function UpdateTamanios($tamanioMascota, $idGuardian)
     {
         try {
