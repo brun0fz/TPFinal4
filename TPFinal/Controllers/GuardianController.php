@@ -38,14 +38,14 @@ class GuardianController
         }
     }
 
-    public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $rutaFoto)
+    public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso="", $departamento="", $codigoPostal="", $rutaFoto="")
     {
 
         $duenioDAO = new DuenioDAO();
 
         if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
-            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero);
+            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso, $departamento, $codigoPostal);
 
             if ($rutaFoto["tmp_name"] != "") {
                 $temp = $rutaFoto["tmp_name"];

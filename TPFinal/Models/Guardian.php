@@ -4,17 +4,23 @@ class Guardian extends Usuario{
 
     private $calle;
     private $numero;
+    private $piso;
+    private $departamento;
+    private $codigoPostal;
     private $tamanioMascotaCuidar = array();
     private $reputacion = NULL;
     private $diasOcupados = array();
     private $disponibilidad = array();
     private $precioXDia;
 
-    public function __construct($nombre, $apellido, $telefono, $email, $password, $calle, $numero)
+    public function __construct($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso, $departamento, $codigoPostal)
     {
         parent::__construct($nombre, $apellido, $telefono, $email, $password);
         $this->calle = $calle;
         $this->numero = $numero;
+        $this->piso = $piso;
+        $this->departamento = $departamento;
+        $this->codigoPostal = $codigoPostal;
         $this->tipo = 2;
     }
 
@@ -140,6 +146,60 @@ class Guardian extends Usuario{
     public function setCalle($calle): self
     {
         $this->calle = $calle;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of piso
+     */
+    public function getPiso()
+    {
+        return $this->piso;
+    }
+
+    /**
+     * Set the value of piso
+     */
+    public function setPiso($piso): self
+    {
+        $this->piso = $piso;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of departamento
+     */
+    public function getDepartamento()
+    {
+        return $this->departamento;
+    }
+
+    /**
+     * Set the value of departamento
+     */
+    public function setDepartamento($departamento): self
+    {
+        $this->departamento = $departamento;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of codigoPostal
+     */
+    public function getCodigoPostal()
+    {
+        return $this->codigoPostal;
+    }
+
+    /**
+     * Set the value of codigoPostal
+     */
+    public function setCodigoPostal($codigoPostal): self
+    {
+        $this->codigoPostal = $codigoPostal;
 
         return $this;
     }

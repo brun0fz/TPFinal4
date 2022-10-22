@@ -3,7 +3,6 @@
 namespace DAO;
 
 use \Exception as Exception;
-use Models\Duenio as Duenio;
 use DAO\Connection as Connection;
 use Models\Mascota;
 
@@ -15,10 +14,22 @@ class MascotaDAO implements IMascotaDAO
     public function Add(Mascota $mascota)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (animal, raza, nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, fk_idDuenio, alta) VALUES (:animal, :raza, :nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :fk_idDuenio, :alta);";
+
+            $parameters = array();
+
+            $query = "INSERT INTO Animales (animal, raza) VALUES (:animal, :raza);";
 
             $parameters["animal"] = $mascota->getAnimal();
             $parameters["raza"] = $mascota->getRaza();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+
+            $parameters = array();
+
+            $query = "INSERT INTO " . $this->tableName . " (nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, fk_idDuenio, fk_idAnimal, alta) VALUES (:nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :fk_idDuenio, LAST_INSERT_ID(), :alta);";
+
             $parameters["nombre"] = $mascota->getNombre();
             $parameters["tamanio"] = $mascota->getTamanio();
             $parameters["observaciones"] = $mascota->getObservaciones();
@@ -27,10 +38,10 @@ class MascotaDAO implements IMascotaDAO
             $parameters["fk_idDuenio"] = $mascota->getIdDuenio();
             $parameters["alta"] = $mascota->getAlta();
 
-
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
+            
         } catch (Exception $ex) {
             throw $ex;
         }
@@ -41,7 +52,7 @@ class MascotaDAO implements IMascotaDAO
         try {
             $mascotasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName;
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Animales ON Mascotas.fk_idAnimal = Animales.idAnimal";
 
             $this->connection = Connection::GetInstance();
 
@@ -77,7 +88,7 @@ class MascotaDAO implements IMascotaDAO
         try {
             $mascotasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio)";
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Animales ON Mascotas.fk_idAnimal = Animales.idAnimal WHERE fk_idDuenio = :fk_idDuenio";
 
             $parameters["fk_idDuenio"] = $idDuenio;
 

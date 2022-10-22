@@ -32,7 +32,7 @@ class DuenioController
 
 
 
-    public function ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianes = null)
+    public function ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianesasd = null)
     {
         if ($this->validateSession()) {
 
