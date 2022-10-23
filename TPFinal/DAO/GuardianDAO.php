@@ -125,11 +125,16 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setDepartamento($row["departamento"]);
                 $guardian->setCodigoPostal($row["codigoPostal"]);
 
+                $TamanioMascota = array();
+
                 $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
                 $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
                 $TamanioMascota[] = $row["grande"] ? "Grande" : null;
 
                 $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+
+                $disponibilidad = array();
 
                 $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
                 $disponibilidad[] = $row["martes"] ? "Martes" : null;
@@ -193,11 +198,15 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setDepartamento($row["departamento"]);
                     $guardian->setCodigoPostal($row["codigoPostal"]);
 
+                    $TamanioMascota = array();
+
                     $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
                     $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
                     $TamanioMascota[] = $row["grande"] ? "Grande" : null;
 
                     $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                    $disponibilidad = array();
 
                     $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
                     $disponibilidad[] = $row["martes"] ? "Martes" : null;
@@ -264,11 +273,15 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setDepartamento($row["departamento"]);
                     $guardian->setCodigoPostal($row["codigoPostal"]);
 
+                    $TamanioMascota = array();
+
                     $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
                     $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
                     $TamanioMascota[] = $row["grande"] ? "Grande" : null;
 
                     $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                    $disponibilidad = array();
 
                     $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
                     $disponibilidad[] = $row["martes"] ? "Martes" : null;

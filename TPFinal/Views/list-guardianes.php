@@ -7,7 +7,7 @@ include("navBar.php");
     <div class="list-guardianes">
         <h2 id="list-title">Guardianes</h2><br>
         <?php foreach ($listaGuardianes as $guardian) {
-            if (/*$guardian->getDisponibilidad() &&*/$guardian->getPrecioXDia() != 0) { ?>
+            if ($guardian->getDisponibilidad() && $guardian->getPrecioXDia() != 0) { ?>
                 <!--Solo muestra guardianes con Disponibilidad y PrecioxDia seteados-->
                 <div class="card mb-3 shadow-sm">
                     <div class="row g-0">
@@ -36,16 +36,8 @@ include("navBar.php");
                                 <br><br>
                                 <p class="card-text">Precio por día: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
                                 <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero() . " " . $guardian->getPiso() . " " . $guardian->getDepartamento() ?></b></p>
-                                <p class="card-text">Disponibilidad: <b><?php if ($guardian->getDisponibilidad()) {
-                                                                            echo implode(", ", $guardian->getDisponibilidad());
-                                                                        } else {
-                                                                            echo "Sin definir.";
-                                                                        } ?></b></p>
-                                <p class="card-text">Tamaño de Mascota: <b><?php if ($guardian->getTamanioMascotaCuidar()) {
-                                                                                echo implode(", ", $guardian->getTamanioMascotaCuidar());
-                                                                            } else {
-                                                                                echo "Sin definir.";
-                                                                            } ?></b></p>
+                                <p class="card-text">Disponibilidad: <b><?php echo implode(" ", $guardian->getDisponibilidad()) ?></b></p>
+                                <p class="card-text">Tamaño de Mascota: <b><?php echo implode(" ", $guardian->getTamanioMascotaCuidar()) ?></b></p>
                                 <div class="text-end">
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/ShowAddReservaView" method="Post">
                                         <input type="hidden" name="idGuardian" value="<?php echo $guardian->getId(); ?>">

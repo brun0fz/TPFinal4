@@ -2,7 +2,6 @@
 include("header.php");
 include("navBar.php");
 
-function isnull($array) {foreach ($array as $value) {if ($value != null) {return false;} return true;}}
 ?>
 
 <div class="container px-4 py-5" id="featured-3">
@@ -25,7 +24,7 @@ function isnull($array) {foreach ($array as $value) {if ($value != null) {return
             <a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView" ?>">Establecer configuración</a>
         </div>
     </div>
-    <?php if (isnull($_SESSION["loggedUser"]->getDisponibilidad()) || !$_SESSION["loggedUser"]->getDisponibilidad() || isnull($_SESSION["loggedUser"]->getTamanioMascotaCuidar()) || !$_SESSION["loggedUser"]->getTamanioMascotaCuidar() || !$_SESSION["loggedUser"]->getPrecioXDia()) { ?>
+    <?php if (!$_SESSION["loggedUser"]->getDisponibilidad() || !$_SESSION["loggedUser"]->getTamanioMascotaCuidar() || !$_SESSION["loggedUser"]->getPrecioXDia()) { ?>
         <div class="col-sm-12 col-md-7 text-danger m-4 p-2 border border-danger rounded bg-danger bg-opacity-10">
             <span class="mx-4"><b>(!)</b> Recuerda completar tus opciones de configuración para poder comenzar a recibir reservas.</span>
         </div>
