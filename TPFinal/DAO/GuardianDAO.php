@@ -124,26 +124,27 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setPiso($row["piso"]);
                 $guardian->setDepartamento($row["departamento"]);
                 $guardian->setCodigoPostal($row["codigoPostal"]);
+                /*$TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
+                $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
+                $TamanioMascota[] = $row["grande"] ? "Grande" : null;*/
 
                 $TamanioMascota = array();
 
-                $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
-                $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
-                $TamanioMascota[] = $row["grande"] ? "Grande" : null;
+                if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                if ($row["mediana"]) $TamanioMascota[] = "Mediano";
+                if ($row["grande"]) $TamanioMascota[] = "Grande";
 
                 $guardian->setTamanioMascotaCuidar($TamanioMascota);
 
-
                 $disponibilidad = array();
 
-                $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
-                $disponibilidad[] = $row["martes"] ? "Martes" : null;
-                $disponibilidad[] = $row["miercoles"] ? "Miercoles" : null;
-                $disponibilidad[] = $row["jueves"] ? "Jueves" : null;
-                $disponibilidad[] = $row["viernes"] ? "Viernes" : null;
-                $disponibilidad[] = $row["sabado"] ? "Sabado" : null;
-                $disponibilidad[] = $row["domingo"] ? "Domingo" : null;
-
+                if ($row["lunes"]) $disponibilidad[] = "Lunes";
+                if ($row["martes"]) $disponibilidad[] = "Martes";
+                if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
+                if ($row["jueves"]) $disponibilidad[] = "Jueves";
+                if ($row["viernes"]) $disponibilidad[] = "Viernes";
+                if ($row["sabado"]) $disponibilidad[] = "Sabado";
+                if ($row["domingo"]) $disponibilidad[] = "Domingo";
 
                 $guardian->setDisponibilidad($disponibilidad);
 
@@ -200,22 +201,21 @@ class GuardianDAO implements IGuardianDAO
 
                     $TamanioMascota = array();
 
-                    $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
-                    $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
-                    $TamanioMascota[] = $row["grande"] ? "Grande" : null;
+                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                    if ($row["mediana"]) $TamanioMascota[] = "Mediano";
+                    if ($row["grande"]) $TamanioMascota[] = "Grande";
 
                     $guardian->setTamanioMascotaCuidar($TamanioMascota);
 
                     $disponibilidad = array();
 
-                    $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
-                    $disponibilidad[] = $row["martes"] ? "Martes" : null;
-                    $disponibilidad[] = $row["miercoles"] ? "Miercoles" : null;
-                    $disponibilidad[] = $row["jueves"] ? "Jueves" : null;
-                    $disponibilidad[] = $row["viernes"] ? "Viernes" : null;
-                    $disponibilidad[] = $row["sabado"] ? "Sabado" : null;
-                    $disponibilidad[] = $row["domingo"] ? "Domingo" : null;
-
+                    if ($row["lunes"]) $disponibilidad[] = "Lunes";
+                    if ($row["martes"]) $disponibilidad[] = "Martes";
+                    if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
+                    if ($row["jueves"]) $disponibilidad[] = "Jueves";
+                    if ($row["viernes"]) $disponibilidad[] = "Viernes";
+                    if ($row["sabado"]) $disponibilidad[] = "Sabado";
+                    if ($row["domingo"]) $disponibilidad[] = "Domingo";
 
                     $guardian->setDisponibilidad($disponibilidad);
 
@@ -275,21 +275,21 @@ class GuardianDAO implements IGuardianDAO
 
                     $TamanioMascota = array();
 
-                    $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
-                    $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
-                    $TamanioMascota[] = $row["grande"] ? "Grande" : null;
+                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                    if ($row["mediana"]) $TamanioMascota[] = "Mediano";
+                    if ($row["grande"]) $TamanioMascota[] = "Grande";
 
                     $guardian->setTamanioMascotaCuidar($TamanioMascota);
 
                     $disponibilidad = array();
 
-                    $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
-                    $disponibilidad[] = $row["martes"] ? "Martes" : null;
-                    $disponibilidad[] = $row["miercoles"] ? "Miercoles" : null;
-                    $disponibilidad[] = $row["jueves"] ? "Jueves" : null;
-                    $disponibilidad[] = $row["viernes"] ? "Viernes" : null;
-                    $disponibilidad[] = $row["sabado"] ? "Sabado" : null;
-                    $disponibilidad[] = $row["domingo"] ? "Domingo" : null;
+                    if ($row["lunes"]) $disponibilidad[] = "Lunes";
+                    if ($row["martes"]) $disponibilidad[] = "Martes";
+                    if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
+                    if ($row["jueves"]) $disponibilidad[] = "Jueves";
+                    if ($row["viernes"]) $disponibilidad[] = "Viernes";
+                    if ($row["sabado"]) $disponibilidad[] = "Sabado";
+                    if ($row["domingo"]) $disponibilidad[] = "Domingo";
 
                     $guardian->setDisponibilidad($disponibilidad);
 

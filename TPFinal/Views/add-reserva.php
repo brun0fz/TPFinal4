@@ -19,7 +19,7 @@ include("navBar.php");
                 <label for="floatingInput">Fecha de Salida</label>
             </div>
             <div class="form-floating">
-                <input type="text" name="guardianName" value="<?php echo $guardian->getName() . $guardian->getApellido() ?>" class="form-control" id="floatingInput" placeholder="Guardian" required readonly>
+                <input type="text" name="guardianName" value="<?php echo $guardian->getNombre() . " " . $guardian->getApellido() ?>" class="form-control" id="floatingInput" placeholder="Guardian" required readonly>
                 <label for="floatingInput">Guardian</label>
             </div>
 
@@ -28,13 +28,13 @@ include("navBar.php");
                 <label for="floatingInput">Precio Total</label>
             </div>
             <div class="form-floating">
-                <input type="text" name="tamanio" value="<?php echo $guardian->getDisponibilidad() ?>" class="form-control" id="floatingInput" placeholder="Tamaño de Mascota" required readonly>
+                <input type="text" name="tamanio" value="<?php echo implode(" ", $guardian->getTamanioMascotaCuidar()) ?>" class="form-control" id="floatingInput" placeholder="Tamaño de Mascota" required readonly>
                 <label for="floatingInput">Tamaño de Mascota</label>
             </div>
             <div class="form-floating">
                 <select class="form-select form-select-sm" name="idMascota" required>
                     <?php foreach ($mascotaList as $mascota) { ?>
-                        <option value="<?php echo $mascota->getId() ?>"> <?php echo $mascota->getName() ?> </option>
+                        <option value="<?php echo $mascota->getId() ?>"> <?php echo $mascota->getNombre() ?> </option>
                     <?php } ?>
                 </select>
                 <label for="floatingInput">Mascota</label>
