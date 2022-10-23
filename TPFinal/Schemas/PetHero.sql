@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 22, 2022 at 07:29 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.1.6
+-- Host: bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com:3306
+-- Generation Time: Oct 23, 2022 at 02:33 AM
+-- Server version: 8.0.22-13
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,8 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `PetHero`
+-- Database: `bumivsrscryp1fqpzsmn`
 --
+CREATE DATABASE IF NOT EXISTS `bumivsrscryp1fqpzsmn` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `bumivsrscryp1fqpzsmn`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +31,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Animales` (
-  `idAnimal` int(11) NOT NULL,
+  `idAnimal` int NOT NULL,
   `animal` varchar(100) NOT NULL,
   `raza` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -48,7 +51,7 @@ INSERT INTO `Animales` (`idAnimal`, `animal`, `raza`) VALUES
 --
 
 CREATE TABLE `Direcciones` (
-  `idDireccion` int(11) NOT NULL,
+  `idDireccion` int NOT NULL,
   `calle` varchar(100) NOT NULL,
   `numero` varchar(100) DEFAULT NULL,
   `piso` varchar(100) DEFAULT NULL,
@@ -71,14 +74,14 @@ INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamen
 --
 
 CREATE TABLE `Disponibilidades` (
-  `idDisponibilidad` int(11) NOT NULL,
-  `lunes` tinyint(1) DEFAULT 0,
-  `martes` tinyint(1) DEFAULT 0,
-  `miercoles` tinyint(1) DEFAULT 0,
-  `jueves` tinyint(1) DEFAULT 0,
-  `viernes` tinyint(1) DEFAULT 0,
-  `sabado` tinyint(1) DEFAULT 0,
-  `domingo` tinyint(1) DEFAULT 0
+  `idDisponibilidad` int NOT NULL,
+  `lunes` tinyint(1) DEFAULT '0',
+  `martes` tinyint(1) DEFAULT '0',
+  `miercoles` tinyint(1) DEFAULT '0',
+  `jueves` tinyint(1) DEFAULT '0',
+  `viernes` tinyint(1) DEFAULT '0',
+  `sabado` tinyint(1) DEFAULT '0',
+  `domingo` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -86,8 +89,8 @@ CREATE TABLE `Disponibilidades` (
 --
 
 INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `domingo`) VALUES
-(1, 0, 0, 0, 0, 0, 0, 0),
-(2, 0, 0, 0, 0, 0, 0, 0);
+(1, 0, 0, 0, 0, 1, 1, 1),
+(2, 1, 1, 1, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -96,15 +99,15 @@ INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercole
 --
 
 CREATE TABLE `Duenios` (
-  `idDuenio` int(11) NOT NULL,
+  `idDuenio` int NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `telefono` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `tipo` tinyint(4) NOT NULL DEFAULT 1,
+  `tipo` tinyint NOT NULL DEFAULT '1',
   `rutaFoto` varchar(100) NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT 1
+  `alta` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -121,29 +124,29 @@ INSERT INTO `Duenios` (`idDuenio`, `nombre`, `apellido`, `telefono`, `email`, `p
 --
 
 CREATE TABLE `Guardianes` (
-  `idGuardian` int(11) NOT NULL,
+  `idGuardian` int NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `telefono` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `tipo` tinyint(4) NOT NULL DEFAULT 2,
+  `tipo` tinyint NOT NULL DEFAULT '2',
   `rutaFoto` varchar(100) NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT 1,
-  `reputacion` float DEFAULT 0,
-  `precioXDia` float DEFAULT 0,
-  `fk_idDireccion` int(11) DEFAULT NULL,
-  `fk_idDisponibilidad` int(11) DEFAULT NULL,
-  `fk_tamanioMascota` int(11) DEFAULT NULL
+  `alta` tinyint(1) NOT NULL DEFAULT '1',
+  `reputacion` float DEFAULT '0',
+  `precioXDia` float DEFAULT '0',
+  `fk_idDireccion` int DEFAULT NULL,
+  `fk_idDisponibilidad` int DEFAULT NULL,
+  `fk_idTamanioMascota` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Guardianes`
 --
 
-INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_tamanioMascota`) VALUES
+INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
 (3, 'Belen', 'Robledo', '2235589863', 'belen@gmail.com', '123', 2, 'belen@gmail.com.jpeg', 1, 0, 899, 3, 1, 2),
-(4, 'Clara', 'Videla', '2235452536', 'clara@gmail.com', '123', 2, 'clara@gmail.com.jpeg', 1, 0, 799, 4, 2, 3);
+(4, 'Clara', 'Videla', '2235452536', 'clara@gmail.com', '123', 2, 'clara@gmail.com.jpeg', 1, 0, 899, 4, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -152,16 +155,16 @@ INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email
 --
 
 CREATE TABLE `Mascotas` (
-  `idMascota` int(11) NOT NULL,
+  `idMascota` int NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `tamanio` varchar(100) NOT NULL,
   `observaciones` varchar(100) NOT NULL,
   `rutaFoto` varchar(100) NOT NULL,
   `rutaPlanVacunas` varchar(100) NOT NULL,
   `rutaVideo` varchar(100) DEFAULT 'undefinedVideo',
-  `fk_idDuenio` int(11) NOT NULL,
-  `fk_idAnimal` int(11) NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT 1
+  `fk_idDuenio` int NOT NULL,
+  `fk_idAnimal` int NOT NULL,
+  `alta` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -179,13 +182,13 @@ INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `ruta
 --
 
 CREATE TABLE `Reservas` (
-  `idReserva` int(11) NOT NULL,
+  `idReserva` int NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
   `precioTotal` float NOT NULL,
-  `fk_idMascota` int(11) NOT NULL,
-  `fk_idDuenio` int(11) NOT NULL,
-  `fk_idGuardian` int(11) NOT NULL
+  `fk_idMascota` int NOT NULL,
+  `fk_idDuenio` int NOT NULL,
+  `fk_idGuardian` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -195,10 +198,10 @@ CREATE TABLE `Reservas` (
 --
 
 CREATE TABLE `TamaniosMascota` (
-  `idTamanioMascota` int(11) NOT NULL,
-  `pequenia` tinyint(1) DEFAULT 0,
-  `mediana` tinyint(1) DEFAULT 0,
-  `grande` tinyint(1) DEFAULT 0
+  `idTamanioMascota` int NOT NULL,
+  `pequenia` tinyint(1) DEFAULT '0',
+  `mediana` tinyint(1) DEFAULT '0',
+  `grande` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -206,8 +209,8 @@ CREATE TABLE `TamaniosMascota` (
 --
 
 INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grande`) VALUES
-(2, 0, 0, 0),
-(3, 0, 0, 0);
+(2, 1, 0, 1),
+(3, 1, 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -244,7 +247,7 @@ ALTER TABLE `Guardianes`
   ADD PRIMARY KEY (`idGuardian`),
   ADD KEY `fk_id_disponibilidad` (`fk_idDisponibilidad`),
   ADD KEY `fk_id_direccion` (`fk_idDireccion`),
-  ADD KEY `fk_id_tamanioMascota` (`fk_tamanioMascota`);
+  ADD KEY `fk_id_tamanioMascota` (`fk_idTamanioMascota`);
 
 --
 -- Indexes for table `Mascotas`
@@ -277,49 +280,49 @@ ALTER TABLE `TamaniosMascota`
 -- AUTO_INCREMENT for table `Animales`
 --
 ALTER TABLE `Animales`
-  MODIFY `idAnimal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idAnimal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
 --
 ALTER TABLE `Direcciones`
-  MODIFY `idDireccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idDireccion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `Disponibilidades`
 --
 ALTER TABLE `Disponibilidades`
-  MODIFY `idDisponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idDisponibilidad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idDuenio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  MODIFY `idGuardian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idGuardian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `idMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
-  MODIFY `idTamanioMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTamanioMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -331,7 +334,7 @@ ALTER TABLE `TamaniosMascota`
 ALTER TABLE `Guardianes`
   ADD CONSTRAINT `fk_id_direccion` FOREIGN KEY (`fk_idDireccion`) REFERENCES `Direcciones` (`idDireccion`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_id_disponibilidad` FOREIGN KEY (`fk_idDisponibilidad`) REFERENCES `Disponibilidades` (`idDisponibilidad`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_id_tamanioMascota` FOREIGN KEY (`fk_tamanioMascota`) REFERENCES `TamaniosMascota` (`idTamanioMascota`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_tamanioMascota` FOREIGN KEY (`fk_idTamanioMascota`) REFERENCES `TamaniosMascota` (`idTamanioMascota`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Mascotas`
