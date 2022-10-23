@@ -55,6 +55,7 @@ class ReservaDAO implements IReservaDAO
                 $reserva->setFechaInicio($row["fechaInicio"]);
                 $reserva->setFechaFin($row["fechaFin"]);
                 $reserva->setPrecioTotal($row["precioTotal"]);
+                $reserva->setEstado($row["estado"]);
 
                 array_push($reservasList, $reserva);
             }
@@ -92,6 +93,7 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setFechaInicio($row["fechaInicio"]);
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
 
                     array_push($reservasList, $reserva);
                 }
@@ -134,6 +136,7 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setFechaInicio($row["fechaInicio"]);
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
 
                     array_push($reservasList, $reserva);
                 }

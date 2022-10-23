@@ -13,7 +13,10 @@ include("navBar.php");
                 <label for="floatingInput">Nombre</label>
             </div>
             <div class="form-floating">
-                <input type="text" name="animal" class="form-control" id="floatingInput" placeholder="animal" required>
+                <select class="form-select form-select-sm" name="animal" required>
+                    <option value="Perro">Perro</option>
+                    <option value="Gato">Gato</option>
+                </select>
                 <label for="floatingInput">Animal</label>
             </div>
             <div class="form-floating">
