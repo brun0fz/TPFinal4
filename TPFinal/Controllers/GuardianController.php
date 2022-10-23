@@ -38,7 +38,7 @@ class GuardianController
         }
     }
 
-    public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso="", $departamento="", $codigoPostal="", $rutaFoto="")
+    public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso = "", $departamento = "", $codigoPostal = "", $rutaFoto = "")
     {
 
         $duenioDAO = new DuenioDAO();
@@ -81,7 +81,9 @@ class GuardianController
     {
         if ($this->validateSession()) {
             $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
-            $this->guardianDAO->UpdateTamanios($tamanios, $_SESSION["loggedUser"]->getId());
+
+            $this->guardianDAO->UpdateTamanios($_SESSION["loggedUser"]->getId(), $tamanios);
+
             $this->ShowConfiguracionView();
         }
     }
@@ -90,7 +92,7 @@ class GuardianController
     {
         if ($this->validateSession()) {
             $_SESSION["loggedUser"]->setPrecioXDia($precio);
-            $this->guardianDAO->UpdatePrecio($precio, $_SESSION["loggedUser"]->getId());
+            $this->guardianDAO->UpdatePrecio($_SESSION["loggedUser"]->getId(), $precio);
             $this->ShowConfiguracionView();
         }
     }
@@ -99,7 +101,7 @@ class GuardianController
     {
         if ($this->validateSession()) {
             $_SESSION["loggedUser"]->setDisponibilidad($dias);
-            $this->guardianDAO->UpdateDisponibilidad($dias, $_SESSION["loggedUser"]->getId());
+            $this->guardianDAO->UpdateDisponibilidad($_SESSION["loggedUser"]->getId(), $dias);
             $this->ShowConfiguracionView();
         }
     }

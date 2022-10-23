@@ -59,7 +59,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "UPDATE Guardianes SET fk_tamanioMascota = LAST_INSERT_ID() WHERE email = :email";
+            $query = "UPDATE Guardianes SET fk_idTamanioMascota = LAST_INSERT_ID() WHERE email = :email";
 
             $parameters["email"] = $guardian->getEmail();
 
@@ -97,7 +97,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardianesList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion";
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad;";
 
             $this->connection = Connection::GetInstance();
 
@@ -125,10 +125,22 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setDepartamento($row["departamento"]);
                 $guardian->setCodigoPostal($row["codigoPostal"]);
 
+                $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
+                $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
+                $TamanioMascota[] = $row["grande"] ? "Grande" : null;
+
+                $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
+                $disponibilidad[] = $row["martes"] ? "Martes" : null;
+                $disponibilidad[] = $row["miercoles"] ? "Miercoles" : null;
+                $disponibilidad[] = $row["jueves"] ? "Jueves" : null;
+                $disponibilidad[] = $row["viernes"] ? "Viernes" : null;
+                $disponibilidad[] = $row["sabado"] ? "Sabado" : null;
+                $disponibilidad[] = $row["domingo"] ? "Domingo" : null;
 
 
-                /*$guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
-                $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));*/
+                $guardian->setDisponibilidad($disponibilidad);
 
                 /*
                 $guardian->setDiasOcupados($row["diasOcupados"]);
@@ -149,7 +161,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion WHERE (email = :email)";
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
 
             $parameters["email"] = $email;
 
@@ -181,8 +193,23 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setDepartamento($row["departamento"]);
                     $guardian->setCodigoPostal($row["codigoPostal"]);
 
-                    //$guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
-                    // $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+                    $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
+                    $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
+                    $TamanioMascota[] = $row["grande"] ? "Grande" : null;
+
+                    $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                    $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
+                    $disponibilidad[] = $row["martes"] ? "Martes" : null;
+                    $disponibilidad[] = $row["miercoles"] ? "Miercoles" : null;
+                    $disponibilidad[] = $row["jueves"] ? "Jueves" : null;
+                    $disponibilidad[] = $row["viernes"] ? "Viernes" : null;
+                    $disponibilidad[] = $row["sabado"] ? "Sabado" : null;
+                    $disponibilidad[] = $row["domingo"] ? "Domingo" : null;
+
+
+                    $guardian->setDisponibilidad($disponibilidad);
+
 
                     /*
                     $guardian->setDiasOcupados($row["diasOcupados"]);
@@ -205,7 +232,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion WHERE (idGuardian = :idGuardian)";
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (idGuardian = :idGuardian)";
 
             $parameters["idGuardian"] = $idGuardian;
 
@@ -237,8 +264,21 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setDepartamento($row["departamento"]);
                     $guardian->setCodigoPostal($row["codigoPostal"]);
 
-                    //$guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
-                    //$guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+                    $TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
+                    $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
+                    $TamanioMascota[] = $row["grande"] ? "Grande" : null;
+
+                    $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                    $disponibilidad[] = $row["lunes"] ? "Lunes" : null;
+                    $disponibilidad[] = $row["martes"] ? "Martes" : null;
+                    $disponibilidad[] = $row["miercoles"] ? "Miercoles" : null;
+                    $disponibilidad[] = $row["jueves"] ? "Jueves" : null;
+                    $disponibilidad[] = $row["viernes"] ? "Viernes" : null;
+                    $disponibilidad[] = $row["sabado"] ? "Sabado" : null;
+                    $disponibilidad[] = $row["domingo"] ? "Domingo" : null;
+
+                    $guardian->setDisponibilidad($disponibilidad);
 
                     /*
                     $guardian->setDiasOcupados($row["diasOcupados"]);
@@ -256,12 +296,19 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function UpdateTamanios($tamanioMascota, $idGuardian)
+    public function UpdateDisponibilidad($idGuardian, $disponibilidad)
     {
         try {
-            $query = "UPDATE " . $this->tableName . " SET tamanioMascota = :tamanioMascota WHERE idGuardian = :idGuardian;";
+            $query = "UPDATE Disponibilidades INNER JOIN Guardianes ON Disponibilidades.idDisponibilidad = Guardianes.fk_idDisponibilidad SET lunes = :lunes, martes = :martes, miercoles = :miercoles, jueves = :jueves, viernes = :viernes, sabado = :sabado, domingo = :domingo WHERE idGuardian = :idGuardian;";
 
-            $parameters["tamanioMascota"] = implode(",", $tamanioMascota);
+            $parameters["lunes"] = in_array("Lunes", $disponibilidad) ? 1 : 0;
+            $parameters["martes"] = in_array("Martes", $disponibilidad) ? 1 : 0;
+            $parameters["miercoles"] = in_array("Miercoles", $disponibilidad) ? 1 : 0;
+            $parameters["jueves"] = in_array("Jueves", $disponibilidad) ? 1 : 0;
+            $parameters["viernes"] = in_array("Viernes", $disponibilidad) ? 1 : 0;
+            $parameters["sabado"] = in_array("Sabado", $disponibilidad) ? 1 : 0;
+            $parameters["domingo"] = in_array("Domingo", $disponibilidad) ? 1 : 0;
+
             $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
@@ -272,29 +319,31 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function UpdatePrecio($precioXDia, $idGuardian)
+    public function UpdateTamanios($idGuardian, $tamanios)
+    {
+        try {
+            $query = "UPDATE TamaniosMascota INNER JOIN Guardianes ON TamaniosMascota.idTamanioMascota = Guardianes.fk_idTamanioMascota SET pequenia = :pequenia, mediana = :mediana, grande = :grande WHERE idGuardian = :idGuardian;";
+
+            $parameters["pequenia"] = in_array("Pequeño", $tamanios) ? 1 : 0;
+            $parameters["mediana"] = in_array("Mediano", $tamanios) ? 1 : 0;
+            $parameters["grande"] = in_array("Grande", $tamanios) ? 1 : 0;
+
+            $parameters["idGuardian"] = $idGuardian;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function UpdatePrecio($idGuardian, $precioXDia)
     {
         try {
             $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE idGuardian = :idGuardian;";
 
             $parameters["precioXDia"] = $precioXDia;
-            $parameters["idGuardian"] = $idGuardian;
-
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-
-
-    public function UpdateDisponibilidad($disponibilidad, $idGuardian)
-    {
-        try {
-            $query = "UPDATE " . $this->tableName . " SET disponibilidad = :disponibilidad WHERE idGuardian = :idGuardian;";
-
-            $parameters["disponibilidad"] = implode(",", $disponibilidad);
             $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
