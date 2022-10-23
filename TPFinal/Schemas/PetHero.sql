@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com:3306
--- Generation Time: Oct 23, 2022 at 02:33 AM
+-- Generation Time: Oct 23, 2022 at 05:59 AM
 -- Server version: 8.0.22-13
 -- PHP Version: 7.2.34
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `bumivsrscryp1fqpzsmn`
 --
-CREATE DATABASE IF NOT EXISTS `bumivsrscryp1fqpzsmn` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `bumivsrscryp1fqpzsmn`;
 
 -- --------------------------------------------------------
 
@@ -64,8 +62,8 @@ CREATE TABLE `Direcciones` (
 --
 
 INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamento`, `codigoPostal`) VALUES
-(3, 'Luro', '2365', '7', 'C', '7600'),
-(4, 'Funes', '3652', '', '', '7600');
+(5, 'Luro', '2365', '2', 'C', '7600'),
+(6, 'Funes', '1254', '4', 'D', '7600');
 
 -- --------------------------------------------------------
 
@@ -89,8 +87,8 @@ CREATE TABLE `Disponibilidades` (
 --
 
 INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `domingo`) VALUES
-(1, 0, 0, 0, 0, 1, 1, 1),
-(2, 1, 1, 1, 1, 1, 0, 0);
+(3, 1, 1, 1, 1, 1, 0, 0),
+(4, 0, 0, 0, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -145,8 +143,8 @@ CREATE TABLE `Guardianes` (
 --
 
 INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
-(3, 'Belen', 'Robledo', '2235589863', 'belen@gmail.com', '123', 2, 'belen@gmail.com.jpeg', 1, 0, 899, 3, 1, 2),
-(4, 'Clara', 'Videla', '2235452536', 'clara@gmail.com', '123', 2, 'clara@gmail.com.jpeg', 1, 0, 899, 4, 2, 3);
+(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', '123', 2, 'belen@gmail.com.jpeg', 1, 0, 499, 5, 3, 4),
+(6, 'Clara', 'Videla', '2234587452', 'clara@gmail.com', '123', 2, 'clara@gmail.com.jpeg', 1, 0, 899, 6, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -186,10 +184,18 @@ CREATE TABLE `Reservas` (
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
   `precioTotal` float NOT NULL,
+  `estado` varchar(100) NOT NULL DEFAULT 'Solicitada',
   `fk_idMascota` int NOT NULL,
   `fk_idDuenio` int NOT NULL,
   `fk_idGuardian` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Reservas`
+--
+
+INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
+(3, '2022-10-24', '2022-10-28', 2495, 'Solicitada', 4, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -209,8 +215,8 @@ CREATE TABLE `TamaniosMascota` (
 --
 
 INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grande`) VALUES
-(2, 1, 0, 1),
-(3, 1, 1, 0);
+(4, 1, 0, 0),
+(5, 0, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -286,13 +292,13 @@ ALTER TABLE `Animales`
 -- AUTO_INCREMENT for table `Direcciones`
 --
 ALTER TABLE `Direcciones`
-  MODIFY `idDireccion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idDireccion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `Disponibilidades`
 --
 ALTER TABLE `Disponibilidades`
-  MODIFY `idDisponibilidad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idDisponibilidad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `Duenios`
@@ -304,7 +310,7 @@ ALTER TABLE `Duenios`
 -- AUTO_INCREMENT for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  MODIFY `idGuardian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idGuardian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
@@ -316,13 +322,13 @@ ALTER TABLE `Mascotas`
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
-  MODIFY `idTamanioMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTamanioMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
