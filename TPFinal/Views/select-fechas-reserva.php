@@ -1,7 +1,41 @@
+<?php
+include("header.php");
+include("navBar.php");
+?>
+
 <div class="container">
-    <form action="<?php echo FRONT_ROOT ?>Duenio/FiltrarGuardianes" method="Post">
-        <input type="date" name="fechaInicio" id="" min="<?php echo date("Y-m-d") ?>">
-        <input type="date" name="fechaFin" id="" min="<?php echo date("Y-m-d") ?>">
-        <input type="submit" value="Enviar">
-    </form>
+    <h2 class="py-3">Seleccione las fechas deseadas y la mascota a cuidar</h2><br>
+
+    <div class="col-sm-12 col-md-7">
+        <form action="<?php echo FRONT_ROOT ?>Duenio/FiltrarGuardianes" method="Post">
+            <label for="fechaInicio">Entrada:</label>
+            <input type="date" name="fechaInicio" id="fechaInicio" min="<?php echo date("Y-m-d") ?>" oninput="controlFecha()">
+            <script>
+                function controlFecha() {
+                    let fechaInicio = document.getElementById("fechaInicio").value;
+                    console.log(fechaInicio);
+                    let fechaFin = document.getElementById("fechaFin");
+                    fechaFin.setAttribute("min", fechaInicio);
+                    fechaFin.removeAttribute("disabled");
+                }
+            </script>
+            <label for="fechaFin">Salida:</label>
+            <input type="date" name="fechaFin" id="fechaFin" disabled>
+            <br>
+            <div class="form-floating">
+                <select class="form-select form-select-sm" name="idMascota" required>
+                    <?php foreach ($mascotaList as $mascota) { ?>
+                        <option value="<?php echo $mascota->getId() ?>"> <?php echo $mascota->getNombre() ?> </option>
+                    <?php } ?>
+                </select>
+                <label for="floatingInput">Mascota</label>
+            </div>
+            <br>
+            <input class="btn btn-lg btn-primary" type="submit" value="Buscar guardianes">
+        </form>
+    </div>
 </div>
+
+<?php
+include("footer.php");
+?>

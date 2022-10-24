@@ -167,4 +167,40 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
+
+    public function GetReservaGuardianxDia($idGuardian, $dia){
+        try{
+            $reserva = null;
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE fechaInicio >= :dia AND fechaFin <= :dia AND fk_idGuardian = :idGuardian";
+
+            $parameters['idGuardian'] = $idGuardian;
+            $parameters['dia'] = $dia;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $reserva->setIdReserva($row["idReserva"]);
+                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
+                    $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
+                    $reserva->setFechaInicio($row["fechaInicio"]);
+                    $reserva->setFechaFin($row["fechaFin"]);
+                    $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
+                }
+            }
+            return $reserva;
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 }

@@ -25,7 +25,7 @@ include("navBar.php");
 
             <div class="form-floating">
                 <input type="text" name="precioTotal" value="<?php echo $precioTotal ?>" class="form-control" id="floatingInput" placeholder="Precio Total" required readonly>
-                <label for="floatingInput">Precio Total</label>
+                <label for="floatingInput">Precio Total ($)</label>
             </div>
             <div class="form-floating">
                 <input type="text" value="<?php echo implode(" ", $guardian->getTamanioMascotaCuidar()) ?>" class="form-control" id="floatingInput" placeholder="Tamaños Aceptados" required readonly>

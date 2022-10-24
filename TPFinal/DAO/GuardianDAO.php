@@ -124,9 +124,6 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setPiso($row["piso"]);
                 $guardian->setDepartamento($row["departamento"]);
                 $guardian->setCodigoPostal($row["codigoPostal"]);
-                /*$TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
-                $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
-                $TamanioMascota[] = $row["grande"] ? "Grande" : null;*/
 
                 $TamanioMascota = array();
 

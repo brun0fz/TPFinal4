@@ -4,16 +4,20 @@ namespace Controllers;
 
 use DAO\DuenioDAO;
 use DAO\GuardianDAO;
+use DAO\MascotaDAO;
+use DAO\ReservaDAO;
 use Models\Duenio;
 use Models\Mascota;
 
 class DuenioController
 {
     private $duenioDAO;
+    private $mascotaDAO;
 
     public function __construct()
     {
         $this->duenioDAO = new DuenioDAO();
+        $this->mascotaDAO = new MascotaDAO();
     }
 
     private function validateSession()
@@ -48,6 +52,7 @@ class DuenioController
     public function ShowSelectFechasReserva()
     {
         if ($this->validateSession()) {
+            $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
             require_once(VIEWS_PATH . "select-fechas-reserva.php");
         }
     }
@@ -90,11 +95,23 @@ class DuenioController
     }
 
 
-    public function FiltrarGuardianes($fechaInicio, $fechaFin)
+    public function FiltrarGuardianes($fechaInicio, $fechaFin, $idMascota)
     {
         $guardianDAO = new GuardianDAO();
         $listaGuardianes = $guardianDAO->GetAll();
 
+        $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
+
+        $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+        $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
+
+        $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+
+        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianes);
+    }
+
+
+    private function FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin){
         $timeInicio = strtotime($fechaInicio);
 
         while ($timeInicio <= strtotime($fechaFin)) {
@@ -123,9 +140,46 @@ class DuenioController
             }
         }
 
-        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianesDisponibles);
+        return $listaGuardianesDisponibles;
     }
 
+    private function FiltrarGuardianesPorTamanio($listaGuardianes, $tamanio){
+
+        $listaFiltrada = array();
+
+        foreach($listaGuardianes as $guardian){
+            if(in_array($guardian->getTamanioMascotaCuidar(), $tamanio)){
+                array_push($listaFiltrada, $guardian);
+            }
+        }
+
+        return $listaFiltrada;
+    }
+
+    private function FiltrarGuardianesPorRaza($listaGuardianes, $raza, $fechaInicio, $fechaFin){
+        $reservaDAO = new ReservaDAO();
+
+        $timeInicio = strtotime($fechaInicio);
+        $timeFin = strtotime($fechaInicio);
+
+        while ($timeInicio <= $timeFin) {
+
+            $dias[] = date("Y-m-d", $timeInicio);
+
+            $timeInicio += 86400;
+        }
+
+        foreach($listaGuardianes as $guardian){
+            foreach($dias as $dia){
+                $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+                print_r($reserva);
+
+                if($reserva){
+                    //completar
+                }
+            }
+        }
+    }
 
     private function traducirDias($diaSemana)
     {

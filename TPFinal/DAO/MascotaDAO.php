@@ -126,4 +126,40 @@ class MascotaDAO implements IMascotaDAO
             throw $ex;
         }
     }
+
+    public function GetMascotaById($idMascota)
+    {
+        try {
+            $mascota = null;
+
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Animales ON Mascotas.fk_idAnimal = Animales.idAnimal WHERE idMascota = :idMascota";
+
+            $parameters["idMascota"] = $idMascota;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+                    $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $mascota->setId($row["idMascota"]);
+                    $mascota->setAnimal($row["animal"]);
+                    $mascota->setRaza($row["raza"]);
+                    $mascota->setNombre($row["nombre"]);
+                    $mascota->setTamanio($row["tamanio"]);
+                    $mascota->setObservaciones($row["observaciones"]);
+                    $mascota->setRutaFoto($row["rutaFoto"]);
+                    $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
+                    $mascota->setIdDuenio($row["fk_idDuenio"]);
+                    $mascota->setAlta($row["alta"]);
+                }
+            }
+            return $mascota;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 }
