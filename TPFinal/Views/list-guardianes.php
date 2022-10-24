@@ -35,7 +35,7 @@ include("navBar.php");
                                                                                                                                                                                                                                                                                                                                 ?>
                                 <br><br>
                                 <p class="card-text">Precio por día: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
-                                <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero(); ?></b></p>
+                                <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero() . " " . $guardian->getPiso() . " " . $guardian->getDepartamento() ?></b></p>
                                 <p class="card-text">Disponibilidad: <b><?php if ($guardian->getDisponibilidad()) {
                                                                             echo implode(", ", $guardian->getDisponibilidad());
                                                                         } else {

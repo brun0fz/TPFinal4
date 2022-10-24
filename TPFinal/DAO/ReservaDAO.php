@@ -15,13 +15,15 @@ class ReservaDAO implements IReservaDAO
     public function Add(Reserva $reserva)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (fk_idGuardian, fk_idMascota, fechaInicio, fechaFin, precioTotal) VALUES (:fk_idGuardian, :fk_idMascota, :fechaInicio, :fechaFin, :precioTotal);";
+            $query = "INSERT INTO " . $this->tableName . " (fechaInicio, fechaFin, precioTotal, fk_idMascota, fk_idDuenio, fk_idGuardian) VALUES (:fechaInicio, :fechaFin, :precioTotal, :fk_idMascota, :fk_idDuenio, :fk_idGuardian);";
 
-            $parameters["fk_idGuardian"] = $reserva->getFkIdGuardian();
-            $parameters["fk_idMascota"] = $reserva->getFkIdMascota();
+
             $parameters["fechaInicio"] = $reserva->getFechaInicio();
             $parameters["fechaFin"] = $reserva->getFechaFin();
             $parameters["precioTotal"] = $reserva->getPrecioTotal();
+            $parameters["fk_idMascota"] = $reserva->getFkIdMascota();
+            $parameters["fk_idDuenio"] = $reserva->getFkIdDuenio();
+            $parameters["fk_idGuardian"] = $reserva->getFkIdGuardian();
 
             $this->connection = Connection::GetInstance();
 
@@ -44,14 +46,16 @@ class ReservaDAO implements IReservaDAO
 
             foreach ($resultSet as $row) {
 
-                $reserva = new reserva(NULL, NULL, NULL, NULL, NULL);
+                $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
 
                 $reserva->setIdReserva($row["idReserva"]);
                 $reserva->setFkIdGuardian($row["fk_idGuardian"]);
                 $reserva->setFkIdMascota($row["fk_idMascota"]);
+                $reserva->setFkIdDuenio($row["fk_idDuenio"]);
                 $reserva->setFechaInicio($row["fechaInicio"]);
                 $reserva->setFechaFin($row["fechaFin"]);
                 $reserva->setPrecioTotal($row["precioTotal"]);
+                $reserva->setEstado($row["estado"]);
 
                 array_push($reservasList, $reserva);
             }
@@ -85,11 +89,11 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setIdReserva($row["idReserva"]);
                     $reserva->setFkIdGuardian($row["fk_idGuardian"]);
                     $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
                     $reserva->setFechaInicio($row["fechaInicio"]);
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
-
-
+                    $reserva->setEstado($row["estado"]);
 
                     array_push($reservasList, $reserva);
                 }
@@ -128,11 +132,11 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setIdReserva($row["idReserva"]);
                     $reserva->setFkIdGuardian($row["fk_idGuardian"]);
                     $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
                     $reserva->setFechaInicio($row["fechaInicio"]);
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
-
-
+                    $reserva->setEstado($row["estado"]);
 
                     array_push($reservasList, $reserva);
                 }

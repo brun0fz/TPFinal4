@@ -106,7 +106,6 @@ class DuenioController
 
         $listaGuardianesDisponibles = array();
 
-
         foreach ($listaGuardianes as $guardian) {
 
             $disponibilidad = $guardian->getDisponibilidad();
@@ -123,8 +122,6 @@ class DuenioController
                 array_push($listaGuardianesDisponibles, $guardian);
             }
         }
-
-        echo $fechaFin;
 
         $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianesDisponibles);
     }

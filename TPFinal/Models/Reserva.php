@@ -7,19 +7,22 @@ use clases\Guardian as Guardian;
 class Reserva
 {
     private $idReserva;
-    private $fk_idGuardian;
-    private $fk_idMascota;
 
     private $fechaInicio;
     private $fechaFin;
     private $precioTotal;
 
+    private $fk_idMascota;
+    private $fk_idDuenio;
+    private $fk_idGuardian;
+
     private $estado = EstadoReserva::SOLICITADA;
 
-    public function __construct($fk_idGuardian, $fk_idMascota, $fechaInicio, $fechaFin, $precioTotal)
+    public function __construct($fechaInicio, $fechaFin, $precioTotal, $fk_idMascota, $fk_idDuenio, $fk_idGuardian)
     {
         $this->fk_idGuardian = $fk_idGuardian;
         $this->fk_idMascota = $fk_idMascota;
+        $this->fk_idDuenio = $fk_idDuenio;
         $this->fechaInicio = $fechaInicio;
         $this->fechaFin = $fechaFin;
         $this->precioTotal = $precioTotal;
@@ -148,6 +151,24 @@ class Reserva
     public function setEstado($estado): self
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fk_idDuenio
+     */
+    public function getFkIdDuenio()
+    {
+        return $this->fk_idDuenio;
+    }
+
+    /**
+     * Set the value of fk_idDuenio
+     */
+    public function setFkIdDuenio($fk_idDuenio): self
+    {
+        $this->fk_idDuenio = $fk_idDuenio;
 
         return $this;
     }

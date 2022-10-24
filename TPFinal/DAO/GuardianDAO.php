@@ -16,7 +16,23 @@ class GuardianDAO implements IGuardianDAO
     {
         try {
 
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, calle, numero, precioXDia, reputacion, tamanioMascota, disponibilidad) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, :calle, :numero, :precioXDia, :reputacion, :tamanioMascota, :disponibilidad);";
+            $parameters = array();
+
+            $query = "INSERT INTO Direcciones (calle, numero, piso, departamento, codigoPostal) VALUES (:calle, :numero, :piso, :departamento, :codigoPostal);";
+
+            $parameters["calle"] = $guardian->getCalle();
+            $parameters["numero"] = $guardian->getNumero();
+            $parameters["piso"] = $guardian->getPiso();
+            $parameters["departamento"] = $guardian->getDepartamento();
+            $parameters["codigoPostal"] = $guardian->getCodigoPostal();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+
+            $parameters = array();
+
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
 
             $parameters["nombre"] = $guardian->getNombre();
             $parameters["apellido"] = $guardian->getApellido();
@@ -25,20 +41,48 @@ class GuardianDAO implements IGuardianDAO
             $parameters["password"] = $guardian->getPassword();
             $parameters["tipo"] = $guardian->getTipo();
             $parameters["rutaFoto"] = $guardian->getRutaFoto();
-
             $parameters["alta"] = $guardian->getAlta();
 
-            $parameters["calle"] = $guardian->getCalle();
-            $parameters["numero"] = $guardian->getNumero();
-            $parameters["precioXDia"] = $guardian->getPrecioXDia();
-            $parameters["reputacion"] = $guardian->getReputacion();
+            $this->connection = Connection::GetInstance();
 
-            $parameters["tamanioMascota"] = implode(",", $guardian->getTamanioMascotaCuidar());
-            $parameters["disponibilidad"] = implode(",", $guardian->getDisponibilidad());
+            $this->connection->ExecuteNonQuery($query, $parameters);
 
-            /*
-            $parameters["diasOcupados"] = $guardian->getDiasOcupados();
-            */
+            $parameters = array();
+
+            $query = "INSERT INTO TamaniosMascota (pequenia) values (:pequenia);";
+
+            $parameters["pequenia"] = 0;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+
+            $parameters = array();
+
+            $query = "UPDATE Guardianes SET fk_idTamanioMascota = LAST_INSERT_ID() WHERE email = :email";
+
+            $parameters["email"] = $guardian->getEmail();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+
+
+            $parameters = array();
+
+            $query = "INSERT INTO Disponibilidades (lunes) values (:lunes);";
+
+            $parameters["lunes"] = 0;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+
+            $parameters = array();
+
+            $query = "UPDATE Guardianes SET fk_idDisponibilidad = LAST_INSERT_ID() WHERE email = :email";
+
+            $parameters["email"] = $guardian->getEmail();
 
             $this->connection = Connection::GetInstance();
 
@@ -53,7 +97,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardianesList = array();
 
-            $query = "SELECT * FROM " . $this->tableName;
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad;";
 
             $this->connection = Connection::GetInstance();
 
@@ -61,7 +105,7 @@ class GuardianDAO implements IGuardianDAO
 
             foreach ($resultSet as $row) {
 
-                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                 $guardian->setId($row["idGuardian"]);
                 $guardian->setNombre($row["nombre"]);
@@ -69,18 +113,40 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setTelefono($row["telefono"]);
                 $guardian->setEmail($row["email"]);
                 $guardian->setPassword($row["password"]);
-
+                $guardian->setPrecioXDia($row["precioXDia"]);
+                $guardian->setReputacion($row["reputacion"]);
                 $guardian->setAlta($row["alta"]);
                 $guardian->setTipo($row["tipo"]);
                 $guardian->setRutaFoto($row["rutaFoto"]);
 
                 $guardian->setCalle($row["calle"]);
                 $guardian->setNumero($row["numero"]);
-                $guardian->setPrecioXDia($row["precioXDia"]);
-                $guardian->setReputacion($row["reputacion"]);
+                $guardian->setPiso($row["piso"]);
+                $guardian->setDepartamento($row["departamento"]);
+                $guardian->setCodigoPostal($row["codigoPostal"]);
+                /*$TamanioMascota[] = $row["pequenia"] ? "Pequeño" : null;
+                $TamanioMascota[] = $row["mediana"] ? "Mediano" : null;
+                $TamanioMascota[] = $row["grande"] ? "Grande" : null;*/
 
-                $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
-                $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+                $TamanioMascota = array();
+
+                if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                if ($row["mediana"]) $TamanioMascota[] = "Mediano";
+                if ($row["grande"]) $TamanioMascota[] = "Grande";
+
+                $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                $disponibilidad = array();
+
+                if ($row["lunes"]) $disponibilidad[] = "Lunes";
+                if ($row["martes"]) $disponibilidad[] = "Martes";
+                if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
+                if ($row["jueves"]) $disponibilidad[] = "Jueves";
+                if ($row["viernes"]) $disponibilidad[] = "Viernes";
+                if ($row["sabado"]) $disponibilidad[] = "Sabado";
+                if ($row["domingo"]) $disponibilidad[] = "Domingo";
+
+                $guardian->setDisponibilidad($disponibilidad);
 
                 /*
                 $guardian->setDiasOcupados($row["diasOcupados"]);
@@ -101,7 +167,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
 
             $parameters["email"] = $email;
 
@@ -113,7 +179,7 @@ class GuardianDAO implements IGuardianDAO
 
                 foreach ($resultSet as $row) {
 
-                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                     $guardian->setId($row["idGuardian"]);
                     $guardian->setNombre($row["nombre"]);
@@ -124,15 +190,35 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
-
-
-                    $guardian->setCalle($row["calle"]);
-                    $guardian->setNumero($row["numero"]);
                     $guardian->setPrecioXDia($row["precioXDia"]);
                     $guardian->setReputacion($row["reputacion"]);
 
-                    $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
-                    $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+                    $guardian->setCalle($row["calle"]);
+                    $guardian->setNumero($row["numero"]);
+                    $guardian->setPiso($row["piso"]);
+                    $guardian->setDepartamento($row["departamento"]);
+                    $guardian->setCodigoPostal($row["codigoPostal"]);
+
+                    $TamanioMascota = array();
+
+                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                    if ($row["mediana"]) $TamanioMascota[] = "Mediano";
+                    if ($row["grande"]) $TamanioMascota[] = "Grande";
+
+                    $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                    $disponibilidad = array();
+
+                    if ($row["lunes"]) $disponibilidad[] = "Lunes";
+                    if ($row["martes"]) $disponibilidad[] = "Martes";
+                    if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
+                    if ($row["jueves"]) $disponibilidad[] = "Jueves";
+                    if ($row["viernes"]) $disponibilidad[] = "Viernes";
+                    if ($row["sabado"]) $disponibilidad[] = "Sabado";
+                    if ($row["domingo"]) $disponibilidad[] = "Domingo";
+
+                    $guardian->setDisponibilidad($disponibilidad);
+
 
                     /*
                     $guardian->setDiasOcupados($row["diasOcupados"]);
@@ -155,7 +241,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (idGuardian = :idGuardian)";
+            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (idGuardian = :idGuardian)";
 
             $parameters["idGuardian"] = $idGuardian;
 
@@ -167,7 +253,7 @@ class GuardianDAO implements IGuardianDAO
 
                 foreach ($resultSet as $row) {
 
-                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
                     $guardian->setId($row["idGuardian"]);
                     $guardian->setNombre($row["nombre"]);
@@ -178,15 +264,34 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
-
-
-                    $guardian->setCalle($row["calle"]);
-                    $guardian->setNumero($row["numero"]);
                     $guardian->setPrecioXDia($row["precioXDia"]);
                     $guardian->setReputacion($row["reputacion"]);
 
-                    $guardian->setTamanioMascotaCuidar(explode(",", $row["tamanioMascota"]));
-                    $guardian->setDisponibilidad(explode(",", $row["disponibilidad"]));
+                    $guardian->setCalle($row["calle"]);
+                    $guardian->setNumero($row["numero"]);
+                    $guardian->setPiso($row["piso"]);
+                    $guardian->setDepartamento($row["departamento"]);
+                    $guardian->setCodigoPostal($row["codigoPostal"]);
+
+                    $TamanioMascota = array();
+
+                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                    if ($row["mediana"]) $TamanioMascota[] = "Mediano";
+                    if ($row["grande"]) $TamanioMascota[] = "Grande";
+
+                    $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+                    $disponibilidad = array();
+
+                    if ($row["lunes"]) $disponibilidad[] = "Lunes";
+                    if ($row["martes"]) $disponibilidad[] = "Martes";
+                    if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
+                    if ($row["jueves"]) $disponibilidad[] = "Jueves";
+                    if ($row["viernes"]) $disponibilidad[] = "Viernes";
+                    if ($row["sabado"]) $disponibilidad[] = "Sabado";
+                    if ($row["domingo"]) $disponibilidad[] = "Domingo";
+
+                    $guardian->setDisponibilidad($disponibilidad);
 
                     /*
                     $guardian->setDiasOcupados($row["diasOcupados"]);
@@ -204,12 +309,19 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function UpdateTamanios($tamanioMascota, $idGuardian)
+    public function UpdateDisponibilidad($idGuardian, $disponibilidad)
     {
         try {
-            $query = "UPDATE " . $this->tableName . " SET tamanioMascota = :tamanioMascota WHERE idGuardian = :idGuardian;";
+            $query = "UPDATE Disponibilidades INNER JOIN Guardianes ON Disponibilidades.idDisponibilidad = Guardianes.fk_idDisponibilidad SET lunes = :lunes, martes = :martes, miercoles = :miercoles, jueves = :jueves, viernes = :viernes, sabado = :sabado, domingo = :domingo WHERE idGuardian = :idGuardian;";
 
-            $parameters["tamanioMascota"] = implode(",", $tamanioMascota);
+            $parameters["lunes"] = in_array("Lunes", $disponibilidad) ? 1 : 0;
+            $parameters["martes"] = in_array("Martes", $disponibilidad) ? 1 : 0;
+            $parameters["miercoles"] = in_array("Miercoles", $disponibilidad) ? 1 : 0;
+            $parameters["jueves"] = in_array("Jueves", $disponibilidad) ? 1 : 0;
+            $parameters["viernes"] = in_array("Viernes", $disponibilidad) ? 1 : 0;
+            $parameters["sabado"] = in_array("Sabado", $disponibilidad) ? 1 : 0;
+            $parameters["domingo"] = in_array("Domingo", $disponibilidad) ? 1 : 0;
+
             $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
@@ -220,29 +332,31 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function UpdatePrecio($precioXDia, $idGuardian)
+    public function UpdateTamanios($idGuardian, $tamanios)
+    {
+        try {
+            $query = "UPDATE TamaniosMascota INNER JOIN Guardianes ON TamaniosMascota.idTamanioMascota = Guardianes.fk_idTamanioMascota SET pequenia = :pequenia, mediana = :mediana, grande = :grande WHERE idGuardian = :idGuardian;";
+
+            $parameters["pequenia"] = in_array("Pequeño", $tamanios) ? 1 : 0;
+            $parameters["mediana"] = in_array("Mediano", $tamanios) ? 1 : 0;
+            $parameters["grande"] = in_array("Grande", $tamanios) ? 1 : 0;
+
+            $parameters["idGuardian"] = $idGuardian;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function UpdatePrecio($idGuardian, $precioXDia)
     {
         try {
             $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE idGuardian = :idGuardian;";
 
             $parameters["precioXDia"] = $precioXDia;
-            $parameters["idGuardian"] = $idGuardian;
-
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-
-
-    public function UpdateDisponibilidad($disponibilidad, $idGuardian)
-    {
-        try {
-            $query = "UPDATE " . $this->tableName . " SET disponibilidad = :disponibilidad WHERE idGuardian = :idGuardian;";
-
-            $parameters["disponibilidad"] = implode(",", $disponibilidad);
             $parameters["idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
