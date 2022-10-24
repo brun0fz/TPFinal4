@@ -8,7 +8,6 @@ include("navBar.php");
 <div class="container-fluid">
     <main class="add-reserva w-100 m-auto text-center">
         <form class="form-center" action="<?php echo FRONT_ROOT . "Reserva/Add" ?>" method="Post">
-
             <h3>Nueva Reserva</h3><br>
             <div class="form-floating">
                 <input type="text" name="fechaInicio" value= "<?php echo $fechaInicio ?>" class="form-control" id="floatingInput" placeholder="Fecha de Entrada" required readonly>
