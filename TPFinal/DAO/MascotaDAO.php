@@ -14,21 +14,9 @@ class MascotaDAO implements IMascotaDAO
     public function Add(Mascota $mascota)
     {
         try {
-
             $parameters = array();
 
-            $query = "INSERT INTO Animales (animal, raza) VALUES (:animal, :raza);";
-
-            $parameters["animal"] = $mascota->getAnimal();
-            $parameters["raza"] = $mascota->getRaza();
-
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters);
-
-            $parameters = array();
-
-            $query = "INSERT INTO " . $this->tableName . " (nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, fk_idDuenio, fk_idAnimal, alta) VALUES (:nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :fk_idDuenio, LAST_INSERT_ID(), :alta);";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, fk_idDuenio, fk_idAnimal, alta) VALUES (:nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :fk_idDuenio, :fk_idAnimal, :alta);";
 
             $parameters["nombre"] = $mascota->getNombre();
             $parameters["tamanio"] = $mascota->getTamanio();
@@ -36,15 +24,31 @@ class MascotaDAO implements IMascotaDAO
             $parameters["rutaFoto"] = $mascota->getRutaFoto();
             $parameters["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
             $parameters["fk_idDuenio"] = $mascota->getIdDuenio();
+            $parameters["fk_idAnimal"] = $this->buscarIdAnimal($mascota->getAnimal(), $mascota->getRaza());
             $parameters["alta"] = $mascota->getAlta();
 
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
-            
         } catch (Exception $ex) {
             throw $ex;
         }
+    }
+
+    private function buscarIdAnimal($animal, $raza)
+    {
+        $query = "SELECT idAnimal FROM Animales WHERE animal = :animal and raza = :raza";
+
+        $this->connection = Connection::GetInstance();
+
+        $resultSet = $this->connection->Execute($query);
+
+        foreach ($resultSet as $row) {
+
+            $idAnimal = $row["idAnimal"];
+        }
+
+        return $idAnimal;
     }
 
     public function GetAll()
@@ -80,6 +84,26 @@ class MascotaDAO implements IMascotaDAO
         } catch (Exception $ex) {
             throw $ex;
         }
+    }
+
+    public function GetAnimales()
+    {
+        $animalesList = array();
+
+        $query = "SELECT * FROM Animales";
+
+        $this->connection = Connection::GetInstance();
+
+        $resultSet = $this->connection->Execute($query);
+
+        foreach ($resultSet as $row) {
+
+            $animalesList["idAnimal"] = $row["idAnimal"];
+            $animalesList["animal"] = $row["animal"];
+            $animalesList["raza"] = $row["raza"];
+        }
+
+        return $animalesList;
     }
 
 

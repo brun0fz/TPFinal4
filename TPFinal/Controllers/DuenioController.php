@@ -52,10 +52,12 @@ class DuenioController
         }
     }
 
-    public function ShowListReservasView(){
+    public function ShowListReservasView()
+    {
+        $reservaDAO = new ReservaDAO();
+        $listaReservas = $reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
 
-        
-
+        require_once(VIEWS_PATH . "list-reservas.php");
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)

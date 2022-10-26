@@ -56,6 +56,7 @@ class ReservaDAO implements IReservaDAO
                 $reserva->setFechaFin($row["fechaFin"]);
                 $reserva->setPrecioTotal($row["precioTotal"]);
                 $reserva->setEstado($row["estado"]);
+                $reserva->setPuntaje($row["puntaje"]);
 
                 array_push($reservasList, $reserva);
             }
@@ -94,6 +95,49 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
                     $reserva->setEstado($row["estado"]);
+                    $reserva->setPuntaje($row["puntaje"]);
+
+                    array_push($reservasList, $reserva);
+                }
+
+                return $reservasList;
+            } else {
+
+                return null;
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function ListaReservasDuenio($idDuenio)
+    {
+        try {
+            $reservasList = array();
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (idDuenio = :idDuenio)";
+
+            $parameters["idDuenio"] = $idDuenio;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $reserva->setIdReserva($row["idReserva"]);
+                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
+                    $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
+                    $reserva->setFechaInicio($row["fechaInicio"]);
+                    $reserva->setFechaFin($row["fechaFin"]);
+                    $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
+                    $reserva->setPuntaje($row["puntaje"]);
 
                     array_push($reservasList, $reserva);
                 }
@@ -137,6 +181,7 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
                     $reserva->setEstado($row["estado"]);
+                    $reserva->setPuntaje($row["puntaje"]);
 
                     array_push($reservasList, $reserva);
                 }
@@ -168,8 +213,9 @@ class ReservaDAO implements IReservaDAO
         }
     }
 
-    public function GetReservaGuardianxDia($idGuardian, $dia){
-        try{
+    public function GetReservaGuardianxDia($idGuardian, $dia)
+    {
+        try {
             $reserva = null;
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE fechaInicio >= :dia AND fechaFin <= :dia AND fk_idGuardian = :idGuardian";
@@ -195,10 +241,10 @@ class ReservaDAO implements IReservaDAO
                     $reserva->setFechaFin($row["fechaFin"]);
                     $reserva->setPrecioTotal($row["precioTotal"]);
                     $reserva->setEstado($row["estado"]);
+                    $reserva->setPuntaje($row["puntaje"]);
                 }
             }
             return $reserva;
-            
         } catch (Exception $ex) {
             throw $ex;
         }

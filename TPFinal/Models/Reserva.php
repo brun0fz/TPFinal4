@@ -17,6 +17,7 @@ class Reserva
     private $fk_idGuardian;
 
     private $estado = EstadoReserva::SOLICITADA;
+    private $puntaje;
 
     public function __construct($fechaInicio, $fechaFin, $precioTotal, $fk_idMascota, $fk_idDuenio, $fk_idGuardian)
     {
@@ -169,6 +170,24 @@ class Reserva
     public function setFkIdDuenio($fk_idDuenio): self
     {
         $this->fk_idDuenio = $fk_idDuenio;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of puntaje
+     */
+    public function getPuntaje()
+    {
+        return $this->puntaje;
+    }
+
+    /**
+     * Set the value of puntaje
+     */
+    public function setPuntaje($puntaje): self
+    {
+        $this->puntaje = $puntaje;
 
         return $this;
     }
