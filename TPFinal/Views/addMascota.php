@@ -13,15 +13,29 @@ include("navBar.php");
                 <label for="floatingInput">Nombre</label>
             </div>
             <div class="form-floating">
-                <select class="form-select form-select-sm" name="animal" required>
-                    <option value="Perro">Perro</option>
-                    <option value="Gato">Gato</option>
+                <select class="form-select form-select-sm" name="animal" id="animal" required oninput="filtrarRaza()">
+                    <?php $auxAnimales = array();
+                    foreach ($animalesList as $animal) {
+                        if (!in_array($animal["animal"], $auxAnimales)) { ?>
+                            <option value="<?php echo $animal["animal"] ?>"><?php echo $animal["animal"] ?></option>
+                    <?php array_push($auxAnimales, $animal["animal"]);
+                        }
+                    } ?>
                 </select>
+                <script>
+                    function filtrarRaza() {
+                        let animal = document.getElementById("animal").value;
+                        let raza = document.getElementById("raza");
+                        
+                    }
+                </script>
                 <label for="floatingInput">Animal</label>
             </div>
             <div class="form-floating">
-                <select class="form-select form-select-sm" name="raza" required>
-                    <option value=""><?php echo $animalesList ?></option>
+                <select class="form-select form-select-sm" name="raza" id="raza" required>
+                    <?php foreach ($animalesList as $animal) { ?>
+                        <option value="<?php echo $animal["raza"] ?>"><?php echo $animal["raza"] ?></option>
+                    <?php } ?>
                 </select>
                 <label for="floatingInput">Raza</label>
             </div>

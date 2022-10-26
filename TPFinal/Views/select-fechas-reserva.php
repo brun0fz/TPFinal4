@@ -13,7 +13,6 @@ include("navBar.php");
             <script>
                 function controlFecha() {
                     let fechaInicio = document.getElementById("fechaInicio").value;
-                    console.log(fechaInicio);
                     let fechaFin = document.getElementById("fechaFin");
                     fechaFin.setAttribute("min", fechaInicio);
                     fechaFin.removeAttribute("disabled");

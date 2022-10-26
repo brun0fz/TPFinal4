@@ -98,9 +98,11 @@ class MascotaDAO implements IMascotaDAO
 
         foreach ($resultSet as $row) {
 
-            $animalesList["idAnimal"] = $row["idAnimal"];
-            $animalesList["animal"] = $row["animal"];
-            $animalesList["raza"] = $row["raza"];
+            $values["idAnimal"] = $row["idAnimal"];
+            $values["animal"] = $row["animal"];
+            $values["raza"] = $row["raza"];
+
+            array_push($animalesList, $row);
         }
 
         return $animalesList;

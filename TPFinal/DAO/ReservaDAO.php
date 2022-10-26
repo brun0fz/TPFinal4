@@ -73,9 +73,9 @@ class ReservaDAO implements IReservaDAO
         try {
             $reservasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (idGuardian = :idGuardian)";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idGuardian = :fk_idGuardian)";
 
-            $parameters["idGuardian"] = $idGuardian;
+            $parameters["fk_idGuardian"] = $idGuardian;
 
             $this->connection = Connection::GetInstance();
 
@@ -115,9 +115,9 @@ class ReservaDAO implements IReservaDAO
         try {
             $reservasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (idDuenio = :idDuenio)";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio)";
 
-            $parameters["idDuenio"] = $idDuenio;
+            $parameters["fk_idDuenio"] = $idDuenio;
 
             $this->connection = Connection::GetInstance();
 
