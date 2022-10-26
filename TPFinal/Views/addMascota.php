@@ -20,7 +20,9 @@ include("navBar.php");
                 <label for="floatingInput">Animal</label>
             </div>
             <div class="form-floating">
-                <input type="text" name="raza" class="form-control" id="floatingInput" placeholder="raza" required>
+                <select class="form-select form-select-sm" name="raza" required>
+                    <option value=""><?php echo $animalesList ?></option>
+                </select>
                 <label for="floatingInput">Raza</label>
             </div>
             <div class="form-floating">

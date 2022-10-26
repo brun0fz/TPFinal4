@@ -4,6 +4,7 @@ namespace Controllers;
 
 use DAO\DuenioDAO;
 use DAO\GuardianDAO;
+use DAO\ReservaDAO;
 use Models\Guardian;
 
 class GuardianController
@@ -36,6 +37,14 @@ class GuardianController
             $tamanioArray = $_SESSION["loggedUser"]->getTamanioMascotaCuidar();
             require_once(VIEWS_PATH . "set-configuracion.php");
         }
+    }
+
+    public function ShowListReservasView()
+    {
+        $reservaDAO = new ReservaDAO();
+        $listaReservas = $reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
+
+        require_once(VIEWS_PATH . "list-reservas.php");
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso = "", $departamento = "", $codigoPostal = "", $rutaFoto = "")

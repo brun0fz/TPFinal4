@@ -39,6 +39,7 @@ class MascotaController
     public function ShowAddMascotaView()
     {
         if ($this->validateSession()) {
+            $animalesList = $this->mascotaDAO->GetAnimales();
             require_once(VIEWS_PATH . "addMascota.php");
         }
     }
@@ -78,7 +79,6 @@ class MascotaController
                 $this->mascotaDAO->Add($newMascota);
 
                 $alert = "Mascota agregada con exito";
-
             } catch (Exception $ex) {
                 $alert = "La mascota no se pudo agregar";
             } finally {
