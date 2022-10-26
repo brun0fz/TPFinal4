@@ -28,29 +28,11 @@ include("navBar.php");
                     </div>
                     <div class="col-md-8 p-1">
                         <div class="card-body">
-                            <h3 class="card-title"><b><?php echo "Reserva para" . $mascota->getNombre(); ?></b></h3>
-                            <p class="card-text">Entrada: <b><?php echo $reserva->getFechaInicio() . " Salida: " . $reserva->getFechaFin(); ?></b></p>
+                            <h3 class="card-title"><b><?php echo "Reserva para " . $mascota->getNombre(); ?></b> (<?php echo $reserva->getEstado(); ?>)</h3>
+                            <p class="card-text">Entrada: <b><?php echo $reserva->getFechaInicio() ?></b> Salida: <b><?php echo $reserva->getFechaFin(); ?></b></p><br>
                             <p class="card-text">Guardian: <b><?php echo $guardian->getNombre() . " " . $guardian->getApellido(); ?></b></p>
-                            <?php
-                            $n = 0;
-                            for ($i = 1; $i <= (int)$guardian->getReputacion(); $i++) {
-                            ?><img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
-                                                                                                                                $n = $i;
-                                                                                                                            }
-                                                                                                                            if (($guardian->getReputacion() - (int)$guardian->getReputacion()) >= 0.5) {
-                                                                                                                                ?><img src="<?php echo IMG_PATH . "pawHalf.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
-                                                                                                                                                                                                                                $n++;
-                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                            if ($i <= 5) {
-                                                                                                                                                                                                                                for ($i = $n + 1; $i <= 5; $i++) {
-                                                                                                                                                                                                                                ?><img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
-                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                ?>
-                            <br><br>
                             <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero() . " " . $guardian->getPiso() . " " . $guardian->getDepartamento() ?></b></p>
                             <p class="card-text">Precio Total: <b><?php echo "$" . $reserva->getPrecioTotal(); ?></b></p>
-                            <p class="card-text">Estado: <b><?php echo $reserva->getEstado(); ?></b></p>
                             <div class="text-end">
                                 <form action="<?php echo FRONT_ROOT ?>Reserva/CancelReserva" method="Post">
                                     <input type="hidden" name="idReserva" value="<?php echo $reserva->getId(); ?>">
