@@ -9,7 +9,7 @@ include("navBar.php");
     <div class="col-sm-12 col-md-7">
         <form action="<?php echo FRONT_ROOT ?>Duenio/FiltrarGuardianes" method="Post">
             <label for="fechaInicio">Entrada:</label>
-            <input type="date" name="fechaInicio" id="fechaInicio" min="<?php echo date("Y-m-d") ?>" oninput="controlFecha()">
+            <input type="date" name="fechaInicio" id="fechaInicio" min="<?php echo date("Y-m-d") ?>" oninput="controlFecha()" required>
             <script>
                 function controlFecha() {
                     let fechaInicio = document.getElementById("fechaInicio").value;
@@ -20,7 +20,7 @@ include("navBar.php");
                 }
             </script>
             <label for="fechaFin">Salida:</label>
-            <input type="date" name="fechaFin" id="fechaFin" disabled>
+            <input type="date" name="fechaFin" id="fechaFin" disabled required>
             <br>
             <div class="form-floating">
                 <select class="form-select form-select-sm" name="idMascota" required>

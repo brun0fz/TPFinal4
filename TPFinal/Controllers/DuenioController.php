@@ -36,14 +36,9 @@ class DuenioController
 
 
 
-    public function ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianes = null)
+    public function ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes)
     {
         if ($this->validateSession()) {
-
-            if (!isset($listaGuardianes)) {
-                $guardianDAO = new GuardianDAO();
-                $listaGuardianes = $guardianDAO->GetAll();
-            }
 
             require_once(VIEWS_PATH . "list-guardianes.php");
         }
@@ -55,6 +50,12 @@ class DuenioController
             $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
             require_once(VIEWS_PATH . "select-fechas-reserva.php");
         }
+    }
+
+    public function ShowListReservasView(){
+
+        
+
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)
@@ -98,6 +99,7 @@ class DuenioController
     public function FiltrarGuardianes($fechaInicio, $fechaFin, $idMascota)
     {
         $guardianDAO = new GuardianDAO();
+
         $listaGuardianes = $guardianDAO->GetAll();
 
         $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
@@ -107,11 +109,12 @@ class DuenioController
 
         $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
 
-        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $listaGuardianes);
+        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
     }
 
 
-    private function FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin){
+    private function FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin)
+    {
         $timeInicio = strtotime($fechaInicio);
 
         while ($timeInicio <= strtotime($fechaFin)) {
@@ -143,12 +146,13 @@ class DuenioController
         return $listaGuardianesDisponibles;
     }
 
-    private function FiltrarGuardianesPorTamanio($listaGuardianes, $tamanio){
+    private function FiltrarGuardianesPorTamanio($listaGuardianes, $tamanio)
+    {
 
         $listaFiltrada = array();
 
-        foreach($listaGuardianes as $guardian){
-            if(in_array($guardian->getTamanioMascotaCuidar(), $tamanio)){
+        foreach ($listaGuardianes as $guardian) {
+            if (in_array($tamanio, $guardian->getTamanioMascotaCuidar())) {
                 array_push($listaFiltrada, $guardian);
             }
         }
@@ -156,11 +160,13 @@ class DuenioController
         return $listaFiltrada;
     }
 
-    private function FiltrarGuardianesPorRaza($listaGuardianes, $raza, $fechaInicio, $fechaFin){
+    private function FiltrarGuardianesPorRaza($listaGuardianes, $raza, $fechaInicio, $fechaFin)
+    {
         $reservaDAO = new ReservaDAO();
+        $listaFiltrada = array();
 
         $timeInicio = strtotime($fechaInicio);
-        $timeFin = strtotime($fechaInicio);
+        $timeFin = strtotime($fechaFin);
 
         while ($timeInicio <= $timeFin) {
 
@@ -169,16 +175,25 @@ class DuenioController
             $timeInicio += 86400;
         }
 
-        foreach($listaGuardianes as $guardian){
-            foreach($dias as $dia){
-                $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
-                print_r($reserva);
+        foreach ($listaGuardianes as $guardian) {
+            foreach ($dias as $dia) {
 
-                if($reserva){
-                    //completar
+                $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+
+                if ($reserva) {
+                    $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+                    if ($mascota->getRaza() == $raza) {
+                        $listaFiltrada[] = $guardian;
+                        break;
+                    }
+                } else {
+                    $listaFiltrada[] = $guardian;
+                    break;
                 }
             }
         }
+
+        return $listaFiltrada;
     }
 
     private function traducirDias($diaSemana)

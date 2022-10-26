@@ -80,7 +80,7 @@ class MascotaController
                 $alert = "Mascota agregada con exito";
 
             } catch (Exception $ex) {
-                $alert = $ex->getMessage();
+                $alert = "La mascota no se pudo agregar";
             } finally {
                 $this->ShowMascotaView($alert);
             }

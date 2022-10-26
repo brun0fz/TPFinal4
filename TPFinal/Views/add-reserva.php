@@ -4,8 +4,6 @@ include("navBar.php");
 
 ?>
 
-
-
 <div class="container-fluid">
     <main class="add-reserva w-100 m-auto text-center">
         <form class="form-center" action="<?php echo FRONT_ROOT . "Reserva/Add" ?>" method="Post">
@@ -24,22 +22,18 @@ include("navBar.php");
             </div>
 
             <div class="form-floating">
-                <input type="text" name="precioTotal" value="<?php echo $precioTotal ?>" class="form-control" id="floatingInput" placeholder="Precio Total" required readonly>
-                <label for="floatingInput">Precio Total ($)</label>
+                <input type="text" value="<?php echo "$" . $precioTotal ?>" class="form-control" id="floatingInput" placeholder="Precio Total" required readonly>
+                <label for="floatingInput">Precio Total</label>
             </div>
             <div class="form-floating">
-                <input type="text" value="<?php echo implode(" ", $guardian->getTamanioMascotaCuidar()) ?>" class="form-control" id="floatingInput" placeholder="Tamaños Aceptados" required readonly>
-                <label for="floatingInput">Tamaños Aceptados</label>
-            </div>
-            <div class="form-floating">
-                <select class="form-select form-select-sm" name="idMascota" required>
-                    <?php foreach ($mascotaList as $mascota) { ?>
-                        <option value="<?php echo $mascota->getId() ?>" <?php if (!(in_array($mascota->getTamanioDescripcion(), $guardian->getTamanioMascotaCuidar()))){echo "disabled";}  ?>> <?php echo $mascota->getNombre() ?> </option>
-                    <?php } ?>
-                </select>
+                <input type="text" value="<?php echo $mascota->getNombre() ?>" class="form-control" id="floatingInput" placeholder="Mascota" required readonly>
                 <label for="floatingInput">Mascota</label>
             </div>
             <br>
+
+
+            <input type="hidden" name="precioTotal" value=<?php echo $precioTotal ?>>
+            <input type="hidden" name="idMascota" value=<?php echo $mascota->getId() ?>>
             <input type="hidden" name="idGuardian" value=<?php echo $guardian->getId() ?>>
             <input type="hidden" name="idDuenio" value=<?php echo $_SESSION["loggedUser"]->getId() ?>>
 

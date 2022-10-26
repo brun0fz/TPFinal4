@@ -22,13 +22,13 @@ class ReservaController
         $this->reservaDAO = new ReservaDAO();
     }
 
-    public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin)
+    public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin, $idMascota)
     {
         $guardian = $this->guardianDAO->BuscarId($idGuardian);
 
         $precioTotal = $this->CalcularPrecioTotal($fechaInicio, $fechaFin, $guardian->getPrecioXDia());
 
-        $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+        $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
         require_once(VIEWS_PATH . "add-reserva.php");
     }
 
