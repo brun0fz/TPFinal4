@@ -5,11 +5,6 @@ include("navBar.php");
 
 <div class="container">
     <br><h1>Configuración</h1><br><br>
-    <?php if ($alert != "") { ?>
-        <div class="alert alert-primary" role="alert" style= " width: 300px;  color:black; background-color:rgba(152,251,152, 0.2); border-color:rgba(152,251,152, 0.2)">
-          <?php echo $alert ?>
-          </div>
-          <?php } ?>
     <div class="row justify-content-start">
     <form class="formcheck" action="<?php echo FRONT_ROOT ?>Guardian/setConfig" method="Post">
         <div class="col-12">
@@ -44,8 +39,17 @@ include("navBar.php");
                
         </div>
      </div>
-     <div class="my-5 position-relative">
-        <input class="btn btn-lg btn-primary position-absolute end-0 me-4 px-5" type="submit" value="Guardar">
+     <div class="my-5 row">
+        <div class="col-sm-8 col-md-9 d-flex justify-content-center my-2">
+            <?php if ($alert != "") { ?>
+                <div class="alert alert-success my-auto mx-auto" role="alert" style= "width: 300px">
+                <?php echo $alert ?>
+                </div>
+            <?php } ?>
+        </div>
+        <div class="col-sm-4 col-md-3 d-flex justify-content-center my-2">
+            <input class="btn btn-lg btn-primary mx-auto px-5" type="submit" value="Guardar">
+        </div>
     </div>
     </form> 
 </div>
