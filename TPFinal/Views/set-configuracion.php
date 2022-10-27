@@ -5,9 +5,14 @@ include("navBar.php");
 
 <div class="container">
     <br><h1>Configuración</h1><br><br>
+    <?php if ($alert != "") { ?>
+        <div class="alert alert-primary" role="alert" style= " width: 300px;  color:black; background-color:rgba(152,251,152, 0.2); border-color:rgba(152,251,152, 0.2)">
+          <?php echo $alert ?>
+          </div>
+          <?php } ?>
     <div class="row justify-content-start">
+    <form class="formcheck" action="<?php echo FRONT_ROOT ?>Guardian/setConfig" method="Post">
         <div class="col-12">
-            <form class="formcheck" action="<?php echo FRONT_ROOT ?>Guardian/setDisponibilidad" method="Post">
                 <label class="formcheck label" for="checkbox"><h3>Días disponibles</h3></label><br>
                 <div class="formcheck form-switch items">
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Lunes" <?php if(in_array("Lunes", $disponibilidad)){echo 'checked="checked"';} ?>> Lunes
@@ -17,36 +22,30 @@ include("navBar.php");
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Viernes" <?php if(in_array("Viernes", $disponibilidad)){echo 'checked="checked"';} ?>> Viernes
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Sabado" <?php if(in_array("Sabado", $disponibilidad)){echo 'checked="checked"';} ?>> Sabado
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Domingo" <?php if(in_array("Domingo", $disponibilidad)){echo 'checked="checked"';} ?>> Domingo
-
-                    <input class="btn btn-sm btn-primary ms-3" type="submit" value="Guardar">
                 </div>
-            </form>
         </div>
         <hr class="my-5"/>
         <div class="col-12">
-            <form class="formcheck" action="<?php echo FRONT_ROOT ?>Guardian/setTamanios" method="Post">
                 <label class="formcheck label" for="checkbox"><h3>Tamaño de Mascotas</h3></label><br>
                 <div class="formcheck form-switch items">
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Pequeño" <?php if(in_array("Pequeño", $tamanioArray)){echo 'checked="checked"';} ?>> Pequeño
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Mediano" <?php if(in_array("Mediano", $tamanioArray)){echo 'checked="checked"';} ?>> Mediano
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Grande" <?php if(in_array("Grande", $tamanioArray)){echo 'checked="checked"';} ?>> Grande
 
-                    <input class="btn btn-sm btn-primary ms-3" type="submit" value="Guardar">
                 </div>
-            </form>  
         </div>
         <hr class="my-5"/>
         <div class="col-12">
             <h3>Precio por día</h3>
-            <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo FRONT_ROOT ?>Guardian/setPrecio" method="Post">
-                <div class="form-floating ms-5" width="200px">
+                <div class="form-floating ms-5 row" width="50px">
                     <input type="text" name="precio" class="form-control" id="floatingInput" value="<?php echo $_SESSION["loggedUser"]->getPrecioXDia() ?>" placeholder="precio" required>
                     <label for="floatingInput">Precio($)</label>
                 </div>
-                <input class="btn btn-sm btn-primary ms-3" type="submit" value="Guardar">
-            </form> 
+               
         </div>
-    </div>
+     </div>
+    <input class="btn btn-sm btn-primary ms-3" type="submit" value="Guardar">
+    </form> 
 </div>
 
 <?php
