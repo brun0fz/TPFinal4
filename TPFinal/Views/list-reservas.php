@@ -14,7 +14,7 @@ include("navBar.php");
     <div class="list-reservas">
         <h2 id="list-title">Reservas</h2><br>
         <?php foreach ($listaReservas as $reserva) { 
-            $guardianDAO = new GuardianDAO();
+            $guardianDAO = new GuardianDAO();   
             $mascotaDAO = new MascotaDAO();
 
             $guardian = $guardianDAO->BuscarId($reserva->getFkIdGuardian());
