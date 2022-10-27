@@ -83,6 +83,19 @@ main {
   width: 100%;
 }
 
+.list-reservas {
+  padding: 10px;
+}
+
+.card-img-reserva {
+  height: 275px;
+  overflow: hidden;
+}
+
+.img-reserva {
+  width: 100%;
+}
+
 .btn-confirmar {
   right: 117px;
 }
