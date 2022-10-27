@@ -42,7 +42,7 @@ class GuardianController
     public function ShowListReservasView()
     {
         $reservaDAO = new ReservaDAO();
-        $listaReservas = $reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
+        $listaReservas = $reservaDAO->ListaReservasGuardian($_SESSION["loggedUser"]->getId());
 
         require_once(VIEWS_PATH . "list-reservas.php");
     }

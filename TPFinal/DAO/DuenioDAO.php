@@ -109,4 +109,44 @@ class DuenioDAO implements IDuenioDAO
             throw $ex;
         }
     }
+
+    public function BuscarId($idDuenio)
+    {
+        try {
+            $duenio = NULL;
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (idDuenio = :idDuenio)";
+
+            $parameters["idDuenio"] = $idDuenio;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
+
+                    $duenio->setId($row["idDuenio"]);
+                    $duenio->setNombre($row["nombre"]);
+                    $duenio->setApellido($row["apellido"]);
+                    $duenio->setTelefono($row["telefono"]);
+                    $duenio->setEmail($row["email"]);
+                    $duenio->setPassword($row["password"]);
+                    $duenio->setTipo($row["tipo"]);
+                    $duenio->setRutaFoto($row["rutaFoto"]);
+                    $duenio->setAlta($row["alta"]);
+                }
+
+                return $duenio;
+            } else {
+
+                return null;
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 }
