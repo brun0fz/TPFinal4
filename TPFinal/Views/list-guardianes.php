@@ -52,7 +52,7 @@ include("navBar.php");
                                         <input type="hidden" name="fechaInicio" value="<?php echo $fechaInicio; ?>">
                                         <input type="hidden" name="fechaFin" value="<?php echo $fechaFin; ?>">
                                         <input type="hidden" name="idMascota" value="<?php echo $idMascota; ?>">
-                                        <button type="submit" class="btn btn-lg btn-outline-primary position-absolute bottom-0 end-0 m-3">Reservar</button>
+                                        <button type="submit" class="btn btn-lg btn-outline-primary rounded-pill position-absolute bottom-0 end-0 m-3">Reservar</button>
                                     </form>
                                 </div>
                             </div>
