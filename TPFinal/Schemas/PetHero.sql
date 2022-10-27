@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com:3306
--- Generation Time: Oct 23, 2022 at 05:59 AM
+-- Generation Time: Oct 27, 2022 at 07:35 AM
 -- Server version: 8.0.22-13
 -- PHP Version: 7.2.34
 
@@ -40,7 +40,30 @@ CREATE TABLE `Animales` (
 
 INSERT INTO `Animales` (`idAnimal`, `animal`, `raza`) VALUES
 (5, 'Perro', 'Breton'),
-(6, 'Perro', 'Caniche');
+(6, 'Perro', 'Caniche'),
+(7, 'Gato', 'Siames'),
+(9, 'Gato', 'Persa'),
+(10, 'Gato', 'Angora'),
+(11, 'Perro', 'Dalmata'),
+(12, 'Perro', 'Golden Retriever'),
+(13, 'Perro', 'Labrador Retriever'),
+(14, 'Perro', 'Beagle'),
+(15, 'Perro', 'Bulldog'),
+(16, 'Perro', 'Boxer'),
+(17, 'Perro', 'Pastor Aleman'),
+(18, 'Perro', 'Akita Inu'),
+(19, 'Perro', 'Shiba Inu'),
+(20, 'Gato', 'Sphynx'),
+(21, 'Gato', 'Ruso Azul'),
+(22, 'Gato', 'Bobtail Americano'),
+(23, 'Gato', 'Somali'),
+(24, 'Gato', 'Siberiano'),
+(25, 'Gato', 'Ragdoll'),
+(26, 'Gato', 'Maine Coon'),
+(27, 'Gato', 'Manes'),
+(28, 'Gato', 'Birmano'),
+(29, 'Perro', 'Mestizo'),
+(30, 'Gato', 'Mestizo');
 
 -- --------------------------------------------------------
 
@@ -171,7 +194,8 @@ CREATE TABLE `Mascotas` (
 
 INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `rutaFoto`, `rutaPlanVacunas`, `rutaVideo`, `fk_idDuenio`, `fk_idAnimal`, `alta`) VALUES
 (3, 'Sasha', 'M', 'Dormilona', '1-Sasha.jpeg', '1-Vacunas.png', 'undefinedVideo', 1, 5, 1),
-(4, 'Lolo', 'S', 'Marron', '1-Lolo.png', '1-Vacunas.png', 'undefinedVideo', 1, 6, 1);
+(4, 'Lolo', 'L', 'Marron', '1-Lolo.png', '1-Vacunas.png', 'undefinedVideo', 1, 6, 1),
+(5, 'Pepito', 'M', 'Muy lindo', '1-Pepito.png', '1-Vacunas.png', 'undefinedVideo', 1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -185,6 +209,7 @@ CREATE TABLE `Reservas` (
   `fechaFin` date NOT NULL,
   `precioTotal` float NOT NULL,
   `estado` varchar(100) NOT NULL DEFAULT 'Solicitada',
+  `puntaje` int NOT NULL DEFAULT '0',
   `fk_idMascota` int NOT NULL,
   `fk_idDuenio` int NOT NULL,
   `fk_idGuardian` int NOT NULL
@@ -194,8 +219,8 @@ CREATE TABLE `Reservas` (
 -- Dumping data for table `Reservas`
 --
 
-INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
-(3, '2022-10-24', '2022-10-28', 2495, 'Solicitada', 4, 1, 5);
+INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `puntaje`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
+(5, '2022-10-26', '2022-10-28', 1497, 'Solicitada', 0, 3, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -215,7 +240,7 @@ CREATE TABLE `TamaniosMascota` (
 --
 
 INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grande`) VALUES
-(4, 1, 0, 0),
+(4, 1, 1, 0),
 (5, 0, 0, 1);
 
 --
@@ -286,7 +311,7 @@ ALTER TABLE `TamaniosMascota`
 -- AUTO_INCREMENT for table `Animales`
 --
 ALTER TABLE `Animales`
-  MODIFY `idAnimal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idAnimal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
@@ -316,13 +341,13 @@ ALTER TABLE `Guardianes`
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `idMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`

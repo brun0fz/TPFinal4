@@ -93,7 +93,7 @@ class MascotaDAO implements IMascotaDAO
     {
         $animalesList = array();
 
-        $query = "SELECT * FROM Animales";
+        $query = "SELECT * FROM Animales ORDER BY animal, raza";
 
         $this->connection = Connection::GetInstance();
 
