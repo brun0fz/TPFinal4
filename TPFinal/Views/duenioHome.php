@@ -12,16 +12,16 @@ include('navBar.php');
                 <img src="<?php echo IMG_PATH . "reservasIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Reservas</h3>
-            <p>Mira el listado de tus reservas confirmadas o en curso, visualiza el detalle de una reserva. </p>
-            <a href="<?php echo FRONT_ROOT . "Duenio/ShowListReservasView" ?>">Ver reservas</a><br>
+            <p>Mira el listado de tus reservas solicitadas, confirmadas, en curso o ya finalizadas. Visualiza el detalle de una reserva. </p>
+            <a href="<?php echo FRONT_ROOT . "Reserva/ShowListReservasView" ?>">Ver reservas</a><br>
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
                 <img src="<?php echo IMG_PATH . "guardianesIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Guardianes</h3>
-            <p>Visualiza el listado de guardianes, filtralos por ubicacion, reputacion y disponibilidad, busca un guardian para realizar una reserva.</p>
-            <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>">Ver listado de Guardianes</a>
+            <p>Selecciona tu mascota y fechas de estadía y visualiza el listado de guardianes disponibles para ella.</p>
+            <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>">Buscar Guardianes</a>
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">

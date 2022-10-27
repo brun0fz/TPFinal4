@@ -55,7 +55,7 @@ class HomeController
 
             require_once(VIEWS_PATH . "guardianHome.php");
         } else {
-            $mensaje = "Usuario o contraseña incorrectas. Ingrese sus datos nuevamente";
+            $mensaje = "Usuario o contraseña incorrectos. Ingrese sus datos nuevamente.";
             $this->Index($mensaje);
         }
     }

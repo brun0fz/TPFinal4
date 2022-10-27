@@ -32,6 +32,18 @@ class ReservaController
         require_once(VIEWS_PATH . "add-reserva.php");
     }
 
+    public function ShowListReservasView()
+    {   
+        if($_SESSION["loggedUser"]->getTipo() == 1){
+            $listaReservas = $this->reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
+        }
+        else{
+            $listaReservas = $this->reservaDAO->ListaReservasGuardian($_SESSION["loggedUser"]->getId());
+        }
+
+        require_once(VIEWS_PATH . "list-reservas.php");
+    }
+
     public function CalcularPrecioTotal($fechaInicio, $fechaFin, $precioXDia)
     {
         $dateInicio = new DateTime($fechaInicio);
@@ -46,14 +58,12 @@ class ReservaController
 
     public function Add($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idGuardian, $idDuenio)
     {
-
+        
         $reserva = new Reserva($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idDuenio, $idGuardian);
-
-        var_dump($reserva);
 
         $this->reservaDAO->Add($reserva);
 
-        HomeController::Index();
+        $this->ShowListReservasView();
 
     }
 }
