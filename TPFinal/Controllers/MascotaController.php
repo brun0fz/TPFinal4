@@ -48,6 +48,10 @@ class MascotaController
     {
         if ($this->validateSession()) {
 
+            echo $nombre . $animal .  $raza . $tamanio . $observaciones ;
+            print_r($rutaFoto);
+            print_r($rutaPlanVacunas);
+
             try {
 
                 ///Foto
@@ -80,7 +84,7 @@ class MascotaController
 
                 $alert = "Mascota agregada con exito";
             } catch (Exception $ex) {
-                $alert = "La mascota no se pudo agregar";
+                $alert = $ex;
             } finally {
                 $this->ShowMascotaView($alert);
             }

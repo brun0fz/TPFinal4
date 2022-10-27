@@ -6,14 +6,15 @@ include("navBar.php");
 
 <div class="container-fluid">
     <main class="add-mascota w-100 m-auto text-center">
-        <form class="form-center" action="<?php echo FRONT_ROOT . "Mascota/Add" ?>" method="Post" enctype="multipart/form-data">
+        <form class="form-center" name="f1" action="<?php echo FRONT_ROOT . "Mascota/Add" ?>" method="Post" enctype="multipart/form-data">
             <h3>Nueva Mascota</h3><br>
             <div class="form-floating">
                 <input type="text" name="nombre" class="form-control" id="floatingInput" placeholder="nombre" required>
                 <label for="floatingInput">Nombre</label>
             </div>
             <div class="form-floating">
-                <select class="form-select form-select-sm" name="animal" id="animal" required oninput="filtrarRaza()">
+                <select class="form-select form-select-sm" name="animal" id="animal" required oninput="cambiaRaza()">
+                    <option disabled selected value>-Seleccione un animal-</option>
                     <?php $auxAnimales = array();
                     foreach ($animalesList as $animal) {
                         if (!in_array($animal["animal"], $auxAnimales)) { ?>
@@ -22,20 +23,11 @@ include("navBar.php");
                         }
                     } ?>
                 </select>
-                <script>
-                    function filtrarRaza() {
-                        let animal = document.getElementById("animal").value;
-                        let raza = document.getElementById("raza");
-                        
-                    }
-                </script>
                 <label for="floatingInput">Animal</label>
             </div>
             <div class="form-floating">
-                <select class="form-select form-select-sm" name="raza" id="raza" required>
-                    <?php foreach ($animalesList as $animal) { ?>
-                        <option value="<?php echo $animal["raza"] ?>"><?php echo $animal["raza"] ?></option>
-                    <?php } ?>
+                <select class="form-select form-select-sm" name="raza" id="raza" required disabled>
+                    <option value=""></option>
                 </select>
                 <label for="floatingInput">Raza</label>
             </div>
@@ -64,6 +56,50 @@ include("navBar.php");
         </form>
     </main>
 </div>
+
+<script>
+    <?php
+    $perros = array();
+    $gatos = array();
+    foreach ($animalesList as $animal) {
+        if ($animal["animal"] == "Perro") {
+            $perros[] = $animal["raza"];
+        } else {
+            $gatos[] = $animal["raza"];
+        }
+    }
+    ?>
+
+    let perros = <?php echo json_encode($perros) ?>;
+    let gatos = <?php echo json_encode($gatos) ?>;
+
+    function cambiaRaza() {
+
+        let animal = document.getElementById('animal').value;
+        document.f1.raza.removeAttribute("disabled");
+
+        if (animal == "Perro") {
+
+            let numPerros = perros.length;
+            document.f1.raza.length = numPerros;
+
+            for (i = 0; i < numPerros; i++) {
+                document.f1.raza.options[i].value = perros[i];
+                document.f1.raza.options[i].text = perros[i];
+            }
+
+        } else {
+
+            let numGatos = gatos.length;
+            document.f1.raza.length = numGatos;
+
+            for (i = 0; i < numGatos; i++) {
+                document.f1.raza.options[i].value = gatos[i];
+                document.f1.raza.options[i].text = gatos[i];
+            }
+        }
+    }
+</script>
 
 
 <?php

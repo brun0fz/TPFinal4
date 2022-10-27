@@ -39,9 +39,12 @@ class MascotaDAO implements IMascotaDAO
     {
         $query = "SELECT idAnimal FROM Animales WHERE animal = :animal and raza = :raza";
 
+        $parameters["animal"] = $animal;
+        $parameters["raza"] = $raza;
+
         $this->connection = Connection::GetInstance();
 
-        $resultSet = $this->connection->Execute($query);
+        $resultSet = $this->connection->Execute($query, $parameters);
 
         foreach ($resultSet as $row) {
 
