@@ -44,8 +44,8 @@ include("navBar.php");
                
         </div>
      </div>
-     <div class="w-25 my-5 border row-3 justify-content-center">
-        <input class="btn btn-lg btn-primary mx-auto" type="submit" value="Guardar">
+     <div class="my-5 position-relative">
+        <input class="btn btn-lg btn-primary position-absolute end-0 me-4 px-5" type="submit" value="Guardar">
     </div>
     </form> 
 </div>
