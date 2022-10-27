@@ -17,10 +17,8 @@ class HomeController
         $this->guardianDAO = new GuardianDAO;
     }
 
-    static function Index()
+    static function Index($mensaje = "")
     {
-
-        //require_once(VIEWS_PATH . "indexDAO.php");
 
         if (isset($_SESSION["loggedUser"])) {
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
@@ -57,7 +55,8 @@ class HomeController
 
             require_once(VIEWS_PATH . "guardianHome.php");
         } else {
-            $this->Index();
+            $mensaje = "Usuario o contraseña incorrectas. Ingrese sus datos nuevamente";
+            $this->Index($mensaje);
         }
     }
 
