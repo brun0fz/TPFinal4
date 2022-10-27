@@ -6,6 +6,7 @@ use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use DAO\ReservaDAO;
 use Models\Guardian;
+use Exception;
 
 class GuardianController
 {
@@ -30,7 +31,7 @@ class GuardianController
         $this->validateSession() && require_once(VIEWS_PATH . "guardianHome.php");
     }
 
-    public function ShowConfiguracionView()
+    public function ShowConfiguracionView($alert = "")
     {
         if ($this->validateSession()) {
             $disponibilidad = $_SESSION["loggedUser"]->getDisponibilidad();
@@ -77,33 +78,26 @@ class GuardianController
         }
     }
 
-
-    public function setTamanios($tamanios = array())
-    {
+    public function setConfig($dias = array(), $tamanios = array(), $precio = null){
         if ($this->validateSession()) {
-            $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
+            try {
+                $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
+                $this->guardianDAO->UpdateTamanios($_SESSION["loggedUser"]->getId(), $tamanios);
 
-            $this->guardianDAO->UpdateTamanios($_SESSION["loggedUser"]->getId(), $tamanios);
+                $_SESSION["loggedUser"]->setPrecioXDia($precio);
+                $this->guardianDAO->UpdatePrecio($_SESSION["loggedUser"]->getId(), $precio);
 
-            $this->ShowConfiguracionView();
+                $_SESSION["loggedUser"]->setDisponibilidad($dias);
+                $this->guardianDAO->UpdateDisponibilidad($_SESSION["loggedUser"]->getId(), $dias);
+
+                $alert = "Configuracion guardada con exito ✓";
+            } catch (Exception $ex) {
+
+                $alert = "No se pudo guardar la configuracion";
+            } finally {
+                $this->ShowConfiguracionView($alert);
+            }
         }
     }
 
-    public function setPrecio($precio = null)
-    {
-        if ($this->validateSession()) {
-            $_SESSION["loggedUser"]->setPrecioXDia($precio);
-            $this->guardianDAO->UpdatePrecio($_SESSION["loggedUser"]->getId(), $precio);
-            $this->ShowConfiguracionView();
-        }
-    }
-
-    public function setDisponibilidad($dias = array())
-    {
-        if ($this->validateSession()) {
-            $_SESSION["loggedUser"]->setDisponibilidad($dias);
-            $this->guardianDAO->UpdateDisponibilidad($_SESSION["loggedUser"]->getId(), $dias);
-            $this->ShowConfiguracionView();
-        }
-    }
 }
