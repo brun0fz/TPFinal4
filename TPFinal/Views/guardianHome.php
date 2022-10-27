@@ -12,8 +12,8 @@ include("navBar.php");
                 <img src="<?php echo IMG_PATH . "reservasIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Reservas</h3>
-            <p>Mira el listado de tus reservas confirmadas o en curso, visualiza el detalle de una reserva. </p>
-            <a href="<?php echo FRONT_ROOT . "Guardian/ShowListReservasView" ?>">Ver reservas</a><br>
+            <p>Mira el listado de tus reservas solicitadas, confirmadas, en curso o ya finalizadas. Visualiza el detalle de una reserva. </p>
+            <a href="<?php echo FRONT_ROOT . "Reserva/ShowListReservasView" ?>">Ver reservas</a><br>
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">

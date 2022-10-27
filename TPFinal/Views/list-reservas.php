@@ -14,7 +14,7 @@ include("navBar.php");
 
 <div class="container">
     <div class="list-reservas">
-        <h2 id="list-title">Reservas</h2><br>
+        <h2 id="list-title">Mis Reservas</h2><br>
         <?php foreach ($listaReservas as $reserva) { 
             $guardianDAO = new GuardianDAO();
             $duenioDAO = new DuenioDAO();
