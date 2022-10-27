@@ -12,7 +12,7 @@ include("navBar.php");
                 <div class="card mb-3 shadow-sm">
                     <div class="row g-0">
                         <div class="col-md-4 card-img-guardian">
-                            <img src="<?php echo IMG_PATH . $guardian->getRutaFoto() ?>" class="img-fluid rounded-start img-guardian">
+                            <img src="<?php echo IMG_PATH . $guardian->getRutaFoto() ?>" class="img-fluid rounded-start img-guardian img-unselect">
                         </div>
                         <div class="col-md-8 p-1">
                             <div class="card-body">

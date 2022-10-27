@@ -35,16 +35,18 @@ include("navBar.php");
                 </div>
         </div>
         <hr class="my-5"/>
-        <div class="col-12">
+        <div class="col-sm-12 col-md-6 col-lg-3">
             <h3>Precio por día</h3>
-                <div class="form-floating ms-5 row" width="50px">
+                <div class="form-floating mx-5 row">
                     <input type="text" name="precio" class="form-control" id="floatingInput" value="<?php echo $_SESSION["loggedUser"]->getPrecioXDia() ?>" placeholder="precio" required>
                     <label for="floatingInput">Precio($)</label>
                 </div>
                
         </div>
      </div>
-    <input class="btn btn-sm btn-primary ms-3" type="submit" value="Guardar">
+     <div class="w-25 my-5 border row-3 justify-content-center">
+        <input class="btn btn-lg btn-primary mx-auto" type="submit" value="Guardar">
+    </div>
     </form> 
 </div>
 

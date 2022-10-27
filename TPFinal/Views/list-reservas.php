@@ -28,7 +28,7 @@ include("navBar.php");
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
                     <div class="col-md-4 card-img-reserva">
-                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="img-fluid rounded-start img-reserva">
+                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="img-fluid rounded-start img-reserva img-unselect">
                     </div>
                     <div class="col-md-8 p-1 position-relative">
                         <div class="card-body">
