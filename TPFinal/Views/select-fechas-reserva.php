@@ -6,6 +6,12 @@ include("navBar.php");
 <div class="container">
     <h2 class="py-3">Seleccione las fechas deseadas y la mascota a cuidar</h2><br>
 
+    <?php if ($alert != "") { ?>
+        <div class="alert alert-primary" role="alert" style=" width: 300px;">
+            <?php echo $alert ?>
+        </div>
+    <?php } ?>
+
     <div class="col-sm-12 col-md-7">
         <form action="<?php echo FRONT_ROOT ?>Duenio/FiltrarGuardianes" method="Post">
             <label for="fechaInicio">Entrada:</label>

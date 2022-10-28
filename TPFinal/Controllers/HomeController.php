@@ -31,7 +31,7 @@ class HomeController
         }
     }
 
-    public function ShowRegisterView($type)
+    public function ShowRegisterView($type, $alert="")
     {
         require_once(VIEWS_PATH . "registro.php");
     }

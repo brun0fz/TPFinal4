@@ -32,7 +32,7 @@ class ReservaController
         require_once(VIEWS_PATH . "add-reserva.php");
     }
 
-    public function ShowListReservasView()
+    public function ShowListReservasView($alert="")
     {   
         if($_SESSION["loggedUser"]->getTipo() == 1){
             $listaReservas = $this->reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
@@ -63,7 +63,8 @@ class ReservaController
 
         $this->reservaDAO->Add($reserva);
 
-        $this->ShowListReservasView();
+        $alert = "Reserva realizada con exito.";
+        $this->ShowListReservasView($alert);
 
     }
 }

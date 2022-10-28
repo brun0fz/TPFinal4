@@ -73,8 +73,10 @@ class GuardianController
 
             $this->ShowGuardianHome();
         } else {
+            $alert = "El email ingresado ya existe.";
             $type = 2;
-            require_once(VIEWS_PATH . "registro.php");
+            $homeController = new HomeController();
+            $homeController->ShowRegisterView($type, $alert);
         }
     }
 

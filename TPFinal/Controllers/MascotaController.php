@@ -47,11 +47,6 @@ class MascotaController
     public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas)
     {
         if ($this->validateSession()) {
-
-            echo $nombre . $animal .  $raza . $tamanio . $observaciones ;
-            print_r($rutaFoto);
-            print_r($rutaPlanVacunas);
-
             try {
 
                 ///Foto
