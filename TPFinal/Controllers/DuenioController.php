@@ -48,75 +48,88 @@ class DuenioController
     public function ShowSelectFechasReserva($alert = "")
     {
         if ($this->validateSession()) {
-            $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-            require_once(VIEWS_PATH . "select-fechas-reserva.php");
+            try {
+
+                $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+                require_once(VIEWS_PATH . "select-fechas-reserva.php");
+            } catch (Exception $ex) {
+                echo $ex;
+            }
         }
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)
     {
-        $guardianDAO = new GuardianDAO();
+        try {
+            $guardianDAO = new GuardianDAO();
 
-        if (($this->duenioDAO->Buscar($email) == null) && ($guardianDAO->Buscar($email) == null)) {
+            if (($this->duenioDAO->Buscar($email) == null) && ($guardianDAO->Buscar($email) == null)) {
 
-            $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+                $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
-            if ($rutaFoto["tmp_name"] != "") {
-                $temp = $rutaFoto["tmp_name"];
-                $aux = explode("/", $rutaFoto["type"]);
-                $type = $aux[1];
+                if ($rutaFoto["tmp_name"] != "") {
+                    $temp = $rutaFoto["tmp_name"];
+                    $aux = explode("/", $rutaFoto["type"]);
+                    $type = $aux[1];
 
-                $name = $email . "." . $type;
+                    $name = $email . "." . $type;
 
-                move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-                chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+                    move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+                    chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
-                $duenio->setRutaFoto($name);
+                    $duenio->setRutaFoto($name);
+                } else {
+                    $duenio->setRutaFoto("undefinedProfile.png");
+                }
+
+                $this->duenioDAO->Add($duenio);
+
+                $duenio = $this->duenioDAO->Buscar($duenio->getEmail());
+
+                $duenio->setPassword(null);
+                $_SESSION["loggedUser"] = $duenio;
+
+                $this->ShowDuenioHome();
             } else {
-                $duenio->setRutaFoto("undefinedProfile.png");
+                $alert = "El email ingresado ya existe.";
+                $type = 1;
+                $homeController = new HomeController();
+                $homeController->ShowRegisterView($type, $alert);
             }
-
-            $this->duenioDAO->Add($duenio);
-
-            $duenio = $this->duenioDAO->Buscar($duenio->getEmail());
-
-            $duenio->setPassword(null);
-            $_SESSION["loggedUser"] = $duenio;
-
-            $this->ShowDuenioHome();
-        } else {
-            $alert = "El email ingresado ya existe.";
-            $type = 1;
-            $homeController = new HomeController();
-            $homeController->ShowRegisterView($type, $alert);
+        } catch (Exception $ex) {
+            echo $ex;
         }
     }
 
 
-    public function FiltrarGuardianes($fechaInicio, $fechaFin, $idMascota)
+    public function FiltrarGuardianes($fechaInicio = "", $fechaFin = "", $idMascota = "")
     {
         if ($this->validateSession()) {
-            try {
+            if ($fechaInicio != "" && $fechaFin != "" && $idMascota != "") {
+                try {
 
-                $guardianDAO = new GuardianDAO();
+                    $guardianDAO = new GuardianDAO();
 
-                $listaGuardianes = $guardianDAO->GetAll();
+                    $listaGuardianes = $guardianDAO->GetAll();
 
-                $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
+                    $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
 
-                $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-                $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
+                    $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+                    $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
 
-                $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+                    $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
 
-                if (!empty($listaGuardianes)) {
-                    $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
-                } else {
-                    $alert = "No hay guardianes disponibles.";
-                    $this->ShowSelectFechasReserva($alert);
+                    if (!empty($listaGuardianes)) {
+                        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
+                    } else {
+                        $alert = "No hay guardianes disponibles.";
+                        $this->ShowSelectFechasReserva($alert);
+                    }
+                } catch (Exception $ex) {
+                    echo $ex;
                 }
-            } catch (Exception $ex) {
-                echo $ex;
+            } else {
+                $this->ShowSelectFechasReserva();
             }
         }
     }
@@ -201,9 +214,13 @@ class DuenioController
 
                     $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
 
-                    if ($reserva) {
+                    print_r($reserva);
+
+                    if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+                        
                         if ($mascota->getRaza() == $raza) {
+                            echo "uwu";
                             $listaFiltrada[] = $guardian;
                             break;
                         }

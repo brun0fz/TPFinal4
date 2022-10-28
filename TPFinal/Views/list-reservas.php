@@ -22,6 +22,12 @@ include("navBar.php");
             </div>
         <?php } ?>
 
+        <?php if (empty($listaReservas)) { ?>
+            <div class="alert alert-primary" role="alert" style=" width: 230px;">
+                <?php echo "Todavia no tiene reservas." ?>
+            </div>
+        <?php } ?>
+
         <?php foreach ($listaReservas as $reserva) {
             $guardianDAO = new GuardianDAO();
             $duenioDAO = new DuenioDAO();
@@ -51,14 +57,13 @@ include("navBar.php");
                             <?php } ?>
                             <p class="card-text">Precio Total: <b><?php echo "$" . $reserva->getPrecioTotal(); ?></b></p>
                             <div class="text-end">
-                                <?php if ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() != "Confirmada") { ?>
-                                    <form action="<?php echo FRONT_ROOT ?>Reserva/cambiarEstado" method="Post">
+                                <?php if ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada") { ?>
+                                    <form action="<?php echo FRONT_ROOT ?>Reserva/confirmarReserva" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
-                                        <input type="hidden" name="estado" value="<?php echo "Confirmada" ?>">
                                         <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Confirmar</button>
                                     </form>
                                 <?php } ?>
-                                <?php if ($reserva->getEstado() != "Cancelada") { ?>
+                                <?php if (($_SESSION["loggedUser"]->getTipo() == 1 && ($reserva->getEstado() == "Solicitada" || $reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada")) || ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada")) { ?>
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/cambiarEstado" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
                                         <input type="hidden" name="estado" value="<?php echo "Cancelada" ?>">
