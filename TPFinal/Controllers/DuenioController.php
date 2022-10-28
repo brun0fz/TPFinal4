@@ -220,7 +220,6 @@ class DuenioController
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
                         
                         if ($mascota->getRaza() == $raza) {
-                            echo "uwu";
                             $listaFiltrada[] = $guardian;
                             break;
                         }
