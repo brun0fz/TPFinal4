@@ -107,7 +107,7 @@ class ReservaController
             HomeController::Index();
         }
     }
-
+ 
     public function confirmarReserva($idReserva)
     {
         if (isset($_SESSION["loggedUser"]) && $_SESSION["loggedUser"]->getTipo() == 2) {
