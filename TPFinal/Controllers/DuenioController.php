@@ -6,6 +6,7 @@ use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use DAO\MascotaDAO;
 use DAO\ReservaDAO;
+use Exception;
 use Models\Duenio;
 use Models\Mascota;
 
@@ -94,107 +95,129 @@ class DuenioController
 
     public function FiltrarGuardianes($fechaInicio, $fechaFin, $idMascota)
     {
-        $guardianDAO = new GuardianDAO();
+        if ($this->validateSession()) {
+            try {
 
-        $listaGuardianes = $guardianDAO->GetAll();
+                $guardianDAO = new GuardianDAO();
 
-        $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
+                $listaGuardianes = $guardianDAO->GetAll();
 
-        $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-        $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
+                $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
 
-        $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+                $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+                $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
 
-        if (!empty($listaGuardianes)) {
-            $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
-        } else {
-            $alert = "No hay guardianes disponibles.";
-            $this->ShowSelectFechasReserva($alert);
+                $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+
+                if (!empty($listaGuardianes)) {
+                    $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
+                } else {
+                    $alert = "No hay guardianes disponibles.";
+                    $this->ShowSelectFechasReserva($alert);
+                }
+            } catch (Exception $ex) {
+                echo $ex;
+            }
         }
     }
 
 
     private function FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin)
     {
-        $timeInicio = strtotime($fechaInicio);
+        try {
 
-        while ($timeInicio <= strtotime($fechaFin)) {
+            $timeInicio = strtotime($fechaInicio);
 
-            $dias[] = $this->traducirDias(date("l", $timeInicio));
+            while ($timeInicio <= strtotime($fechaFin)) {
 
-            $timeInicio += 86400;
-        }
+                $dias[] = $this->traducirDias(date("l", $timeInicio));
 
-        $listaGuardianesDisponibles = array();
+                $timeInicio += 86400;
+            }
 
-        foreach ($listaGuardianes as $guardian) {
+            $listaGuardianesDisponibles = array();
 
-            $disponibilidad = $guardian->getDisponibilidad();
+            foreach ($listaGuardianes as $guardian) {
 
-            $flag = 1;
+                $disponibilidad = $guardian->getDisponibilidad();
 
-            foreach ($dias as $dia) {
-                if (!in_array($dia, $disponibilidad)) {
-                    $flag = 0;
+                $flag = 1;
+
+                foreach ($dias as $dia) {
+                    if (!in_array($dia, $disponibilidad)) {
+                        $flag = 0;
+                    }
+                }
+
+                if ($flag) {
+                    array_push($listaGuardianesDisponibles, $guardian);
                 }
             }
 
-            if ($flag) {
-                array_push($listaGuardianesDisponibles, $guardian);
-            }
+            return $listaGuardianesDisponibles;
+        } catch (Exception $ex) {
+            echo $ex;
         }
-
-        return $listaGuardianesDisponibles;
     }
 
     private function FiltrarGuardianesPorTamanio($listaGuardianes, $tamanio)
     {
+        try {
 
-        $listaFiltrada = array();
+            $listaFiltrada = array();
 
-        foreach ($listaGuardianes as $guardian) {
-            if (in_array($tamanio, $guardian->getTamanioMascotaCuidar())) {
-                array_push($listaFiltrada, $guardian);
+            foreach ($listaGuardianes as $guardian) {
+                if (in_array($tamanio, $guardian->getTamanioMascotaCuidar())) {
+                    array_push($listaFiltrada, $guardian);
+                }
             }
-        }
 
-        return $listaFiltrada;
+            return $listaFiltrada;
+        } catch (Exception $ex) {
+            echo $ex;
+        }
     }
 
     private function FiltrarGuardianesPorRaza($listaGuardianes, $raza, $fechaInicio, $fechaFin)
     {
-        $reservaDAO = new ReservaDAO();
-        $listaFiltrada = array();
 
-        $timeInicio = strtotime($fechaInicio);
-        $timeFin = strtotime($fechaFin);
+        try {
 
-        while ($timeInicio <= $timeFin) {
+            $reservaDAO = new ReservaDAO();
+            $listaFiltrada = array();
 
-            $dias[] = date("Y-m-d", $timeInicio);
+            $timeInicio = strtotime($fechaInicio);
+            $timeFin = strtotime($fechaFin);
 
-            $timeInicio += 86400;
-        }
+            while ($timeInicio <= $timeFin) {
 
-        foreach ($listaGuardianes as $guardian) {
-            foreach ($dias as $dia) {
+                $dias[] = date("Y-m-d", $timeInicio);
 
-                $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+                $timeInicio += 86400;
+            }
 
-                if ($reserva) {
-                    $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
-                    if ($mascota->getRaza() == $raza) {
+            foreach ($listaGuardianes as $guardian) {
+                foreach ($dias as $dia) {
+
+                    $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+
+                    if ($reserva) {
+                        $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+                        if ($mascota->getRaza() == $raza) {
+                            $listaFiltrada[] = $guardian;
+                            break;
+                        }
+                    } else {
                         $listaFiltrada[] = $guardian;
                         break;
                     }
-                } else {
-                    $listaFiltrada[] = $guardian;
-                    break;
                 }
             }
-        }
 
-        return $listaFiltrada;
+            return $listaFiltrada;
+        } catch (Exception $ex) {
+            echo $ex;
+        }
     }
 
     private function traducirDias($diaSemana)

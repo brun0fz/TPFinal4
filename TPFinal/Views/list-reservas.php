@@ -52,13 +52,15 @@ include("navBar.php");
                             <p class="card-text">Precio Total: <b><?php echo "$" . $reserva->getPrecioTotal(); ?></b></p>
                             <div class="text-end">
                                 <?php if($_SESSION["loggedUser"]->getTipo() == 2){ ?>
-                                    <form action="<?php echo FRONT_ROOT ?>Reserva/Confirm" method="Post">
+                                    <form action="<?php echo FRONT_ROOT ?>Reserva/cambiarEstado" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
+                                        <input type="hidden" name="estado" value="<?php echo EstadoReserva::CONFIRMADA ?>">
                                         <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Confirmar</button>
                                     </form>
                                 <?php } ?>
-                                <form action="<?php echo FRONT_ROOT ?>Reserva/Cancel" method="Post">
+                                <form action="<?php echo FRONT_ROOT ?>Reserva/cambiarEstado" method="Post">
                                     <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
+                                    <input type="hidden" name="estado" value="<?php echo EstadoReserva::CANCELADA ?>">
                                     <button type="submit" class="btn btn-lg btn-outline-danger rounded-pill position-absolute bottom-0 end-0 m-2">Cancelar</button>
                                 </form>
                             </div>

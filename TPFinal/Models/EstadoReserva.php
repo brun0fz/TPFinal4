@@ -1,9 +1,12 @@
-<?php namespace Models;
+<?php
 
-enum EstadoReserva : string{
+namespace Models;
+
+enum EstadoReserva: string
+{
     case SOLICITADA = "Solicitada";
     case CONFIRMADA = "Confirmada";
-    case RECHAZADA = "Rechazada";
+    case CANCELADA = "Cancelada";
     case EN_CURSO = "En curso";
     case COMPLETADA = "Completada";
 }
