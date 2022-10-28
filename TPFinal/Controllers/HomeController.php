@@ -5,6 +5,7 @@ namespace Controllers;
 use Couchbase\View;
 use DAO\DuenioDAO;
 use DAO\GuardianDAO;
+use Exception;
 
 class HomeController
 {
@@ -17,7 +18,7 @@ class HomeController
         $this->guardianDAO = new GuardianDAO;
     }
 
-    static function Index($mensaje = "")
+    static function Index($alert = "")
     {
 
         if (isset($_SESSION["loggedUser"])) {
@@ -31,7 +32,7 @@ class HomeController
         }
     }
 
-    public function ShowRegisterView($type)
+    public function ShowRegisterView($type, $alert = "")
     {
         require_once(VIEWS_PATH . "registro.php");
     }
@@ -39,24 +40,29 @@ class HomeController
 
     public function Login($email, $password)
     {
-        $duenio = $this->duenioDAO->Buscar($email);
-        $guardian = $this->guardianDAO->Buscar($email);
+        try {
 
-        if (isset($duenio) && $duenio->getPassword() == $password) {
+            $duenio = $this->duenioDAO->Buscar($email);
+            $guardian = $this->guardianDAO->Buscar($email);
 
-            $duenio->setPassword(NULL);
-            $_SESSION["loggedUser"] = $duenio;
+            if (isset($duenio) && $duenio->getPassword() == $password) {
 
-            require_once(VIEWS_PATH . "duenioHome.php");
-        } else if (isset($guardian) && $guardian->getPassword() == $password) {
+                $duenio->setPassword(NULL);
+                $_SESSION["loggedUser"] = $duenio;
 
-            $guardian->setPassword(NULL);
-            $_SESSION["loggedUser"] = $guardian;
+                require_once(VIEWS_PATH . "duenioHome.php");
+            } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
-            require_once(VIEWS_PATH . "guardianHome.php");
-        } else {
-            $mensaje = "Usuario o contraseña incorrectos. Ingrese sus datos nuevamente.";
-            $this->Index($mensaje);
+                $guardian->setPassword(NULL);
+                $_SESSION["loggedUser"] = $guardian;
+
+                require_once(VIEWS_PATH . "guardianHome.php");
+            } else {
+                $alert = "Usuario o contraseña incorrectos. Ingrese sus datos nuevamente.";
+                $this->Index($alert);
+            }
+        } catch (Exception $ex) {
+            echo $ex;
         }
     }
 

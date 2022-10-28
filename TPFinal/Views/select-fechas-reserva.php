@@ -6,10 +6,16 @@ include("navBar.php");
 <div class="container">
     <h2 class="py-3">Seleccione las fechas deseadas y la mascota a cuidar</h2><br>
 
+    <?php if ($alert != "") { ?>
+        <div class="alert alert-danger" role="alert" style=" width: 300px;">
+            <?php echo $alert ?>
+        </div>
+    <?php } ?>
+
     <div class="col-sm-12 col-md-7">
         <form action="<?php echo FRONT_ROOT ?>Duenio/FiltrarGuardianes" method="Post">
             <label for="fechaInicio">Entrada:</label>
-            <input type="date" name="fechaInicio" id="fechaInicio" min="<?php echo date("Y-m-d") ?>" oninput="controlFecha()" required>
+            <input type="date" name="fechaInicio" id="fechaInicio" min="<?php echo date('Y-m-d', strtotime("+1 day")) ?>" oninput="controlFecha()" required>
             <script>
                 function controlFecha() {
                     let fechaInicio = document.getElementById("fechaInicio").value;

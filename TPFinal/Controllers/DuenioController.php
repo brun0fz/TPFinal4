@@ -6,6 +6,7 @@ use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use DAO\MascotaDAO;
 use DAO\ReservaDAO;
+use Exception;
 use Models\Duenio;
 use Models\Mascota;
 
@@ -44,150 +45,195 @@ class DuenioController
         }
     }
 
-    public function ShowSelectFechasReserva()
+    public function ShowSelectFechasReserva($alert = "")
     {
         if ($this->validateSession()) {
-            $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-            require_once(VIEWS_PATH . "select-fechas-reserva.php");
+            try {
+
+                $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+                require_once(VIEWS_PATH . "select-fechas-reserva.php");
+            } catch (Exception $ex) {
+                echo $ex;
+            }
         }
     }
 
     public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)
     {
-        $guardianDAO = new GuardianDAO();
+        try {
+            $guardianDAO = new GuardianDAO();
 
-        if (($this->duenioDAO->Buscar($email) == null) && ($guardianDAO->Buscar($email) == null)) {
+            if (($this->duenioDAO->Buscar($email) == null) && ($guardianDAO->Buscar($email) == null)) {
 
-            $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
+                $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
-            if ($rutaFoto["tmp_name"] != "") {
-                $temp = $rutaFoto["tmp_name"];
-                $aux = explode("/", $rutaFoto["type"]);
-                $type = $aux[1];
+                if ($rutaFoto["tmp_name"] != "") {
+                    $temp = $rutaFoto["tmp_name"];
+                    $aux = explode("/", $rutaFoto["type"]);
+                    $type = $aux[1];
 
-                $name = $email . "." . $type;
+                    $name = $email . "." . $type;
 
-                move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-                chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+                    move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+                    chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
-                $duenio->setRutaFoto($name);
+                    $duenio->setRutaFoto($name);
+                } else {
+                    $duenio->setRutaFoto("undefinedProfile.png");
+                }
+
+                $this->duenioDAO->Add($duenio);
+
+                $duenio = $this->duenioDAO->Buscar($duenio->getEmail());
+
+                $duenio->setPassword(null);
+                $_SESSION["loggedUser"] = $duenio;
+
+                $this->ShowDuenioHome();
             } else {
-                $duenio->setRutaFoto("undefinedProfile.png");
+                $alert = "El email ingresado ya existe.";
+                $type = 1;
+                $homeController = new HomeController();
+                $homeController->ShowRegisterView($type, $alert);
             }
-
-            $this->duenioDAO->Add($duenio);
-
-            $duenio = $this->duenioDAO->Buscar($duenio->getEmail());
-
-            $duenio->setPassword(null);
-            $_SESSION["loggedUser"] = $duenio;
-
-            $this->ShowDuenioHome();
-        } else {
-            $type = 1;
-            require_once(VIEWS_PATH . "registro.php");
+        } catch (Exception $ex) {
+            echo $ex;
         }
     }
 
 
-    public function FiltrarGuardianes($fechaInicio, $fechaFin, $idMascota)
+    public function FiltrarGuardianes($fechaInicio = "", $fechaFin = "", $idMascota = "")
     {
-        $guardianDAO = new GuardianDAO();
+        if ($this->validateSession()) {
+            if ($fechaInicio != "" && $fechaFin != "" && $idMascota != "") {
+                try {
 
-        $listaGuardianes = $guardianDAO->GetAll();
+                    $guardianDAO = new GuardianDAO();
 
-        $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
+                    $listaGuardianes = $guardianDAO->GetAll();
 
-        $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-        $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
+                    $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
 
-        $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+                    $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+                    $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
 
-        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
+                    $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+
+                    if (!empty($listaGuardianes)) {
+                        $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
+                    } else {
+                        $alert = "No hay guardianes disponibles.";
+                        $this->ShowSelectFechasReserva($alert);
+                    }
+                } catch (Exception $ex) {
+                    echo $ex;
+                }
+            } else {
+                $this->ShowSelectFechasReserva();
+            }
+        }
     }
 
 
     private function FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin)
     {
-        $timeInicio = strtotime($fechaInicio);
+        try {
 
-        while ($timeInicio <= strtotime($fechaFin)) {
+            $timeInicio = strtotime($fechaInicio);
 
-            $dias[] = $this->traducirDias(date("l", $timeInicio));
+            while ($timeInicio <= strtotime($fechaFin)) {
 
-            $timeInicio += 86400;
-        }
+                $dias[] = $this->traducirDias(date("l", $timeInicio));
 
-        $listaGuardianesDisponibles = array();
+                $timeInicio += 86400;
+            }
 
-        foreach ($listaGuardianes as $guardian) {
+            $listaGuardianesDisponibles = array();
 
-            $disponibilidad = $guardian->getDisponibilidad();
+            foreach ($listaGuardianes as $guardian) {
 
-            $flag = 1;
+                $disponibilidad = $guardian->getDisponibilidad();
 
-            foreach ($dias as $dia) {
-                if (!in_array($dia, $disponibilidad)) {
-                    $flag = 0;
+                $flag = 1;
+
+                foreach ($dias as $dia) {
+                    if (!in_array($dia, $disponibilidad)) {
+                        $flag = 0;
+                    }
+                }
+
+                if ($flag) {
+                    array_push($listaGuardianesDisponibles, $guardian);
                 }
             }
 
-            if ($flag) {
-                array_push($listaGuardianesDisponibles, $guardian);
-            }
+            return $listaGuardianesDisponibles;
+        } catch (Exception $ex) {
+            echo $ex;
         }
-
-        return $listaGuardianesDisponibles;
     }
 
     private function FiltrarGuardianesPorTamanio($listaGuardianes, $tamanio)
     {
+        try {
 
-        $listaFiltrada = array();
+            $listaFiltrada = array();
 
-        foreach ($listaGuardianes as $guardian) {
-            if (in_array($tamanio, $guardian->getTamanioMascotaCuidar())) {
-                array_push($listaFiltrada, $guardian);
+            foreach ($listaGuardianes as $guardian) {
+                if (in_array($tamanio, $guardian->getTamanioMascotaCuidar())) {
+                    array_push($listaFiltrada, $guardian);
+                }
             }
-        }
 
-        return $listaFiltrada;
+            return $listaFiltrada;
+        } catch (Exception $ex) {
+            echo $ex;
+        }
     }
 
     private function FiltrarGuardianesPorRaza($listaGuardianes, $raza, $fechaInicio, $fechaFin)
     {
-        $reservaDAO = new ReservaDAO();
-        $listaFiltrada = array();
 
-        $timeInicio = strtotime($fechaInicio);
-        $timeFin = strtotime($fechaFin);
+        try {
 
-        while ($timeInicio <= $timeFin) {
+            $reservaDAO = new ReservaDAO();
+            $listaFiltrada = array();
 
-            $dias[] = date("Y-m-d", $timeInicio);
+            $timeInicio = strtotime($fechaInicio);
+            $timeFin = strtotime($fechaFin);
 
-            $timeInicio += 86400;
-        }
+            while ($timeInicio <= $timeFin) {
 
-        foreach ($listaGuardianes as $guardian) {
-            foreach ($dias as $dia) {
+                $dias[] = date("Y-m-d", $timeInicio);
 
-                $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+                $timeInicio += 86400;
+            }
 
-                if ($reserva) {
-                    $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
-                    if ($mascota->getRaza() == $raza) {
+            foreach ($listaGuardianes as $guardian) {
+                foreach ($dias as $dia) {
+
+                    $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+
+                    print_r($reserva);
+
+                    if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
+                        $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+                        
+                        if ($mascota->getRaza() == $raza) {
+                            $listaFiltrada[] = $guardian;
+                            break;
+                        }
+                    } else {
                         $listaFiltrada[] = $guardian;
                         break;
                     }
-                } else {
-                    $listaFiltrada[] = $guardian;
-                    break;
                 }
             }
-        }
 
-        return $listaFiltrada;
+            return $listaFiltrada;
+        } catch (Exception $ex) {
+            echo $ex;
+        }
     }
 
     private function traducirDias($diaSemana)

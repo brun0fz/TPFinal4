@@ -8,7 +8,7 @@ class Guardian extends Usuario{
     private $departamento;
     private $codigoPostal;
     private $tamanioMascotaCuidar = array();
-    private $reputacion = NULL;
+    private $reputacion = 2.5;
     private $diasOcupados = array();
     private $disponibilidad = array();
     private $precioXDia;

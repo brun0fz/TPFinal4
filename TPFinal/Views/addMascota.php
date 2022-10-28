@@ -33,6 +33,7 @@ include("navBar.php");
             </div>
             <div class="form-floating">
                 <select class="form-select form-select-sm" name="tamanio" required>
+                    <option disabled selected value>-Seleccione un tamaño-</option>
                     <option value="S">Pequeño</option>
                     <option value="M">Mediano</option>
                     <option value="L">Grande</option>

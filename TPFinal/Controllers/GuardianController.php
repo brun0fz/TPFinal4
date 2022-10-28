@@ -43,42 +43,49 @@ class GuardianController
     public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso = "", $departamento = "", $codigoPostal = "", $rutaFoto = "")
     {
 
-        $duenioDAO = new DuenioDAO();
+        try {
+            $duenioDAO = new DuenioDAO();
 
-        if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
+            if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
 
-            $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso, $departamento, $codigoPostal);
+                $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso, $departamento, $codigoPostal);
 
-            if ($rutaFoto["tmp_name"] != "") {
-                $temp = $rutaFoto["tmp_name"];
-                $aux = explode("/", $rutaFoto["type"]);
-                $type = $aux[1];
+                if ($rutaFoto["tmp_name"] != "") {
+                    $temp = $rutaFoto["tmp_name"];
+                    $aux = explode("/", $rutaFoto["type"]);
+                    $type = $aux[1];
 
-                $name = $email . "." . $type;
+                    $name = $email . "." . $type;
 
-                move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
-                chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
+                    move_uploaded_file($temp, ROOT . VIEWS_PATH . "/img/" . $name);
+                    chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
-                $guardian->setRutaFoto($name);
+                    $guardian->setRutaFoto($name);
+                } else {
+                    $guardian->setRutaFoto("undefinedProfile.png");
+                }
+
+                $this->guardianDAO->Add($guardian);
+
+                $guardian = $this->guardianDAO->Buscar($guardian->getEmail());
+
+                $guardian->setPassword(null);
+                $_SESSION["loggedUser"] = $guardian;
+
+                $this->ShowGuardianHome();
             } else {
-                $guardian->setRutaFoto("undefinedProfile.png");
+                $alert = "El email ingresado ya existe.";
+                $type = 2;
+                $homeController = new HomeController();
+                $homeController->ShowRegisterView($type, $alert);
             }
-
-            $this->guardianDAO->Add($guardian);
-
-            $guardian = $this->guardianDAO->Buscar($guardian->getEmail());
-
-            $guardian->setPassword(null);
-            $_SESSION["loggedUser"] = $guardian;
-
-            $this->ShowGuardianHome();
-        } else {
-            $type = 2;
-            require_once(VIEWS_PATH . "registro.php");
+        } catch (Exception $ex) {
+            echo $ex;
         }
     }
 
-    public function setConfig($dias = array(), $tamanios = array(), $precio = null){
+    public function setConfig($dias = array(), $tamanios = array(), $precio = null)
+    {
         if ($this->validateSession()) {
             try {
                 $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
@@ -99,5 +106,4 @@ class GuardianController
             }
         }
     }
-
 }

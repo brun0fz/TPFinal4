@@ -3,10 +3,13 @@ include("header.php");
 include("navBar.php");
 ?>
 
-<div class="alert"><center><?php echo $alert ?></center></div>
-
 <div class="container list-mascotas">
     <h2 id="list-title">Mis Mascotas</h2>
+    <?php if ($alert != "") { ?>
+        <div class="alert alert-success" role="alert" style= " width: 300px;">
+          <?php echo $alert ?>
+          </div>
+          <?php } ?>
     <a href="<?php echo FRONT_ROOT . "Mascota/ShowAddMascotaView" ?>"><button class="btn btn-primary btn-mascota">Añadir Mascota</button></a><br>
     <div class="row row-cols-sm-1 row-cols-md-3">
         <?php foreach ($mascotasList as $mascota) { ?>

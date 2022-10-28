@@ -15,7 +15,20 @@ include("navBar.php");
 <div class="container">
     <div class="list-reservas">
         <h2 id="list-title">Mis Reservas</h2><br>
-        <?php foreach ($listaReservas as $reserva) { 
+
+        <?php if ($alert != "") { ?>
+            <div class="alert alert-success" role="alert" style=" width: 335px;">
+                <?php echo $alert ?>
+            </div>
+        <?php } ?>
+
+        <?php if (empty($listaReservas)) { ?>
+            <div class="alert alert-primary" role="alert" style=" width: 230px;">
+                <?php echo "Todavia no tiene reservas." ?>
+            </div>
+        <?php } ?>
+
+        <?php foreach ($listaReservas as $reserva) {
             $guardianDAO = new GuardianDAO();
             $duenioDAO = new DuenioDAO();
             $mascotaDAO = new MascotaDAO();
@@ -23,7 +36,7 @@ include("navBar.php");
             $guardian = $guardianDAO->BuscarId($reserva->getFkIdGuardian());
             $duenio = $duenioDAO->BuscarId($reserva->getFkIdDuenio());
             $mascota = $mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
-            ?>
+        ?>
 
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
@@ -34,26 +47,29 @@ include("navBar.php");
                         <div class="card-body">
                             <h3 class="card-title"><b><?php echo "Reserva para " . $mascota->getNombre(); ?></b><span class="<?php echo ($reserva->getEstado() == "En curso") ? "text-primary" : "" ?>"> (<?php echo $reserva->getEstado(); ?>)</span></h3>
                             <h5><small class="card-text">desde el <b><?php echo $reserva->getFechaInicio() ?></b> hasta el <b><?php echo $reserva->getFechaFin(); ?></b></small></h5>
-                            <hr class="my-3"/>
-                            <?php if($_SESSION["loggedUser"]->getTipo() == 1){ ?>
+                            <hr class="my-3" />
+                            <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
                                 <p class="card-text">Guardian: <b><?php echo $guardian->getNombre() . " " . $guardian->getApellido(); ?></b></p>
                                 <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero() . " " . $guardian->getPiso() . " " . $guardian->getDepartamento() ?></b></p>
-                            <?php } else {?>
+                            <?php } else { ?>
                                 <p class="card-text">Dueño: <b><?php echo $duenio->getNombre() . " " . $duenio->getApellido(); ?></b></p>
                                 <p class="card-text"><span>Animal: <b><?php echo $mascota->getAnimal() ?></b></span><span class="ms-3">Raza: <b><?php echo $mascota->getRaza() ?></b></span></p>
                             <?php } ?>
                             <p class="card-text">Precio Total: <b><?php echo "$" . $reserva->getPrecioTotal(); ?></b></p>
                             <div class="text-end">
-                                <?php if($_SESSION["loggedUser"]->getTipo() == 2){ ?>
-                                    <form action="<?php echo FRONT_ROOT ?>Reserva/Confirm" method="Post">
+                                <?php if ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada") { ?>
+                                    <form action="<?php echo FRONT_ROOT ?>Reserva/confirmarReserva" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
                                         <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Confirmar</button>
                                     </form>
                                 <?php } ?>
-                                <form action="<?php echo FRONT_ROOT ?>Reserva/Cancel" method="Post">
-                                    <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
-                                    <button type="submit" class="btn btn-lg btn-outline-danger rounded-pill position-absolute bottom-0 end-0 m-2">Cancelar</button>
-                                </form>
+                                <?php if (($_SESSION["loggedUser"]->getTipo() == 1 && ($reserva->getEstado() == "Solicitada" || $reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada")) || ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada")) { ?>
+                                    <form action="<?php echo FRONT_ROOT ?>Reserva/cambiarEstado" method="Post">
+                                        <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
+                                        <input type="hidden" name="estado" value="<?php echo "Cancelada" ?>">
+                                        <button type="submit" class="btn btn-lg btn-outline-danger rounded-pill position-absolute bottom-0 end-0 m-2">Cancelar</button>
+                                    </form>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

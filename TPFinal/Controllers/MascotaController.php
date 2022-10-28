@@ -29,29 +29,30 @@ class MascotaController
     public function ShowMascotaView($alert = "")
     {
         if ($this->validateSession()) {
-
-            $mascotasList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-
-            require_once(VIEWS_PATH . "list-mascotas.php");
+            try {
+                $mascotasList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+                require_once(VIEWS_PATH . "list-mascotas.php");
+            } catch (Exception $ex) {
+                echo $ex;
+            }
         }
     }
 
     public function ShowAddMascotaView()
     {
         if ($this->validateSession()) {
-            $animalesList = $this->mascotaDAO->GetAnimales();
-            require_once(VIEWS_PATH . "addMascota.php");
+            try {
+                $animalesList = $this->mascotaDAO->GetAnimales();
+                require_once(VIEWS_PATH . "addMascota.php");
+            } catch (Exception $ex) {
+                echo $ex;
+            }
         }
     }
 
     public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas)
     {
         if ($this->validateSession()) {
-
-            echo $nombre . $animal .  $raza . $tamanio . $observaciones ;
-            print_r($rutaFoto);
-            print_r($rutaPlanVacunas);
-
             try {
 
                 ///Foto
