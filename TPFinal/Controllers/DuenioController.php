@@ -117,7 +117,7 @@ class DuenioController
                     $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
                     $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
 
-                    $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getRaza(), $fechaInicio, $fechaFin);
+                    $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getAnimal(), $mascota->getRaza(), $fechaInicio, $fechaFin);
 
                     if (!empty($listaGuardianes)) {
                         $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
@@ -191,7 +191,7 @@ class DuenioController
         }
     }
 
-    private function FiltrarGuardianesPorRaza($listaGuardianes, $raza, $fechaInicio, $fechaFin)
+    private function FiltrarGuardianesPorRaza($listaGuardianes, $animal, $raza, $fechaInicio, $fechaFin)
     {
 
         try {
@@ -219,7 +219,7 @@ class DuenioController
                     if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
                         
-                        if ($mascota->getRaza() == $raza) {
+                        if ($mascota->getAnimal() == $animal && $mascota->getRaza() == $raza) {
                             $listaFiltrada[] = $guardian;
                             break;
                         }
