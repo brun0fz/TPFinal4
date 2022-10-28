@@ -24,27 +24,49 @@ class ReservaController
 
     public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin, $idMascota)
     {
-        $guardian = $this->guardianDAO->BuscarId($idGuardian);
+        if(isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)){
+            $guardian = $this->guardianDAO->BuscarId($idGuardian);
 
-        $precioTotal = $this->CalcularPrecioTotal($fechaInicio, $fechaFin, $guardian->getPrecioXDia());
+            $precioTotal = $this->CalcularPrecioTotal($fechaInicio, $fechaFin, $guardian->getPrecioXDia());
 
-        $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-        require_once(VIEWS_PATH . "add-reserva.php");
+            $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+            require_once(VIEWS_PATH . "add-reserva.php");
+        }  else {
+            HomeController::Index();
+        }
     }
 
-    public function ShowListReservasView($alert="")
-    {   
-        if($_SESSION["loggedUser"]->getTipo() == 1){
-            $listaReservas = $this->reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
+    public function ShowListReservasView()
+    {  
+        if(isset($_SESSION["loggedUser"])){
+            if($_SESSION["loggedUser"]->getTipo() == 1){
+                $listaReservas = $this->reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
+            }
+            else{
+                $listaReservas = $this->reservaDAO->ListaReservasGuardian($_SESSION["loggedUser"]->getId());
+            }
+    
+            require_once(VIEWS_PATH . "list-reservas.php");
+        }  else {
+            HomeController::Index();
         }
-        else{
-            $listaReservas = $this->reservaDAO->ListaReservasGuardian($_SESSION["loggedUser"]->getId());
-        }
-
-        require_once(VIEWS_PATH . "list-reservas.php");
     }
 
-    public function CalcularPrecioTotal($fechaInicio, $fechaFin, $precioXDia)
+    public function Add($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idGuardian, $idDuenio)
+    {
+        if(isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)){
+            $reserva = new Reserva($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idDuenio, $idGuardian);
+
+            $this->reservaDAO->Add($reserva);
+
+            $this->ShowListReservasView();
+        }  else {
+            HomeController::Index();
+        }
+
+    }
+
+    private function CalcularPrecioTotal($fechaInicio, $fechaFin, $precioXDia)
     {
         $dateInicio = new DateTime($fechaInicio);
         $dateFin = new DateTime($fechaFin);
@@ -54,17 +76,5 @@ class ReservaController
         $dias = 1 + (int) $difference->format("%d days ");
 
         return $dias * $precioXDia;
-    }
-
-    public function Add($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idGuardian, $idDuenio)
-    {
-        
-        $reserva = new Reserva($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idDuenio, $idGuardian);
-
-        $this->reservaDAO->Add($reserva);
-
-        $alert = "Reserva realizada con exito.";
-        $this->ShowListReservasView($alert);
-
     }
 }

@@ -15,7 +15,7 @@ include("navBar.php");
         <?php foreach ($mascotasList as $mascota) { ?>
             <div class="card g-3 m-3 shadow-sm" style="width: 400px">
                 <div class="img-container">
-                    <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="card-img-top img-mascota" alt="<?php echo $mascota->getNombre() ?>">
+                    <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="card-img-top img-mascota img-unselect" alt="<?php echo $mascota->getNombre() ?>">
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b><?php echo $mascota->getNombre() ?></b></h5>

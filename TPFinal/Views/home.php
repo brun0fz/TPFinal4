@@ -8,7 +8,7 @@ include('header.php');
 
   <main class="form-signin w-100 m-auto text-center">
     <form class="form-center" action="<?php echo FRONT_ROOT . "Home/Login" ?>" method="POST">
-      <img class="mb-4" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
+      <img class="mb-4 img-unselect" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
       <?php if ($mensaje != "") { ?>
         <div class="alert alert-danger" role="alert" style= "font-size: 14px;">
           <?php echo $mensaje ?>

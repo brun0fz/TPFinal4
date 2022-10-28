@@ -2,7 +2,7 @@
 <nav class="p-3 mb-3 border-bottom">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="<?php echo FRONT_ROOT . "Duenio/ShowDuenioHome"; ?>" class="nav-link px-2 link-secondary"><img src=<?php echo IMG_PATH . "logo2.png" ?> width="36" height="36"></a>
+        <a href="<?php echo FRONT_ROOT . "Duenio/ShowDuenioHome"; ?>" class="nav-link px-2 link-secondary img-unselect"><img src=<?php echo IMG_PATH . "logo2.png" ?> width="36" height="36"></a>
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="<?php echo FRONT_ROOT . "Home/Index"; ?>" class="nav-link px-2 link-secondary">Home</a></li>
                 <li><a href="<?php echo FRONT_ROOT . "Reserva/ShowListReservasView"; ?>" class="nav-link px-2 link-dark">Reservas</a></li>
