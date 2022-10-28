@@ -7,7 +7,7 @@ include("navBar.php");
     <h2 class="py-3">Seleccione las fechas deseadas y la mascota a cuidar</h2><br>
 
     <?php if ($alert != "") { ?>
-        <div class="alert alert-primary" role="alert" style=" width: 300px;">
+        <div class="alert alert-danger" role="alert" style=" width: 300px;">
             <?php echo $alert ?>
         </div>
     <?php } ?>

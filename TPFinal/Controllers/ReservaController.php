@@ -36,7 +36,7 @@ class ReservaController
         }
     }
 
-    public function ShowListReservasView()
+    public function ShowListReservasView($alert="")
     {  
         if(isset($_SESSION["loggedUser"])){
             if($_SESSION["loggedUser"]->getTipo() == 1){
@@ -59,7 +59,8 @@ class ReservaController
 
             $this->reservaDAO->Add($reserva);
 
-            $this->ShowListReservasView();
+            $alert = "Reserva realizada con exito.";
+            $this->ShowListReservasView($alert);
         }  else {
             HomeController::Index();
         }

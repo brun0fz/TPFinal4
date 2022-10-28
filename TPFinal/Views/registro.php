@@ -12,7 +12,7 @@ include('header.php');
                 <img class="mb-4" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="150" height="150">
                 <h3>Nuevo Usuario</h3><br>
                 <?php if ($alert != "") { ?>
-                        <div class="alert alert-primary" role="alert">
+                        <div class="alert alert-danger" role="alert">
                             <?php echo $alert ?>
                         </div>
                     <?php } ?>

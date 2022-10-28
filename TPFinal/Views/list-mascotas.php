@@ -6,7 +6,7 @@ include("navBar.php");
 <div class="container list-mascotas">
     <h2 id="list-title">Mis Mascotas</h2>
     <?php if ($alert != "") { ?>
-        <div class="alert alert-primary" role="alert" style= " width: 300px;  color:black; background-color:rgba(152,251,152, 0.2); border-color:rgba(152,251,152, 0.2)">
+        <div class="alert alert-success" role="alert" style= " width: 300px;">
           <?php echo $alert ?>
           </div>
           <?php } ?>

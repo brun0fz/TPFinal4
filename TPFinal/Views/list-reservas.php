@@ -17,7 +17,7 @@ include("navBar.php");
         <h2 id="list-title">Mis Reservas</h2><br>
 
         <?php if ($alert != "") { ?>
-        <div class="alert alert-primary" role="alert" style= " width: 300px;  color:black; background-color:rgba(152,251,152, 0.2); border-color:rgba(152,251,152, 0.2)">
+        <div class="alert alert-success" role="alert" style= " width: 240px;">
           <?php echo $alert ?>
           </div>
           <?php } ?>
