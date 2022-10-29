@@ -70,6 +70,12 @@ include("navBar.php");
                                         <button type="submit" class="btn btn-lg btn-outline-danger rounded-pill position-absolute bottom-0 end-0 m-2">Cancelar</button>
                                     </form>
                                 <?php } ?>
+                                <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && ($reserva->getEstado() == "En espera de pago")) { ?>
+                                    <form action="<?php echo FRONT_ROOT ?>Reserva/ShowCuponView" method="Post">
+                                        <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
+                                        <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Cupon de Pago</button>
+                                    </form>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

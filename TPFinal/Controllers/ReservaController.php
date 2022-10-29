@@ -62,6 +62,22 @@ class ReservaController
         }
     }
 
+    public function ShowCuponView($idReserva)
+    {
+        if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
+            try {
+                $cupon = $this->reservaDAO->GetCuponByIdReserva($idReserva);
+
+                require_once(VIEWS_PATH . "list-cupon.php");
+
+            } catch (Exception $ex) {
+                $alert  = $ex;
+            }
+        } else {
+            HomeController::Index();
+        }
+    }
+
     public function Add($fechaInicio, $fechaFin, $precioTotal, $idMascota, $idGuardian, $idDuenio)
     {
         if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
@@ -134,8 +150,6 @@ class ReservaController
                 ///Cupon de pago
                 $cupon = new Cupon($idReserva, $_SESSION["loggedUser"]->getAliasCBU(), $reservaConfirmada->getPrecioTotal());
                 $this->reservaDAO->AddCupon($cupon);
-
-
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
