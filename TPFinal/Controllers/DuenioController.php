@@ -39,6 +39,7 @@ class DuenioController
 
     public function ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes)
     {
+        
         if ($this->validateSession()) {
 
             require_once(VIEWS_PATH . "list-guardianes.php");

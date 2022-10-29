@@ -38,6 +38,15 @@ include("navBar.php");
                 </div>
                
         </div>
+        <br><br>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <h3>Alias (CBU)</h3>
+                <div class="form-floating mx-5 row">
+                    <input type="text" name="aliasCBU" class="form-control" id="floatingInput" value="<?php echo $_SESSION["loggedUser"]->getAliasCBU() ?>" placeholder="Alias (CBU)" required>
+                    <label for="floatingInput">Alias (CBU)</label>
+                </div>
+               
+        </div>
      </div>
      <div class="my-5 row">
         <div class="col-sm-8 col-md-9 d-flex justify-content-center my-2">

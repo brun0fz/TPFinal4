@@ -79,15 +79,21 @@ class MascotaController
                 chmod(ROOT . VIEWS_PATH . "/img/" . $namePlanVacunas, 0777);
 
                 ///Video
-                $temp3 = $rutaVideo["tmp_name"];
-                $aux3 = explode("/", $rutaVideo["type"]);
-                $type3 = $aux3[1];
+                if ($rutaVideo["tmp_name"] != "") {
 
-                $nameVideo = $_SESSION["loggedUser"]->getId() . "-" . "Video" . "." . $type3;
+                    $temp3 = $rutaVideo["tmp_name"];
+                    $aux3 = explode("/", $rutaVideo["type"]);
+                    $type3 = $aux3[1];
 
-                move_uploaded_file($temp3, ROOT . VIEWS_PATH . "/video/" . $nameVideo);
+                    $nameVideo = $_SESSION["loggedUser"]->getId() . "-" . "Video" . "." . $type3;
 
-                chmod(ROOT . VIEWS_PATH . "/video/" . $nameVideo, 0777);
+                    move_uploaded_file($temp3, ROOT . VIEWS_PATH . "/video/" . $nameVideo);
+
+                    chmod(ROOT . VIEWS_PATH . "/video/" . $nameVideo, 0777);
+                } else {
+                    $nameVideo = "undefinedVideo";
+                }
+
 
                 $newMascota = new Mascota($animal, $raza, $nombre, $tamanio, $observaciones, $name, $namePlanVacunas, $nameVideo, $_SESSION["loggedUser"]->getId());
 

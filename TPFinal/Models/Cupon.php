@@ -10,9 +10,8 @@ class Cupon
     private $aliasGuardian;
     private $total;
 
-    public function __construct($idCupon, $fk_idReserva, $aliasGuardian, $total)
+    public function __construct($fk_idReserva, $aliasGuardian, $total)
     {
-        $this->idCupon = $idCupon;
         $this->fk_idReserva = $fk_idReserva;
         $this->aliasGuardian = $aliasGuardian;
         $this->total = $total;

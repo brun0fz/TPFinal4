@@ -20,7 +20,6 @@ class HomeController
 
     static function Index($alert = "")
     {
-
         if (isset($_SESSION["loggedUser"])) {
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
                 require_once(VIEWS_PATH . "duenioHome.php");

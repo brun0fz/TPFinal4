@@ -7,6 +7,7 @@ use DAO\MascotaDAO;
 use DAO\ReservaDAO;
 use DateTime;
 use Exception;
+use Models\Cupon;
 use Models\EstadoReserva;
 use Models\Reserva;
 
@@ -107,13 +108,13 @@ class ReservaController
             HomeController::Index();
         }
     }
- 
+
     public function confirmarReserva($idReserva)
     {
         if (isset($_SESSION["loggedUser"]) && $_SESSION["loggedUser"]->getTipo() == 2) {
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, "En espera de pago");
-                $alert = "El estado de la reserva ha sido cambiado.";
+                $alert = "El estado de la reserva ha sido cambiado. Se ha enviado el cupon de pago.";
 
                 $reservaConfirmada = $this->reservaDAO->GetReservaById($idReserva);
 
@@ -129,6 +130,12 @@ class ReservaController
                         $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), "Cancelada");
                     }
                 }
+
+                ///Cupon de pago
+                $cupon = new Cupon($idReserva, $_SESSION["loggedUser"]->getAliasCBU(), $reservaConfirmada->getPrecioTotal());
+                $this->reservaDAO->AddCupon($cupon);
+
+
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {

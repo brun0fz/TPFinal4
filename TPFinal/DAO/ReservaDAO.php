@@ -5,6 +5,7 @@ namespace DAO;
 use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\IReservaDAO as IReservaDAO;
+use Models\Cupon;
 use Models\Reserva;
 
 class ReservaDAO implements IReservaDAO
@@ -389,6 +390,55 @@ class ReservaDAO implements IReservaDAO
                 }
             }
             return $reserva;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function AddCupon($cupon)
+    {
+        try {
+            $query = "INSERT INTO Cupones (total, fk_idReserva, aliasGuardian) VALUES (:total, :fk_idReserva, :aliasGuardian);";
+
+            $parameters["total"] = $cupon->getTotal();
+            $parameters["fk_idReserva"] = $cupon->getFkIdReserva();
+            $parameters["aliasGuardian"] = $cupon->getAliasGuardian();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function GetCuponByIdReserva($idReserva)
+    {
+        try {
+            $cupon = null;
+
+            $query = "SELECT * FROM Cupones WHERE (fk_idReserva = :fk_idReserva)";
+
+            $parameters["fk_idReserva"] = $idReserva;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $cupon = new Cupon(NULL, NULL, NULL);
+
+                    $cupon->setIdCupon($row["idCupon"]);
+                    $cupon->setTotal($row["total"]);
+                    $cupon->setFkIdReserva($row["fk_idReserva"]);
+                    $cupon->setAliasGuardian($row["aliasGuardian"]);
+                }
+            }
+
+            return $cupon;
         } catch (Exception $ex) {
             throw $ex;
         }

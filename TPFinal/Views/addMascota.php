@@ -45,11 +45,11 @@ include("navBar.php");
                 <label for="floatingInput">Observaciones</label>
             </div>
             <div class="form-floating" imgInput>
-                <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" required>
+                <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept="image/*" required>
                 <label for="floatingInput">Foto</label>
             </div>
             <div class="form-floating" imgInput>
-                <input type="file" name="rutaPlanVacunas" class="form-control form-control-sm" id="floatingInput" placeholder="Plan de Vacunas" accept=".png, .jpg, .jpeg" required>
+                <input type="file" name="rutaPlanVacunas" class="form-control form-control-sm" id="floatingInput" placeholder="Plan de Vacunas" accept="image/*" required>
                 <label for="floatingInput">Plan de Vacunas</label>
             </div>
             <div class="form-floating" imgInput>

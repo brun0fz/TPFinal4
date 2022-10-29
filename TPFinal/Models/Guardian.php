@@ -2,6 +2,7 @@
 
 class Guardian extends Usuario{
 
+    private $aliasCBU;
     private $calle;
     private $numero;
     private $piso;
@@ -200,6 +201,24 @@ class Guardian extends Usuario{
     public function setCodigoPostal($codigoPostal): self
     {
         $this->codigoPostal = $codigoPostal;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of aliasCBU
+     */
+    public function getAliasCBU()
+    {
+        return $this->aliasCBU;
+    }
+
+    /**
+     * Set the value of aliasCBU
+     */
+    public function setAliasCBU($aliasCBU): self
+    {
+        $this->aliasCBU = $aliasCBU;
 
         return $this;
     }

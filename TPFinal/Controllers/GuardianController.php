@@ -84,7 +84,7 @@ class GuardianController
         }
     }
 
-    public function setConfig($dias = array(), $tamanios = array(), $precio = null)
+    public function setConfig($dias = array(), $tamanios = array(), $precio = "", $aliasCBU = "")
     {
         if ($this->validateSession()) {
             try {
@@ -96,6 +96,9 @@ class GuardianController
 
                 $_SESSION["loggedUser"]->setDisponibilidad($dias);
                 $this->guardianDAO->UpdateDisponibilidad($_SESSION["loggedUser"]->getId(), $dias);
+
+                $_SESSION["loggedUser"]->setAliasCBU($aliasCBU);
+                $this->guardianDAO->UpdateAliasCBU($_SESSION["loggedUser"]->getId(), $aliasCBU);
 
                 $alert = "Configuracion guardada con exito ✓";
             } catch (Exception $ex) {
