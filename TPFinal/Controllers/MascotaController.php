@@ -50,7 +50,7 @@ class MascotaController
         }
     }
 
-    public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas)
+    public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas, $rutaVideo)
     {
         if ($this->validateSession()) {
             try {
@@ -78,8 +78,18 @@ class MascotaController
 
                 chmod(ROOT . VIEWS_PATH . "/img/" . $namePlanVacunas, 0777);
 
+                ///Video
+                $temp3 = $rutaVideo["tmp_name"];
+                $aux3 = explode("/", $rutaVideo["type"]);
+                $type3 = $aux3[1];
 
-                $newMascota = new Mascota($animal, $raza, $nombre, $tamanio, $observaciones, $name, $namePlanVacunas, $_SESSION["loggedUser"]->getId());
+                $nameVideo = $_SESSION["loggedUser"]->getId() . "-" . "Video" . "." . $type3;
+
+                move_uploaded_file($temp3, ROOT . VIEWS_PATH . "/video/" . $nameVideo);
+
+                chmod(ROOT . VIEWS_PATH . "/video/" . $nameVideo, 0777);
+
+                $newMascota = new Mascota($animal, $raza, $nombre, $tamanio, $observaciones, $name, $namePlanVacunas, $nameVideo, $_SESSION["loggedUser"]->getId());
 
                 $this->mascotaDAO->Add($newMascota);
 

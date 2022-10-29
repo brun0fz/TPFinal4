@@ -18,7 +18,7 @@ class Mascota
 
     private $alta = true;
 
-    public function __construct($animal, $raza, $nombre, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas, $idDuenio)
+    public function __construct($animal, $raza, $nombre, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas, $rutaVideo, $idDuenio)
     {
         $this->animal = $animal;
         $this->nombre = $nombre;
@@ -27,6 +27,7 @@ class Mascota
         $this->observaciones = $observaciones;
         $this->rutaFoto = $rutaFoto;
         $this->rutaPlanVacunas = $rutaPlanVacunas;
+        $this->rutaVideo = $rutaVideo;
         $this->idDuenio = $idDuenio;
     }
 

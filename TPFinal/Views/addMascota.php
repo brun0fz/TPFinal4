@@ -52,6 +52,10 @@ include("navBar.php");
                 <input type="file" name="rutaPlanVacunas" class="form-control form-control-sm" id="floatingInput" placeholder="Plan de Vacunas" accept=".png, .jpg, .jpeg" required>
                 <label for="floatingInput">Plan de Vacunas</label>
             </div>
+            <div class="form-floating" imgInput>
+                <input type="file" name="rutaVideo" class="form-control form-control-sm" id="floatingInput" placeholder="Video" accept="video/*">
+                <label for="floatingInput">Video</label>
+            </div>
             <br>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Añadir</button>
         </form>
