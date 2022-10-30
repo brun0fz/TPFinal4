@@ -9,9 +9,8 @@ class Review
     private $puntaje;
     private $fk_idReserva;
 
-    public function __construct($idReview, $comentario, $puntaje, $fk_idReserva)
+    public function __construct($comentario, $puntaje, $fk_idReserva)
     {
-        $this->idReview = $idReview;
         $this->comentario = $comentario;
         $this->puntaje = $puntaje;
         $this->fk_idReserva = $fk_idReserva;

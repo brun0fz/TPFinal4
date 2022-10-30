@@ -12,10 +12,10 @@ include('header.php');
                 <img class="mb-4" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="150" height="150">
                 <h3>Nuevo Usuario</h3><br>
                 <?php if ($alert != "") { ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php echo $alert ?>
-                        </div>
-                    <?php } ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $alert ?>
+                    </div>
+                <?php } ?>
                 <div class="form-floating">
                     <input type="text" name="nombre" class="form-control" id="floatingInput" placeholder="nombre" required>
                     <label for="floatingInput">Nombre</label>
@@ -33,8 +33,10 @@ include('header.php');
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="contraseña" required>
+                    <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" class="form-control" id="floatingPassword" placeholder="contraseña" required>
                     <label for="floatingPassword">Contraseña</label>
+                    <small id="passwordHelpBlock" class="form-text text-muted">
+                    Su contraseña debe tener al menos 8 caracteres y al menos un número y una letra.
                 </div>
                 <?php if ($type == 2) { ?>
                     <div class="form-floating">

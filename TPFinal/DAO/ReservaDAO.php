@@ -7,6 +7,7 @@ use DAO\Connection as Connection;
 use DAO\IReservaDAO as IReservaDAO;
 use Models\Cupon;
 use Models\Reserva;
+use Models\Review;
 
 class ReservaDAO implements IReservaDAO
 {
@@ -439,6 +440,55 @@ class ReservaDAO implements IReservaDAO
             }
 
             return $cupon;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function AddReview($review)
+    {
+        try {
+            $query = "INSERT INTO Reviews (comentario, puntaje, fk_idReserva) VALUES (:comentario, :puntaje, :fk_idReserva);";
+
+            $parameters["comentario"] = $review->getComentario();
+            $parameters["puntaje"] = $review->getPuntaje();
+            $parameters["fk_idReserva"] = $review->getFkIdReserva();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function GetReviewByIdReserva($idReserva)
+    {
+        try {
+            $review = null;
+
+            $query = "SELECT * FROM Reviews WHERE (fk_idReserva = :fk_idReserva)";
+
+            $parameters["fk_idReserva"] = $idReserva;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $review = new Review(NULL, NULL, NULL);
+
+                    $review->setIdReview($row["idReview"]);
+                    $review->setComentario($row["comentario"]);
+                    $review->setPuntaje($row["puntaje"]);
+                    $review->setFkIdReserva($row["fk_idReserva"]);
+                }
+            }
+
+            return $review;
         } catch (Exception $ex) {
             throw $ex;
         }

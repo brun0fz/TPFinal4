@@ -3,6 +3,7 @@
 use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use DAO\MascotaDAO;
+use DAO\ReservaDAO;
 use Models\Reserva;
 use Models\Guardian;
 use Models\Mascota;
@@ -32,10 +33,12 @@ include("navBar.php");
             $guardianDAO = new GuardianDAO();
             $duenioDAO = new DuenioDAO();
             $mascotaDAO = new MascotaDAO();
+            $reservaDAO = new ReservaDAO();
 
             $guardian = $guardianDAO->BuscarId($reserva->getFkIdGuardian());
             $duenio = $duenioDAO->BuscarId($reserva->getFkIdDuenio());
             $mascota = $mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+            $review = $reservaDAO->GetReviewByIdReserva($reserva->getIdReserva());
         ?>
 
             <div class="card mb-3 shadow-sm">
@@ -55,7 +58,11 @@ include("navBar.php");
                                 <p class="card-text">Dueño: <b><?php echo $duenio->getNombre() . " " . $duenio->getApellido(); ?></b></p>
                                 <p class="card-text"><span>Animal: <b><?php echo $mascota->getAnimal() ?></b></span><span class="ms-3">Raza: <b><?php echo $mascota->getRaza() ?></b></span></p>
                             <?php } ?>
-                            <p class="card-text">Precio Total: <b><?php echo "$" . $reserva->getPrecioTotal(); ?></b></p>
+                            <p class="card-text">Precio Total: <b><?php echo $reserva->getPrecioTotal(); ?></b></p>
+                            <?php if ($review) { ?>
+                                <p class="card-text">Comentario: <b><?php echo $review->getComentario(); ?></b></p>
+                                <p class="card-text">Puntaje: <b><?php echo $review->getPuntaje() . "/5"; ?></b></p>
+                            <?php } ?>
                             <div class="text-end">
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada") { ?>
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/confirmarReserva" method="Post">
@@ -73,7 +80,13 @@ include("navBar.php");
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && ($reserva->getEstado() == "En espera de pago")) { ?>
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/ShowCuponView" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
-                                        <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Cupon de Pago</button>
+                                        <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Cupon de pago</button>
+                                    </form>
+                                <?php } ?>
+                                <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && !$review && ($reserva->getEstado() == "Completada")) { ?>
+                                    <form action="<?php echo FRONT_ROOT ?>Reserva/ShowReviewView" method="Post">
+                                        <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
+                                        <button type="submit" class="btn btn-lg btn-outline-primary rounded-pill position-absolute bottom-0 end-0 m-2">Calificar</button>
                                     </form>
                                 <?php } ?>
                             </div>

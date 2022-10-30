@@ -23,7 +23,7 @@ include("navBar.php");
             <form action="<?php echo FRONT_ROOT ?>Reserva/cambiarEstado" method="Post">
                 <input type="hidden" name="idReserva" value="<?php echo $cupon->getFkIdReserva(); ?>">
                 <input type="hidden" name="estado" value="Confirmada">
-                <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-relative bottom-0 m-2 btn-confirmar">Pagar</button>
+                <input class="btn btn-lg btn-primary" type="submit" value="Pagar">
             </form>
         </div>
     </div>

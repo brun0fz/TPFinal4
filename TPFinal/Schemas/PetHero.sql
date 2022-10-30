@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com:3306
--- Generation Time: Oct 27, 2022 at 07:35 AM
+-- Generation Time: Oct 30, 2022 at 12:01 AM
 -- Server version: 8.0.22-13
 -- PHP Version: 7.2.34
 
@@ -68,6 +68,27 @@ INSERT INTO `Animales` (`idAnimal`, `animal`, `raza`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Cupones`
+--
+
+CREATE TABLE `Cupones` (
+  `idCupon` int NOT NULL,
+  `total` float NOT NULL,
+  `fk_idReserva` int NOT NULL,
+  `aliasGuardian` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Cupones`
+--
+
+INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`, `aliasGuardian`) VALUES
+(1, 45000, 23, 'messi.rve'),
+(2, 15000, 24, 'messi.rve');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Direcciones`
 --
 
@@ -86,7 +107,7 @@ CREATE TABLE `Direcciones` (
 
 INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamento`, `codigoPostal`) VALUES
 (5, 'Luro', '2365', '2', 'C', '7600'),
-(6, 'Funes', '1254', '4', 'D', '7600');
+(7, 'San Martin', '2365', '6', 'C', '7600');
 
 -- --------------------------------------------------------
 
@@ -110,8 +131,8 @@ CREATE TABLE `Disponibilidades` (
 --
 
 INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `domingo`) VALUES
-(3, 1, 1, 1, 1, 1, 0, 0),
-(4, 0, 0, 0, 0, 0, 1, 1);
+(3, 1, 1, 1, 1, 0, 0, 0),
+(5, 1, 1, 1, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -136,7 +157,8 @@ CREATE TABLE `Duenios` (
 --
 
 INSERT INTO `Duenios` (`idDuenio`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`) VALUES
-(1, 'Bruno', 'Fabrizio', '2236698574', 'bruno@gmail.com', '123', 1, 'bruno@gmail.com.jpg', 1);
+(1, 'Bruno', 'Fabrizio', '2236698574', 'bruno@gmail.com', '123', 1, 'bruno@gmail.com.jpg', 1),
+(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', '123', 1, 'clara@gmail.com.png', 1);
 
 -- --------------------------------------------------------
 
@@ -151,10 +173,11 @@ CREATE TABLE `Guardianes` (
   `telefono` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
+  `aliasCBU` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `tipo` tinyint NOT NULL DEFAULT '2',
   `rutaFoto` varchar(100) NOT NULL,
   `alta` tinyint(1) NOT NULL DEFAULT '1',
-  `reputacion` float DEFAULT '0',
+  `reputacion` float DEFAULT '2.5',
   `precioXDia` float DEFAULT '0',
   `fk_idDireccion` int DEFAULT NULL,
   `fk_idDisponibilidad` int DEFAULT NULL,
@@ -165,9 +188,9 @@ CREATE TABLE `Guardianes` (
 -- Dumping data for table `Guardianes`
 --
 
-INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
-(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', '123', 2, 'belen@gmail.com.jpeg', 1, 0, 499, 5, 3, 4),
-(6, 'Clara', 'Videla', '2234587452', 'clara@gmail.com', '123', 2, 'clara@gmail.com.jpeg', 1, 0, 899, 6, 4, 5);
+INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `aliasCBU`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
+(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', '123', '', 2, 'belen@gmail.com.jpeg', 1, 2.5, 899, 5, 3, 4),
+(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', '123', 'messi.rve', 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6);
 
 -- --------------------------------------------------------
 
@@ -194,8 +217,8 @@ CREATE TABLE `Mascotas` (
 
 INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `rutaFoto`, `rutaPlanVacunas`, `rutaVideo`, `fk_idDuenio`, `fk_idAnimal`, `alta`) VALUES
 (3, 'Sasha', 'M', 'Dormilona', '1-Sasha.jpeg', '1-Vacunas.png', 'undefinedVideo', 1, 5, 1),
-(4, 'Lolo', 'L', 'Marron', '1-Lolo.png', '1-Vacunas.png', 'undefinedVideo', 1, 6, 1),
-(5, 'Pepito', 'M', 'Muy lindo', '1-Pepito.png', '1-Vacunas.png', 'undefinedVideo', 1, 5, 1);
+(8, 'Pepa', 'M', 'Muy gruñona', '2-Pepa.jpeg', '2-Vacunas.png', '2-Video.mp4', 2, 30, 1),
+(10, 'Pompon', 'M', 'Le gusta el pollito', '2-Pompon.jpeg', '2-Vacunas.png', 'undefinedVideo', 2, 30, 1);
 
 -- --------------------------------------------------------
 
@@ -209,7 +232,6 @@ CREATE TABLE `Reservas` (
   `fechaFin` date NOT NULL,
   `precioTotal` float NOT NULL,
   `estado` varchar(100) NOT NULL DEFAULT 'Solicitada',
-  `puntaje` int NOT NULL DEFAULT '0',
   `fk_idMascota` int NOT NULL,
   `fk_idDuenio` int NOT NULL,
   `fk_idGuardian` int NOT NULL
@@ -219,8 +241,22 @@ CREATE TABLE `Reservas` (
 -- Dumping data for table `Reservas`
 --
 
-INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `puntaje`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
-(5, '2022-10-26', '2022-10-28', 1497, 'Solicitada', 0, 3, 1, 5);
+INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
+(23, '2022-10-31', '2022-11-02', 45000, 'En espera de pago', 8, 2, 7),
+(24, '2022-11-21', '2022-11-21', 15000, 'Confirmada', 3, 1, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Reviews`
+--
+
+CREATE TABLE `Reviews` (
+  `idReview` int NOT NULL,
+  `comentario` varchar(144) DEFAULT NULL,
+  `puntaje` int NOT NULL,
+  `fk_idReserva` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -240,8 +276,8 @@ CREATE TABLE `TamaniosMascota` (
 --
 
 INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grande`) VALUES
-(4, 1, 1, 0),
-(5, 0, 0, 1);
+(4, 1, 1, 1),
+(6, 1, 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -252,6 +288,13 @@ INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grand
 --
 ALTER TABLE `Animales`
   ADD PRIMARY KEY (`idAnimal`);
+
+--
+-- Indexes for table `Cupones`
+--
+ALTER TABLE `Cupones`
+  ADD PRIMARY KEY (`idCupon`),
+  ADD KEY `fk_id_reserva` (`fk_idReserva`);
 
 --
 -- Indexes for table `Direcciones`
@@ -298,6 +341,13 @@ ALTER TABLE `Reservas`
   ADD KEY `fk_idGuardian` (`fk_idGuardian`);
 
 --
+-- Indexes for table `Reviews`
+--
+ALTER TABLE `Reviews`
+  ADD PRIMARY KEY (`idReview`),
+  ADD KEY `fk_id_reserv` (`fk_idReserva`);
+
+--
 -- Indexes for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
@@ -314,50 +364,68 @@ ALTER TABLE `Animales`
   MODIFY `idAnimal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `Cupones`
+--
+ALTER TABLE `Cupones`
+  MODIFY `idCupon` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `Direcciones`
 --
 ALTER TABLE `Direcciones`
-  MODIFY `idDireccion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idDireccion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `Disponibilidades`
 --
 ALTER TABLE `Disponibilidades`
-  MODIFY `idDisponibilidad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idDisponibilidad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `idDuenio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idDuenio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  MODIFY `idGuardian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idGuardian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `idMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `Reviews`
+--
+ALTER TABLE `Reviews`
+  MODIFY `idReview` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
-  MODIFY `idTamanioMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idTamanioMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `Cupones`
+--
+ALTER TABLE `Cupones`
+  ADD CONSTRAINT `fk_id_reserva` FOREIGN KEY (`fk_idReserva`) REFERENCES `Reservas` (`idReserva`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Guardianes`
@@ -381,6 +449,12 @@ ALTER TABLE `Reservas`
   ADD CONSTRAINT `fk_id_mascota` FOREIGN KEY (`fk_idMascota`) REFERENCES `Mascotas` (`idMascota`) ON UPDATE CASCADE,
   ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`fk_idDuenio`) REFERENCES `Duenios` (`idDuenio`) ON UPDATE CASCADE,
   ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`fk_idGuardian`) REFERENCES `Guardianes` (`idGuardian`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `Reviews`
+--
+ALTER TABLE `Reviews`
+  ADD CONSTRAINT `fk_id_reserv` FOREIGN KEY (`fk_idReserva`) REFERENCES `Reservas` (`idReserva`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

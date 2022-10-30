@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use DAO\MascotaDAO;
 use DAO\ReservaDAO;
@@ -10,6 +11,7 @@ use Exception;
 use Models\Cupon;
 use Models\EstadoReserva;
 use Models\Reserva;
+use Models\Review;
 
 class ReservaController
 {
@@ -17,12 +19,14 @@ class ReservaController
     private $mascotaDAO;
     private $guardianDAO;
     private $reservaDAO;
+    private $duenioDAO;
 
     public function __construct()
     {
         $this->mascotaDAO = new MascotaDAO();
         $this->guardianDAO = new GuardianDAO();
         $this->reservaDAO = new ReservaDAO();
+        $this->duenioDAO = new DuenioDAO();
     }
 
     public function ShowAddReservaView($idGuardian, $fechaInicio, $fechaFin, $idMascota)
@@ -67,9 +71,27 @@ class ReservaController
         if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
             try {
                 $cupon = $this->reservaDAO->GetCuponByIdReserva($idReserva);
-
+                $reserva = $this->reservaDAO->GetReservaById($cupon->getFkIdReserva());
                 require_once(VIEWS_PATH . "list-cupon.php");
+            } catch (Exception $ex) {
+                $alert  = $ex;
+            }
+        } else {
+            HomeController::Index();
+        }
+    }
 
+    public function ShowReviewView($idReserva)
+    {
+
+        if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
+            try {
+                $reserva = $this->reservaDAO->GetReservaById($idReserva);
+                $guardian = $this->guardianDAO->BuscarId($reserva->getFkIdGuardian());
+                $duenio = $this->duenioDAO->BuscarId($reserva->getFkIdDuenio());
+                $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+
+                require_once(VIEWS_PATH . "list-review.php");
             } catch (Exception $ex) {
                 $alert  = $ex;
             }
@@ -157,6 +179,18 @@ class ReservaController
             }
         } else {
             HomeController::Index();
+        }
+    }
+
+    public function AddReview($comentario, $puntaje, $idReserva)
+    {
+        try {
+            $review = new Review($comentario, $puntaje, $idReserva);
+            $this->reservaDAO->AddReview($review);
+        } catch (Exception $ex) {
+            echo $ex;
+        }finally{
+            $this->ShowListReservasView();
         }
     }
 }
