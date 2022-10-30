@@ -236,6 +236,7 @@ class DuenioController
             echo $ex;
         }
     }
+    
 
     private function traducirDias($diaSemana)
     {
