@@ -14,7 +14,7 @@ include("navBar.php");
 ?>
 
 <div class="container">
-    <div class="list-reservas">
+    <div class="list-reservas position-relative">
         <h2 id="list-title">Mis Reservas</h2><br>
 
         <?php if ($alert != "") { ?>
@@ -29,6 +29,10 @@ include("navBar.php");
             </div>
         <?php } ?>
 
+        <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
+        <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>"><button class="btn btn-primary position-absolute top-0 end-0 mt-3">Nueva Reserva</button></a><br>
+        <?php } ?>
+        
         <?php foreach ($listaReservas as $reserva) {
             $guardianDAO = new GuardianDAO();
             $duenioDAO = new DuenioDAO();
@@ -58,7 +62,7 @@ include("navBar.php");
                                 <p class="card-text">Dueño: <b><?php echo $duenio->getNombre() . " " . $duenio->getApellido(); ?></b></p>
                                 <p class="card-text"><span>Animal: <b><?php echo $mascota->getAnimal() ?></b></span><span class="ms-3">Raza: <b><?php echo $mascota->getRaza() ?></b></span></p>
                             <?php } ?>
-                            <p class="card-text">Precio Total: <b><?php echo $reserva->getPrecioTotal(); ?></b></p>
+                            <p class="card-text">Precio Total: <b>$<?php echo $reserva->getPrecioTotal(); ?></b></p>
                             <?php if ($review) { ?>
                                 <p class="card-text">Comentario: <b><?php echo $review->getComentario(); ?></b></p>
                                 <p class="card-text">Puntaje: <b><?php echo $review->getPuntaje() . "/5"; ?></b></p>
@@ -80,7 +84,7 @@ include("navBar.php");
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && ($reserva->getEstado() == "En espera de pago")) { ?>
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/ShowCuponView" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
-                                        <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Cupon de pago</button>
+                                        <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Pagar</button>
                                     </form>
                                 <?php } ?>
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && !$review && ($reserva->getEstado() == "Completada")) { ?>
