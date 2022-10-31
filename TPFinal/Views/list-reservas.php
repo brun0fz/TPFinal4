@@ -32,7 +32,7 @@ include("navBar.php");
         <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
         <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>"><button class="btn btn-primary position-absolute top-0 end-0 mt-3">Nueva Reserva</button></a><br>
         <?php } ?>
-        
+
         <?php foreach ($listaReservas as $reserva) {
             $guardianDAO = new GuardianDAO();
             $duenioDAO = new DuenioDAO();
@@ -102,7 +102,7 @@ include("navBar.php");
         <?php } ?>
     </div>
 </div>
-
+ 
 <?php
 include("footer.php");
 ?>
