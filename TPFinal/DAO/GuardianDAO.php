@@ -6,6 +6,7 @@ use \Exception as Exception;
 use DAO\IGuardianDAO as IGuardianDAO;
 use Models\Guardian as Guardian;
 use DAO\Connection as Connection;
+use Models\EstadoReserva;
 
 class GuardianDAO implements IGuardianDAO
 {
@@ -374,6 +375,52 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters["aliasCBU"] = $aliasCBU;
             $parameters["idGuardian"] = $idGuardian;
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+
+    public function UpdateReputacion($idReserva)
+    {
+        try {
+
+            $cant = 0;
+            $suma = 0;
+
+            $reservaDAO = new ReservaDAO();
+
+            $reserva = $reservaDAO->GetReservaById($idReserva);
+
+            $listaReservas = $reservaDAO->ListaReservasGuardian($reserva->getFkIdGuardian());
+
+            foreach ($listaReservas as $reserva) {
+
+                if ($reserva->getEstado() == "Finalizada") {
+                    $review = $reservaDAO->GetReviewByIdReserva($reserva->getIdReserva());
+
+
+
+                    if ($review) {
+                        $suma += $review->getPuntaje();
+                        $cant++;
+                    }
+                }
+            }
+
+            if ($cant != 0) {
+                $reputacion = ($suma / $cant);
+            }
+
+            $query = "UPDATE " . $this->tableName . " SET reputacion = :reputacion WHERE idGuardian = :idGuardian;";
+
+            $parameters["reputacion"] = $reputacion;
+            $parameters["idGuardian"] = $reserva->getFkIdGuardian();
+
 
             $this->connection = Connection::GetInstance();
 

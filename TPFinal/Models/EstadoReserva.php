@@ -9,6 +9,6 @@ enum EstadoReserva: string
     case ACEPTADA = "Aceptada";
     case CANCELADA = "Cancelada";
     case EN_CURSO = "En curso";
-    case COMPLETADA = "Completada";
+    case FINALIZADA = "Finalizada";
     case ESPERA = "En espera de pago";
 }

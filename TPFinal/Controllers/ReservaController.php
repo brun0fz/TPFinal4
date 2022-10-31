@@ -187,9 +187,11 @@ class ReservaController
         try {
             $review = new Review($comentario, $puntaje, $idReserva);
             $this->reservaDAO->AddReview($review);
+
+            $this->guardianDAO->UpdateReputacion($idReserva);
         } catch (Exception $ex) {
             echo $ex;
-        }finally{
+        } finally {
             $this->ShowListReservasView();
         }
     }
