@@ -87,7 +87,7 @@ include("navBar.php");
                                         <button type="submit" class="btn btn-lg btn-outline-success rounded-pill position-absolute bottom-0 m-2 btn-confirmar">Pagar</button>
                                     </form>
                                 <?php } ?>
-                                <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && !$review && ($reserva->getEstado() == "Completada")) { ?>
+                                <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && !$review && ($reserva->getEstado() == "Finalizada")) { ?>
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/ShowReviewView" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
                                         <button type="submit" class="btn btn-lg btn-outline-primary rounded-pill position-absolute bottom-0 end-0 m-2">Calificar</button>

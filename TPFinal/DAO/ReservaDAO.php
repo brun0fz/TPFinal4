@@ -493,4 +493,35 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
+
+
+    public function getGuardianByReserva($idReserva)
+    {
+
+        try {
+            $idGuardian = null;
+
+            $query = "SELECT fk_idGuardian FROM Reservas WHERE (fk_idReserva = :fk_idReserva)";
+
+            $parameters["fk_idReserva"] = $idReserva;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $idGuardian = $row["fk_idGuardian"];
+                }
+            }
+            return $idGuardian;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    
+
 }
