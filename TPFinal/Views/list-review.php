@@ -29,12 +29,12 @@ include("navBar.php");
         </div>
         <form action="<?php echo FRONT_ROOT ?>Reserva/AddReview" method="Post">
             <div class="form-floating">
-                <input type="text" name="comentario" class="form-control" id="floatingInput" placeholder="Comentario">
+                <input type="text" name="comentario" class="form-control" id="floatingInput" placeholder="Comentario" style="width: 500px; height: 150px;">
                 <label for="floatingInput">Comentario</label>
             </div>
             <br>
             <div class="form-floating">
-                <input type="number" name="puntaje" class="form-control" id="floatingInput" min=0 max=5 placeholder="Puntaje" required>
+                <input type="number" name="puntaje" class="form-control" id="floatingInput" min=0 max=5 placeholder="Puntaje" style="width: 107px; height: 58px" required>
                 <label for="floatingInput">Puntaje</label>
             </div>
             <br>

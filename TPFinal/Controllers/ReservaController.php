@@ -136,7 +136,18 @@ class ReservaController
         if (isset($_SESSION["loggedUser"])) {
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, $estado);
-                $alert = "El estado de la reserva ha sido cambiado.";
+
+                switch ($estado) {
+                    case "Cancelada":
+                        $alert = "La reserva ha sido cancelada.";
+                        break;
+                    case "Confirmada":
+                        $alert = "Su pago ha sido realizado con exito.";
+                        break;
+                    case "Solicitada":
+                        $alert = "Su reserva ha sido solicitada. Espere confimarcion del Guardian.";
+                        break;
+                }
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -152,7 +163,7 @@ class ReservaController
         if (isset($_SESSION["loggedUser"]) && $_SESSION["loggedUser"]->getTipo() == 2) {
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, "En espera de pago");
-                $alert = "El estado de la reserva ha sido cambiado. Se ha enviado el cupon de pago.";
+                $alert = "Se ha enviado el cupon de pago.";
 
                 $reservaConfirmada = $this->reservaDAO->GetReservaById($idReserva);
 
@@ -170,8 +181,15 @@ class ReservaController
                 }
 
                 ///Cupon de pago
-                $cupon = new Cupon($idReserva, $_SESSION["loggedUser"]->getAliasCBU(), $reservaConfirmada->getPrecioTotal());
+                $precioParcial = ($reservaConfirmada->getPrecioTotal() * 0.5);
+
+                $cupon = new Cupon($idReserva, $_SESSION["loggedUser"]->getAliasCBU(), $precioParcial);
                 $this->reservaDAO->AddCupon($cupon);
+
+                ///EMAIL
+                $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
+
+                mail($duenio->getEmail(), "PET-HERO: Cupon de Pago", "",);
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -189,10 +207,12 @@ class ReservaController
             $this->reservaDAO->AddReview($review);
 
             $this->guardianDAO->UpdateReputacion($idReserva);
+
+            $alert = "Su calificacion ha sido enviada.";
         } catch (Exception $ex) {
             echo $ex;
         } finally {
-            $this->ShowListReservasView();
+            $this->ShowListReservasView($alert);
         }
     }
 }

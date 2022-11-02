@@ -8,4 +8,6 @@
     {
         function Add(Duenio $duenio);
         function GetAll();
+        function Buscar($email);
+        function BuscarId($idDuenio);
     }

@@ -8,4 +8,7 @@
     {
         function Add(Mascota $mascota);
         function GetAll();
+        function GetAnimales();
+        function ListaDuenio($idDuenio);
+        function GetMascotaById($idMascota);
     }
