@@ -64,8 +64,11 @@ include("nav-bar.php");
                             <?php } ?>
                             <p class="card-text">Precio Total: <b>$<?php echo $reserva->getPrecioTotal(); ?></b></p>
                             <?php if ($review) { ?>
-                                <p class="card-text">Comentario: <b><?php echo $review->getComentario(); ?></b></p>
-                                <p class="card-text">Puntaje: <b><?php echo $review->getPuntaje() . "/5"; ?></b></p>
+                                <div class="alert alert-dark" style="width: fit-content;">
+                                <span class="card-text">Review: <b><i><?php echo $review->getComentario(); ?></i></b></span>
+                                    <b class="ms-1"><?php echo "- " . $review->getPuntaje(); ?></b>
+                                    <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
+                                </div>
                             <?php } ?>
                             <div class="text-end">
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada") { ?>

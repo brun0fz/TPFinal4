@@ -96,16 +96,15 @@ main {
 }
 
 .card-img-reserva {
-  height: 350px;
+  height: 340px;
   overflow: hidden;
 }
 
 .img-reserva {
-  -o-object-fit: contain;
-     object-fit: contain;
-  width: auto;
+  max-width: 100%;
+  min-width: 100%;
   min-height: 100%;
-  max-height: 110%;
+  max-height: auto;
 }
 
 .btn-confirmar {
@@ -156,6 +155,12 @@ main {
   width: 250px;
   height: 250px;
   align-items: center;
+}
+
+.profile-picture-img {
+  max-width: 135%;
+  min-width: 100%;
+  height: auto;
 }
 
 .profile-picture-small {

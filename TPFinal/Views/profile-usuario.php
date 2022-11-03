@@ -14,7 +14,7 @@ include('nav-bar.php');
     <div class="row pt-4">
         <div class="col-md-12 col-lg-3 d-flex justify-content-center">
             <div class="rounded-circle overflow-hidden profile-picture position-relative border border-5 border-primary shadow-sm">
-                <img src="<?php echo IMG_PATH . $_SESSION["loggedUser"]->getRutaFoto() ?>" alt="profilePic" width="auto" height="250" class="position-absolute top-50 start-50 translate-middle">
+                <img src="<?php echo IMG_PATH . $_SESSION["loggedUser"]->getRutaFoto() ?>" alt="profilePic" width="auto" height="250" class="profile-picture-img position-absolute top-50 start-50 translate-middle">
             </div>
         </div>
         <div class="col-9 my-auto">
@@ -54,7 +54,7 @@ include('nav-bar.php');
                     <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>">
                     <div class="col m-3">
                         <div class="rounded-circle overflow-hidden profile-picture-small position-relative shadow-sm">
-                            <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" alt="profilePic" width="auto" height="150" class="position-absolute top-50 start-50 translate-middle">
+                            <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" alt="profilePic" width="auto" height="150" class="profile-picture-img position-absolute top-50 start-50 translate-middle">
                         </div>
                         <h5 class="d-flex justify-content-center my-1"><?php echo $mascota->getNombre() ?></h5>
                     </div>
@@ -105,8 +105,11 @@ include('nav-bar.php');
                             <?php } ?>
                             <p class="card-text">Precio Total: <b>$<?php echo $reserva->getPrecioTotal(); ?></b></p>
                             <?php if ($review) { ?>
-                                <p class="card-text">Comentario: <b><?php echo $review->getComentario(); ?></b></p>
-                                <p class="card-text">Puntaje: <b><?php echo $review->getPuntaje() . "/5"; ?></b></p>
+                                <div class="alert alert-dark" style="width: fit-content;">
+                                    <span class="card-text">Review: <b><i><?php echo $review->getComentario(); ?></i></b></span>
+                                    <b class="ms-1"><?php echo "- " . $review->getPuntaje(); ?></b>
+                                    <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
+                                </div>
                             <?php } ?>
                         </div>
                     </div>
