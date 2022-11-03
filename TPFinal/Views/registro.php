@@ -12,20 +12,22 @@ include('header.php');
         </div>
     </div>
     <div class="col-md-12 d-flex justify-content-center">
-        <h1>Nuevo Usuario</h1>  
+        <h1>Nuevo Usuario</h1>
     </div>
 
     <!-- Registro Form -->
     <div class="col-md-12">
-    <?php if ($type == 1) { ?>
-        <form class="" action="<?php echo FRONT_ROOT . "Duenio/Add" ?>" method="Post" enctype="multipart/form-data">
-    <?php } else { ?>
-        <form class="" action="<?php echo FRONT_ROOT . "Guardian/Add" ?>" method="Post" enctype="multipart/form-data">
-    <?php } ?>
-        <?php if ($alert != "") { ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $alert ?>
-            </div>
+        <?php if ($type == 1) { ?>
+            <form class="" action="<?php echo FRONT_ROOT . "Duenio/Add" ?>" method="Post" enctype="multipart/form-data">
+            <?php } else { ?>
+                <form class="" action="<?php echo FRONT_ROOT . "Guardian/Add" ?>" method="Post" enctype="multipart/form-data">
+                <?php } ?>
+                <?php if ($alert != "") { ?>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <div class="alert alert-danger" role="alert" style="width: fit-content;">
+                            <?php echo $alert ?>
+                        </div>
+                    </div>
                 <?php } ?>
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="col-md-4 m-2 form-floating">
@@ -88,7 +90,7 @@ include('header.php');
                             <label for="floatingPassword">Código Postal</label>
                         </div>
                     </div>
-                    
+
                 <?php } ?>
 
                 <div class="d-flex justify-content-center">
@@ -97,7 +99,9 @@ include('header.php');
 
                 <div class="d-flex justify-content-center">
                     <div class="col-md-8 my-2 mx-auto d-flex justify-content-center form-floating">
-                        <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" <?php if ($type == 2) {echo "required";} ?>>
+                        <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" <?php if ($type == 2) {
+                                                                                                                                                                        echo "required";
+                                                                                                                                                                    } ?>>
                         <label for="floatingInput">Foto de Perfil</label>
                     </div>
                 </div>
@@ -118,9 +122,9 @@ include('header.php');
                         <span class="text-muted mx-1"> - </span>
                         <a href="<?php echo  FRONT_ROOT . "Home/Index" ?>">Iniciar Sesion</a>
                     </div>
-                </div>    
+                </div>
 
-            </form>
+                </form>
     </div>
 </div>
 
