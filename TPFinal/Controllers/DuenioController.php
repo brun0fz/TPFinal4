@@ -46,13 +46,13 @@ class DuenioController
         }
     }
 
-    public function ShowSelectFechasReserva($alert = "")
+    public function ShowFiltrarGuardianesView($alert = "")
     {
         if ($this->validateSession()) {
             try {
 
                 $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-                require_once(VIEWS_PATH . "select-fechas-reserva.php");
+                require_once(VIEWS_PATH . "filtrar-guardianes.php");
             } catch (Exception $ex) {
                 echo $ex;
             }
@@ -135,13 +135,13 @@ class DuenioController
                         $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
                     } else {
                         $alert = "No hay guardianes disponibles.";
-                        $this->ShowSelectFechasReserva($alert);
+                        $this->ShowFiltrarGuardianesView($alert);
                     }
                 } catch (Exception $ex) {
                     echo $ex;
                 }
             } else {
-                $this->ShowSelectFechasReserva();
+                $this->ShowFiltrarGuardianesView();
             }
         }
     }

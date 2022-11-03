@@ -7,7 +7,7 @@
                 <li><a href="<?php echo FRONT_ROOT . "Home/Index"; ?>" class="nav-link px-2 link-secondary">Home</a></li>
                 <li><a href="<?php echo FRONT_ROOT . "Reserva/ShowListReservasView"; ?>" class="nav-link px-2 link-dark">Reservas</a></li>
                 <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
-                    <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva"; ?>" class="nav-link px-2 link-dark">Guardianes</a></li>
+                    <li><a href="<?php echo FRONT_ROOT . "Duenio/ShowFiltrarGuardianesView"; ?>" class="nav-link px-2 link-dark">Guardianes</a></li>
                     <li><a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaView"; ?>" class="nav-link px-2 link-dark">Mascotas</a></li>
                 <?php } else { ?>
                     <li><a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView"; ?>" class="nav-link px-2 link-dark">Configuración</a></li>

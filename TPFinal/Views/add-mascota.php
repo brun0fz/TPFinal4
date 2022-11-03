@@ -14,7 +14,7 @@ include("navBar.php");
             </div>
             <div class="form-floating">
                 <select class="form-select form-select-sm" name="animal" id="animal" required oninput="cambiaRaza()">
-                    <option disabled selected value>-Seleccione un animal-</option>
+                    <option disabled selected value>(Seleccione un animal)</option>
                     <?php $auxAnimales = array();
                     foreach ($animalesList as $animal) {
                         if (!in_array($animal["animal"], $auxAnimales)) { ?>
@@ -33,7 +33,7 @@ include("navBar.php");
             </div>
             <div class="form-floating">
                 <select class="form-select form-select-sm" name="tamanio" required>
-                    <option disabled selected value>-Seleccione un tamaño-</option>
+                    <option disabled selected value>(Seleccione un tamaño)</option>
                     <option value="S">Pequeño</option>
                     <option value="M">Mediano</option>
                     <option value="L">Grande</option>

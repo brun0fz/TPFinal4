@@ -30,7 +30,7 @@ include("navBar.php");
         <?php } ?>
 
         <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
-        <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>"><button class="btn btn-primary position-absolute top-0 end-0 mt-3">Nueva Reserva</button></a><br>
+        <a href="<?php echo FRONT_ROOT . "Duenio/ShowFiltrarGuardianesView" ?>"><button class="btn btn-primary position-absolute top-0 end-0 mt-3">Nueva Reserva</button></a><br>
         <?php } ?>
 
         <?php foreach ($listaReservas as $reserva) {
@@ -47,8 +47,8 @@ include("navBar.php");
 
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
-                    <div class="col-md-4 card-img-reserva">
-                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="img-fluid rounded-start img-reserva img-unselect">
+                    <div class="col-md-4 card-img-reserva position-relative">
+                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="rounded-start img-reserva img-unselect position-absolute top-50 start-50 translate-middle">
                     </div>
                     <div class="col-md-8 p-1 position-relative">
                         <div class="card-body">
