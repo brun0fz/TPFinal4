@@ -37,7 +37,7 @@ include('nav-bar.php');
             <span class="mx-4"><b>(!)</b> Usted tiene <?php echo $cont ?> reserva(s) pendiente de pago.</span>
         </div>
     <?php } ?>
-    <img class="background-img img-unselect" src="<?php echo IMG_PATH . "background.png" ?>" alt="">
+    <img class="img-unselect background-img" src="<?php echo IMG_PATH . "background.png" ?>" alt="">
 </div>
 
 <?php
