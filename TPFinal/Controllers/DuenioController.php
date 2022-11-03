@@ -32,14 +32,27 @@ class DuenioController
 
     public function ShowDuenioHome()
     {
-        $this->validateSession() && require_once(VIEWS_PATH . "home-duenio.php");
+        if ($this->validateSession()) {
+            $flag = 0;
+            $cont = 0;
+            $reservaDAO = new ReservaDAO();
+            $listaReservas = $reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getID());
+
+            foreach ($listaReservas as $reserva) {
+                if ($reserva->getEstado() == "En espera de pago") {
+                    $flag = 1;
+                    $cont++;
+                }
+            }
+            require_once(VIEWS_PATH . "home-duenio.php");
+        }
     }
 
 
 
     public function ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes)
     {
-        
+
         if ($this->validateSession()) {
 
             require_once(VIEWS_PATH . "list-guardianes.php");
@@ -59,7 +72,8 @@ class DuenioController
         }
     }
 
-    public function ShowProfileView(){
+    public function ShowProfileView()
+    {
         if ($this->validateSession()) {
             $reservaDAO = new ReservaDAO();
 
@@ -228,7 +242,7 @@ class DuenioController
 
                     if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
-                        
+
                         if ($mascota->getAnimal() == $animal && $mascota->getRaza() == $raza) {
                             $listaFiltrada[] = $guardian;
                             break;
@@ -245,7 +259,7 @@ class DuenioController
             echo $ex;
         }
     }
-    
+
 
     private function traducirDias($diaSemana)
     {

@@ -6,6 +6,7 @@ use Couchbase\View;
 use DAO\DuenioDAO;
 use DAO\GuardianDAO;
 use Exception;
+use Models\Duenio;
 
 class HomeController
 {
@@ -22,7 +23,9 @@ class HomeController
     {
         if (isset($_SESSION["loggedUser"])) {
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
-                require_once(VIEWS_PATH . "home-duenio.php");
+                $duenioController = new DuenioController();
+                $duenioController->ShowDuenioHome();
+                //require_once(VIEWS_PATH . "home-duenio.php");
             } else {
                 require_once(VIEWS_PATH . "home-guardian.php");
             }
@@ -49,7 +52,9 @@ class HomeController
                 $duenio->setPassword(NULL);
                 $_SESSION["loggedUser"] = $duenio;
 
-                require_once(VIEWS_PATH . "home-duenio.php");
+                $duenioController = new DuenioController();
+                $duenioController->ShowDuenioHome();
+                //require_once(VIEWS_PATH . "home-duenio.php");
             } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
                 $guardian->setPassword(NULL);

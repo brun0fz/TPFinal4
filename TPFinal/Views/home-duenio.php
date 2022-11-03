@@ -32,6 +32,11 @@ include('nav-bar.php');
             <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaView" ?>">Mis Mascotas</a>
         </div>
     </div>
+    <?php if ($flag) { ?>
+        <div class="col-sm-12 col-md-7 text-danger m-4 p-2 border border-danger rounded bg-danger bg-opacity-10">
+            <span class="mx-4"><b>(!)</b> Usted tiene <?php echo $cont ?> reserva(s) pendiente de pago.</span>
+        </div>
+    <?php } ?>
     <img class="background-img img-unselect" src="<?php echo IMG_PATH . "background.png" ?>" alt="">
 </div>
 
