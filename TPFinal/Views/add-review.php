@@ -27,21 +27,31 @@ include("nav-bar.php");
                 </div>
             </div>
         </div>
-        <form action="<?php echo FRONT_ROOT ?>Reserva/AddReview" method="Post">
-            <div class="form-floating">
-                <textarea class="form-control" name="comentario" placeholder="Comentario" id="floatingTextarea" style="height: 100px"></textarea>
-                <label for="floatingTextarea">Comentario</label>
-            </div>
-            <br>
-            <div class="form-floating">
-                <input type="number" name="puntaje" class="form-control" id="floatingInput" min=0 max=5 placeholder="Puntaje" style="width: 107px; height: 58px" required>
-                <label for="floatingInput">Puntaje</label>
-            </div>
-            <br>
-            <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva() ?>">
-            <input class="btn btn-lg btn-primary" type="submit" value="Calificar">
-        </form>
     </div>
+    
+    <form action="<?php echo FRONT_ROOT ?>Reserva/AddReview" method="Post">
+        <div class="row mx-1">
+                <div class="col-md-8 py-1">
+                    <div class="form-floating">
+                        <textarea class="form-control" name="comentario" placeholder="Comentario" id="floatingTextarea" style="height: 120px"></textarea>
+                        <label for="floatingTextarea">Comentario</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12 py-1">
+                        <div class="form-floating">
+                            <input type="number" name="puntaje" class="form-control" id="floatingInput" min=0 max=5 placeholder="Puntaje" required>
+                            <label for="floatingInput">Puntaje</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 py-1">
+                        <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva() ?>">
+                        <input class="btn btn-lg btn-primary w-100" type="submit" value="Calificar">
+                    </div>
+                </div>
+        </div>
+    </form>
+
 </div>
 
 
