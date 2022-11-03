@@ -6,7 +6,7 @@ include("nav-bar.php");
 <div class="container">
     <h2 class="mt-4 mb-5">Buscar guardianes</h2>
     <?php if ($alert != "") { ?>
-        <div class="alert alert-danger" role="alert" style=" width: 300px;">
+        <div class="alert alert-danger" role="alert" style="width: fit-content;">
             <?php echo $alert ?>
         </div>
     <?php } ?>
