@@ -29,8 +29,8 @@ include("nav-bar.php");
         </div>
         <form action="<?php echo FRONT_ROOT ?>Reserva/AddReview" method="Post">
             <div class="form-floating">
-                <input type="text" name="comentario" class="form-control" id="floatingInput" placeholder="Comentario" style="width: 500px; height: 150px;">
-                <label for="floatingInput">Comentario</label>
+                <textarea class="form-control" name="comentario" placeholder="Comentario" id="floatingTextarea" style="height: 100px"></textarea>
+                <label for="floatingTextarea">Comentario</label>
             </div>
             <br>
             <div class="form-floating">
