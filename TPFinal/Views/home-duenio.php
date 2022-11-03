@@ -33,7 +33,7 @@ include('nav-bar.php');
         </div>
     </div>
     <?php if ($flag) { ?>
-        <div class="col-sm-12 col-md-7 text-danger m-4 p-2 border border-danger rounded bg-danger bg-opacity-10">
+        <div class="alert alert-danger" style="width: fit-content;">
             <span class="mx-4"><b>(!)</b> Usted tiene <?php echo $cont ?> reserva(s) pendiente de pago.</span>
         </div>
     <?php } ?>
