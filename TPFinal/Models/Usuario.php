@@ -25,6 +25,13 @@ abstract class Usuario
         $this->password = $password;
     }
 
+    public function getTipoDescripcion(){
+        if($this->tipo == 1){
+            return "Dueño";
+        } else{
+            return "Guardian";
+        }
+    }
 
     /**
      * Get the value of id

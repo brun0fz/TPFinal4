@@ -40,6 +40,14 @@ class GuardianController
         }
     }
 
+    public function ShowProfileView(){
+        if ($this->validateSession()) {
+            $reservaDAO = new ReservaDAO();
+            $listaReservas = $reservaDAO->HistorialReservasGuardian($_SESSION["loggedUser"]->getId());
+            require_once(VIEWS_PATH . "profile-usuario.php");
+        }
+    }
+
     public function Add($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso = "", $departamento = "", $codigoPostal = "", $rutaFoto = "")
     {
 

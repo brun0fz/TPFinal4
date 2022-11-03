@@ -18,13 +18,13 @@ include("navBar.php");
         <h2 id="list-title">Mis Reservas</h2><br>
 
         <?php if ($alert != "") { ?>
-            <div class="alert alert-success" role="alert" style=" width: 335px;">
+            <div class="alert alert-success" role="alert" style="width: fit-content">
                 <?php echo $alert ?>
             </div>
         <?php } ?>
 
         <?php if (empty($listaReservas)) { ?>
-            <div class="alert alert-primary" role="alert" style=" width: 230px;">
+            <div class="alert alert-primary" role="alert" style="width: fit-content">
                 <?php echo "Todavia no tiene reservas." ?>
             </div>
         <?php } ?>

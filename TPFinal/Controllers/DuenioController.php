@@ -59,6 +59,17 @@ class DuenioController
         }
     }
 
+    public function ShowProfileView(){
+        if ($this->validateSession()) {
+            $reservaDAO = new ReservaDAO();
+
+            $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+            $listaReservas = $reservaDAO->HistorialReservasDuenio($_SESSION["loggedUser"]->getId());
+
+            require_once(VIEWS_PATH . "profile-usuario.php");
+        }
+    }
+
     public function Add($nombre, $apellido, $telefono, $email, $password, $rutaFoto)
     {
         try {
@@ -214,8 +225,6 @@ class DuenioController
                 foreach ($dias as $dia) {
 
                     $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
-
-                    print_r($reserva);
 
                     if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());

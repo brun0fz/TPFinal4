@@ -25,7 +25,7 @@ include("navBar.php");
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-primary">Ver</button>
+                        <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>"><button type="button" class="btn btn-sm btn-outline-primary">Ver</button></a>
                         <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
                     </div>
                     <br><br>

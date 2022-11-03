@@ -21,9 +21,9 @@
                 </a>
                 <ul class="dropdown-menu text-small">
                     <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT . "Duenio/ShowDuenioHome"; //arreglar ?>">Perfil</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT . "Duenio/ShowProfileView"; ?>">Perfil</a></li>
                     <?php } else { ?>
-                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT . "Guardian/ShowGuardianHome"; //arreglar ?>">Perfil</a></li>
+                            <li><a class="dropdown-item" href="<?php echo FRONT_ROOT . "Guardian/ShowProfileView"; ?>">Perfil</a></li>
                     <?php } ?>
                     <li><hr class="dropdown-divider"></li>
 

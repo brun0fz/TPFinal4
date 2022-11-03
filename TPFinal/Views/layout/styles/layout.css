@@ -144,6 +144,26 @@ main {
   height: auto;
 }
 
+.profile-nombre {
+  font-size: 3em;
+}
+
+.profile-picture {
+  width: 250px;
+  height: 250px;
+  align-items: center;
+}
+
+.profile-picture-small {
+  width: 150px;
+  height: 150px;
+  align-items: center;
+}
+
+.profile-picture-small:hover {
+  scale: 1.05;
+}
+
 #copyright {
   position: absolute;
   bottom: -55px;
