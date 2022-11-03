@@ -108,7 +108,7 @@ class GuardianController
                 $_SESSION["loggedUser"]->setAliasCBU($aliasCBU);
                 $this->guardianDAO->UpdateAliasCBU($_SESSION["loggedUser"]->getId(), $aliasCBU);
 
-                $alert = "Configuracion guardada con exito ✓";
+                $alert = "Configuracion guardada con exito &check;";
             } catch (Exception $ex) {
 
                 $alert = "No se pudo guardar la configuracion";

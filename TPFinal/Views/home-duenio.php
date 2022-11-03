@@ -20,7 +20,7 @@ include('nav-bar.php');
                 <img class="img-unselect" src="<?php echo IMG_PATH . "guardianesIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Guardianes</h3>
-            <p>Selecciona tu mascota y fechas de estadía y visualiza el listado de guardianes disponibles para ella.</p>
+            <p>Selecciona tu mascota y fechas de estad&iacute;a y visualiza el listado de guardianes disponibles para ella.</p>
             <a href="<?php echo FRONT_ROOT . "Duenio/ShowFiltrarGuardianesView" ?>">Buscar Guardianes</a>
         </div>
         <div class="feature col">
@@ -28,7 +28,7 @@ include('nav-bar.php');
                 <img class="img-unselect" src="<?php echo IMG_PATH . "mascotasIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Mascotas</h3>
-            <p>Ve tu listado de mascotas, añade nuevas mascotas, visualiza sus perfiles y modificalos.</p>
+            <p>Ve tu listado de mascotas, a&ntilde;ade nuevas mascotas, visualiza sus perfiles y modificalos.</p>
             <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaView" ?>">Mis Mascotas</a>
         </div>
     </div>

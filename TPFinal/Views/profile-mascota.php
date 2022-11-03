@@ -14,7 +14,7 @@ include('nav-bar.php');
             <h1 class="text-primary profile-nombre"><?php echo $mascota->getNombre() ?></h1>
             <h4 class="my-3 ms-1"><small>Animal: <?php echo $mascota->getAnimal() ?></small></h4>
             <h4 class="my-3 ms-1"><small>Raza: <?php echo $mascota->getRaza() ?></small></h4>
-            <h4 class="my-3 ms-1"><small>Tamaño: <?php echo $mascota->getTamanioDescripcion() ?></small></h4>
+            <h4 class="my-3 ms-1"><small>Tama&ntilde;o: <?php echo $mascota->getTamanioDescripcion() ?></small></h4>
             <h4 class="my-3 ms-1"><small>Observaciones: <?php echo $mascota->getObservaciones() ?></small></h4>
         </div>
     </div>

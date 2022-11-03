@@ -34,14 +34,14 @@ include("nav-bar.php");
                                                                                                                                                                                                                                                                                                                         }
                                                                                                                                                                                                                                                                                                                                 ?>
                                 <br><br>
-                                <p class="card-text">Precio por día: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
-                                <p class="card-text">Dirección: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero() . " " . $guardian->getPiso() . " " . $guardian->getDepartamento() ?></b></p>
+                                <p class="card-text">Precio por d&iacute;a: <b><?php echo "$" . $guardian->getPrecioXDia(); ?></b></p>
+                                <p class="card-text">Direcci&oacute;n: <b><?php echo $guardian->getCalle() . " " . $guardian->getNumero() . " " . $guardian->getPiso() . " " . $guardian->getDepartamento() ?></b></p>
                                 <p class="card-text">Disponibilidad: <b><?php if ($guardian->getDisponibilidad()) {
                                                                             echo implode(", ", $guardian->getDisponibilidad());
                                                                         } else {
                                                                             echo "Sin definir.";
                                                                         } ?></b></p>
-                                <p class="card-text">Tamaño de Mascota: <b><?php if ($guardian->getTamanioMascotaCuidar()) {
+                                <p class="card-text">Tama&ntilde;o de Mascota: <b><?php if ($guardian->getTamanioMascotaCuidar()) {
                                                                                 echo implode(", ", $guardian->getTamanioMascotaCuidar());
                                                                             } else {
                                                                                 echo "Sin definir.";

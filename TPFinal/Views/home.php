@@ -21,12 +21,12 @@ include('header.php');
         <label for="floatingInput">Email</label>
       </div>
       <div class="form-floating">
-        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="contraseña" required>
-        <label for="floatingPassword">Contraseña</label>
+        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="contrase&ntilde;a" required>
+        <label for="floatingPassword">Contrase&ntilde;a</label>
       </div>
       <br>
       <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesion</button><br><br>
-      <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Dueño</a><br>
+      <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Due&ntilde;o</a><br>
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/2" ?>">Registrarse como Guardian</a>
     </form>
   </main>

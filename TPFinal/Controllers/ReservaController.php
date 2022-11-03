@@ -203,7 +203,9 @@ class ReservaController
                 ///EMAIL
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
 
-                mail($duenio->getEmail(), "PET-HERO: Cupon de Pago", "",);
+                mail($duenio->getEmail(), "PET-HERO: Cupon de Pago", "holaa",);
+
+                
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -236,7 +238,7 @@ class ReservaController
         if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, $estado);
-                $alert = "Cupón pagado con éxito. La reserva ha sido confirmada.";
+                $alert = "Cup&oacute;n pagado con &eacute;xito. La reserva ha sido confirmada.";
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {

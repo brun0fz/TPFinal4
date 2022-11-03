@@ -51,11 +51,11 @@ include('header.php');
                 </div>
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="col-md-4 m-2 form-floating">
-                        <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" class="form-control" id="floatingPassword" placeholder="contraseña" required>
-                        <label for="floatingPassword">Contraseña</label>
+                        <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" class="form-control" id="floatingPassword" placeholder="contrase&ntilde;a" required>
+                        <label for="floatingPassword">Contrase&ntilde;a</label>
                     </div>
                     <div class="col-md-4 ms-3 my-auto">
-                        <small id="passwordHelpBlock" class="form-text text-muted"> Su contraseña debe tener al menos un número, una letra y un mínimo de 8 caracteres.</small>
+                        <small id="passwordHelpBlock" class="form-text text-muted"> Su contrase&ntilde;a debe tener al menos un n&uacute;mero, una letra y un m&iacute;nimo de 8 caracteres.</small>
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@ include('header.php');
                         </div>
                         <div class="col-md-2 my-2 mx-1 form-floating">
                             <input type="text" name="codigoPostal" class="form-control" id="floatingInput" placeholder="codigo postal" required>
-                            <label for="floatingPassword">Código Postal</label>
+                            <label for="floatingPassword">C&oacute;digo Postal</label>
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@ include('header.php');
                         <?php if ($type == 1) { ?>
                             <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/2" ?>">Registrarse como Guardian</a>
                         <?php } else { ?>
-                            <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Dueño</a>
+                            <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Due&ntilde;o</a>
                         <?php } ?>
                         <span class="text-muted mx-1"> - </span>
                         <a href="<?php echo  FRONT_ROOT . "Home/Index" ?>">Iniciar Sesion</a>
