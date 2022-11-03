@@ -88,12 +88,12 @@ include('nav-bar.php');
 
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
-                    <div class="col-md-4 card-img-reserva">
-                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="img-fluid rounded-start img-reserva img-unselect">
+                    <div class="col-md-4 card-img-reserva position-relative">
+                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="rounded-start img-reserva img-unselect position-absolute top-50 start-50 translate-middle">
                     </div>
                     <div class="col-md-8 p-1 position-relative">
                         <div class="card-body">
-                            <h3 class="card-title"><b><?php echo "Reserva para " . $mascota->getNombre(); ?></b><span class="<?php echo ($reserva->getEstado() == "En curso") ? "text-primary" : "" ?>"> (<?php echo $reserva->getEstado(); ?>)</span></h3>
+                            <h3 class="card-title"><b><?php echo "Reserva para " . $mascota->getNombre(); ?></b></h3>
                             <h5><small class="card-text">desde el <b><?php echo $reserva->getFechaInicio() ?></b> hasta el <b><?php echo $reserva->getFechaFin(); ?></b></small></h5>
                             <hr class="my-3" />
                             <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
