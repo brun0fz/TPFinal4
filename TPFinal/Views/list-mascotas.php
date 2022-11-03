@@ -15,7 +15,9 @@ include("navBar.php");
         <?php foreach ($mascotasList as $mascota) { ?>
             <div class="card g-3 m-3 shadow-sm" style="width: 400px">
                 <div class="img-container">
-                    <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="card-img-top img-mascota img-unselect" alt="<?php echo $mascota->getNombre() ?>">
+                    <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>">
+                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="card-img-top img-mascota img-unselect" alt="<?php echo $mascota->getNombre() ?>">
+                    </a>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><b><?php echo $mascota->getNombre() ?></b></h5>
@@ -25,8 +27,7 @@ include("navBar.php");
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>"><button type="button" class="btn btn-sm btn-outline-primary">Ver</button></a>
-                        <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
+                        <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>"><button type="button" class="btn btn-sm btn-outline-primary px-3">Ver</button></a>
                     </div>
                     <br><br>
                 </div>

@@ -199,8 +199,16 @@ class ReservaController
     }
 
     public function PagarCupon($metodoPago, $nombre, $numero, $vencimiento, $cvv, $idReserva, $estado){
-        if (isset($_SESSION["loggedUser"])) {
-            $this->cambiarEstado($idReserva, $estado);
+        //Los datos de pago no son utilizados ya que esto es solo una simulacion de pago
+        if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
+            try {
+                $this->reservaDAO->UpdateEstado($idReserva, $estado);
+                $alert = "Cupón pagado con éxito. La reserva ha sido confirmada.";
+            } catch (Exception $ex) {
+                $alert = $ex;
+            } finally {
+                $this->ShowListReservasView($alert);
+            }
         } else {
             HomeController::Index();
         }
