@@ -28,7 +28,7 @@ class GuardianController
 
     public function ShowGuardianHome()
     {
-        $this->validateSession() && require_once(VIEWS_PATH . "guardianHome.php");
+        $this->validateSession() && require_once(VIEWS_PATH . "home-guardian.php");
     }
 
     public function ShowConfiguracionView($alert = "")

@@ -32,7 +32,7 @@ class DuenioController
 
     public function ShowDuenioHome()
     {
-        $this->validateSession() && require_once(VIEWS_PATH . "duenioHome.php");
+        $this->validateSession() && require_once(VIEWS_PATH . "home-duenio.php");
     }
 
 
