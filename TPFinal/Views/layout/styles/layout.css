@@ -96,12 +96,15 @@ main {
 }
 
 .card-img-reserva {
-  height: 275px;
+  height: 340px;
   overflow: hidden;
 }
 
 .img-reserva {
-  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: auto;
 }
 
 .btn-confirmar {
@@ -142,6 +145,32 @@ main {
 
 .img-mascota {
   height: auto;
+}
+
+.profile-nombre {
+  font-size: 3em;
+}
+
+.profile-picture {
+  width: 250px;
+  height: 250px;
+  align-items: center;
+}
+
+.profile-picture-img {
+  max-width: 135%;
+  min-width: 100%;
+  height: auto;
+}
+
+.profile-picture-small {
+  width: 150px;
+  height: 150px;
+  align-items: center;
+}
+
+.profile-picture-small:hover {
+  scale: 1.05;
 }
 
 #copyright {

@@ -72,7 +72,9 @@ class ReservaController
             try {
                 $cupon = $this->reservaDAO->GetCuponByIdReserva($idReserva);
                 $reserva = $this->reservaDAO->GetReservaById($cupon->getFkIdReserva());
-                require_once(VIEWS_PATH . "list-cupon.php");
+                $guardian = $this->guardianDAO->BuscarId($reserva->getFkIdGuardian());
+                $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
+                require_once(VIEWS_PATH . "show-cupon.php");
             } catch (Exception $ex) {
                 $alert  = $ex;
             }
@@ -91,7 +93,7 @@ class ReservaController
                 $duenio = $this->duenioDAO->BuscarId($reserva->getFkIdDuenio());
                 $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
 
-                require_once(VIEWS_PATH . "list-review.php");
+                require_once(VIEWS_PATH . "add-review.php");
             } catch (Exception $ex) {
                 $alert  = $ex;
             }
@@ -213,6 +215,22 @@ class ReservaController
             echo $ex;
         } finally {
             $this->ShowListReservasView($alert);
+        }
+    }
+
+    public function PagarCupon($metodoPago, $nombre, $numero, $vencimiento, $cvv, $idReserva, $estado){
+        //Los datos de pago no son utilizados ya que esto es solo una simulacion de pago
+        if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
+            try {
+                $this->reservaDAO->UpdateEstado($idReserva, $estado);
+                $alert = "Cupón pagado con éxito. La reserva ha sido confirmada.";
+            } catch (Exception $ex) {
+                $alert = $ex;
+            } finally {
+                $this->ShowListReservasView($alert);
+            }
+        } else {
+            HomeController::Index();
         }
     }
 }

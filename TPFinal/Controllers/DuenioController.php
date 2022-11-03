@@ -32,7 +32,7 @@ class DuenioController
 
     public function ShowDuenioHome()
     {
-        $this->validateSession() && require_once(VIEWS_PATH . "duenioHome.php");
+        $this->validateSession() && require_once(VIEWS_PATH . "home-duenio.php");
     }
 
 
@@ -46,16 +46,27 @@ class DuenioController
         }
     }
 
-    public function ShowSelectFechasReserva($alert = "")
+    public function ShowFiltrarGuardianesView($alert = "")
     {
         if ($this->validateSession()) {
             try {
 
                 $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-                require_once(VIEWS_PATH . "select-fechas-reserva.php");
+                require_once(VIEWS_PATH . "filtrar-guardianes.php");
             } catch (Exception $ex) {
                 echo $ex;
             }
+        }
+    }
+
+    public function ShowProfileView(){
+        if ($this->validateSession()) {
+            $reservaDAO = new ReservaDAO();
+
+            $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+            $listaReservas = $reservaDAO->HistorialReservasDuenio($_SESSION["loggedUser"]->getId());
+
+            require_once(VIEWS_PATH . "profile-usuario.php");
         }
     }
 
@@ -124,13 +135,13 @@ class DuenioController
                         $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
                     } else {
                         $alert = "No hay guardianes disponibles.";
-                        $this->ShowSelectFechasReserva($alert);
+                        $this->ShowFiltrarGuardianesView($alert);
                     }
                 } catch (Exception $ex) {
                     echo $ex;
                 }
             } else {
-                $this->ShowSelectFechasReserva();
+                $this->ShowFiltrarGuardianesView();
             }
         }
     }
@@ -214,8 +225,6 @@ class DuenioController
                 foreach ($dias as $dia) {
 
                     $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
-
-                    print_r($reserva);
 
                     if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());

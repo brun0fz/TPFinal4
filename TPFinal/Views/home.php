@@ -8,7 +8,9 @@ include('header.php');
 
   <main class="form-signin w-100 m-auto text-center">
     <form class="form-center" action="<?php echo FRONT_ROOT . "Home/Login" ?>" method="POST">
-      <img class="mb-4 img-unselect" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
+      <a href="<?php echo FRONT_ROOT . "Home/Index"; ?>">
+        <img class="mb-4 img-unselect" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
+      </a>
       <?php if ($alert != "") { ?>
         <div class="alert alert-danger" role="alert" style= "font-size: 14px;">
           <?php echo $alert ?>
@@ -28,6 +30,7 @@ include('header.php');
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/2" ?>">Registrarse como Guardian</a>
     </form>
   </main>
+  
 </div>
 
 <?php

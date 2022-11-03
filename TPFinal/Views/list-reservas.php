@@ -10,7 +10,7 @@ use Models\Mascota;
 use Models\EstadoReserva;
 
 include("header.php");
-include("navBar.php");
+include("nav-bar.php");
 ?>
 
 <div class="container">
@@ -18,19 +18,19 @@ include("navBar.php");
         <h2 id="list-title">Mis Reservas</h2><br>
 
         <?php if ($alert != "") { ?>
-            <div class="alert alert-success" role="alert" style=" width: 335px;">
+            <div class="alert alert-success" role="alert" style="width: fit-content">
                 <?php echo $alert ?>
             </div>
         <?php } ?>
 
         <?php if (empty($listaReservas)) { ?>
-            <div class="alert alert-primary" role="alert" style=" width: 230px;">
+            <div class="alert alert-primary" role="alert" style="width: fit-content">
                 <?php echo "Todavia no tiene reservas." ?>
             </div>
         <?php } ?>
 
         <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>
-        <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>"><button class="btn btn-primary position-absolute top-0 end-0 mt-3">Nueva Reserva</button></a><br>
+        <a href="<?php echo FRONT_ROOT . "Duenio/ShowFiltrarGuardianesView" ?>"><button class="btn btn-primary position-absolute top-0 end-0 mt-3">Nueva Reserva</button></a><br>
         <?php } ?>
 
         <?php foreach ($listaReservas as $reserva) {
@@ -47,8 +47,8 @@ include("navBar.php");
 
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
-                    <div class="col-md-4 card-img-reserva">
-                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="img-fluid rounded-start img-reserva img-unselect">
+                    <div class="col-md-4 card-img-reserva position-relative">
+                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="rounded-start img-reserva img-unselect position-absolute top-50 start-50 translate-middle">
                     </div>
                     <div class="col-md-8 p-1 position-relative">
                         <div class="card-body">
@@ -64,8 +64,11 @@ include("navBar.php");
                             <?php } ?>
                             <p class="card-text">Precio Total: <b>$<?php echo $reserva->getPrecioTotal(); ?></b></p>
                             <?php if ($review) { ?>
-                                <p class="card-text">Comentario: <b><?php echo $review->getComentario(); ?></b></p>
-                                <p class="card-text">Puntaje: <b><?php echo $review->getPuntaje() . "/5"; ?></b></p>
+                                <div class="alert alert-dark" style="width: fit-content;">
+                                <span class="card-text">Review: <b><i><?php echo $review->getComentario(); ?></i></b></span>
+                                    <b class="ms-1"><?php echo "- " . $review->getPuntaje(); ?></b>
+                                    <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
+                                </div>
                             <?php } ?>
                             <div class="text-end">
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 2 && $reserva->getEstado() == "Solicitada") { ?>

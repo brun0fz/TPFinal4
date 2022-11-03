@@ -43,19 +43,32 @@ class MascotaController
         if ($this->validateSession()) {
             try {
                 $animalesList = $this->mascotaDAO->GetAnimales();
-                require_once(VIEWS_PATH . "addMascota.php");
+                require_once(VIEWS_PATH . "add-mascota.php");
             } catch (Exception $ex) {
                 echo $ex;
             }
         }
     }
 
+    public function ShowMascotaProfile($idMascota)
+    {
+        if ($this->validateSession()) {
+            try {
+                $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+                require_once(VIEWS_PATH . "profile-mascota.php");
+            } catch (Exception $ex) {
+                echo $ex;
+            }
+        }
+    }
+
+
     public function Add($nombre, $animal, $raza, $tamanio, $observaciones, $rutaFoto, $rutaPlanVacunas, $rutaVideo)
     {
         if ($this->validateSession()) {
             try {
 
-                ///Foto
+                ///Foto -> "idDuenio-nombreMascota.type"
                 $temp = $rutaFoto["tmp_name"];
                 $aux = explode("/", $rutaFoto["type"]);
                 $type = $aux[1];
@@ -67,25 +80,25 @@ class MascotaController
                 chmod(ROOT . VIEWS_PATH . "/img/" . $name, 0777);
 
 
-                ///Plan de vacunas
+                ///Plan de vacunas -> "idDuenio-nombreMascota-Vacunas.type"
                 $temp2 = $rutaPlanVacunas["tmp_name"];
                 $aux2 = explode("/", $rutaPlanVacunas["type"]);
                 $type2 = $aux2[1];
 
-                $namePlanVacunas = $_SESSION["loggedUser"]->getId() . "-" . "Vacunas" . "." . $type2;
+                $namePlanVacunas = $_SESSION["loggedUser"]->getId() . "-" . $nombre . "-" . "Vacunas" . "." . $type2;
 
                 move_uploaded_file($temp2, ROOT . VIEWS_PATH . "/img/" . $namePlanVacunas);
 
                 chmod(ROOT . VIEWS_PATH . "/img/" . $namePlanVacunas, 0777);
 
-                ///Video
+                ///Video -> "idDuenio-nombreMascota-Video.type"
                 if ($rutaVideo["tmp_name"] != "") {
 
                     $temp3 = $rutaVideo["tmp_name"];
                     $aux3 = explode("/", $rutaVideo["type"]);
                     $type3 = $aux3[1];
 
-                    $nameVideo = $_SESSION["loggedUser"]->getId() . "-" . "Video" . "." . $type3;
+                    $nameVideo = $_SESSION["loggedUser"]->getId() . "-" . $nombre . "-" . "Video" . "." . $type3;
 
                     move_uploaded_file($temp3, ROOT . VIEWS_PATH . "/video/" . $nameVideo);
 

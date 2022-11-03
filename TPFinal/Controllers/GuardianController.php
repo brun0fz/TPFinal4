@@ -28,7 +28,7 @@ class GuardianController
 
     public function ShowGuardianHome()
     {
-        $this->validateSession() && require_once(VIEWS_PATH . "guardianHome.php");
+        $this->validateSession() && require_once(VIEWS_PATH . "home-guardian.php");
     }
 
     public function ShowConfiguracionView($alert = "")
@@ -37,6 +37,14 @@ class GuardianController
             $disponibilidad = $_SESSION["loggedUser"]->getDisponibilidad();
             $tamanioArray = $_SESSION["loggedUser"]->getTamanioMascotaCuidar();
             require_once(VIEWS_PATH . "set-configuracion.php");
+        }
+    }
+
+    public function ShowProfileView(){
+        if ($this->validateSession()) {
+            $reservaDAO = new ReservaDAO();
+            $listaReservas = $reservaDAO->HistorialReservasGuardian($_SESSION["loggedUser"]->getId());
+            require_once(VIEWS_PATH . "profile-usuario.php");
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
-include('header.php');
-include('navBar.php');
+include("header.php");
+include("nav-bar.php");
 
 ?>
 
@@ -17,24 +17,21 @@ include('navBar.php');
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
-                <img class="img-unselect" src="<?php echo IMG_PATH . "guardianesIcon.png" ?>" alt="" width="40" height="40">
+                <img class="img-unselect" src="<?php echo IMG_PATH . "disponibilidadIcon.png" ?>" alt="" width="40" height="40">
             </div>
-            <h3 class="fs-2">Guardianes</h3>
-            <p>Selecciona tu mascota y fechas de estadía y visualiza el listado de guardianes disponibles para ella.</p>
-            <a href="<?php echo FRONT_ROOT . "Duenio/ShowSelectFechasReserva" ?>">Buscar Guardianes</a>
-        </div>
-        <div class="feature col">
-            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
-                <img class="img-unselect" src="<?php echo IMG_PATH . "mascotasIcon.png" ?>" alt="" width="40" height="40">
-            </div>
-            <h3 class="fs-2">Mascotas</h3>
-            <p>Ve tu listado de mascotas, añade nuevas mascotas, visualiza sus perfiles y modificalos.</p>
-            <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaView" ?>">Mis Mascotas</a>
+            <h3 class="fs-2">Configuración</h3>
+            <p>Selecciona los días en que estás disponible y el tamaño de las mascotas a cuidar. Establece el precio que cobras por día.</p>
+            <a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView" ?>">Establecer configuración</a>
         </div>
     </div>
+    <?php if ((!$_SESSION["loggedUser"]->getDisponibilidad()) || (!$_SESSION["loggedUser"]->getTamanioMascotaCuidar()) || (!$_SESSION["loggedUser"]->getPrecioXDia())) { ?>
+        <div class="col-sm-12 col-md-7 text-danger m-4 p-2 border border-danger rounded bg-danger bg-opacity-10">
+            <span class="mx-4"><b>(!)</b> Recuerda completar tus opciones de configuración para poder comenzar a recibir reservas.</span>
+        </div>
+    <?php } ?>
     <img class="background-img img-unselect" src="<?php echo IMG_PATH . "background.png" ?>" alt="">
 </div>
 
 <?php
-include('footer.php');
+include("footer.php");
 ?>

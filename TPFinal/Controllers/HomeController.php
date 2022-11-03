@@ -22,9 +22,9 @@ class HomeController
     {
         if (isset($_SESSION["loggedUser"])) {
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
-                require_once(VIEWS_PATH . "duenioHome.php");
+                require_once(VIEWS_PATH . "home-duenio.php");
             } else {
-                require_once(VIEWS_PATH . "guardianHome.php");
+                require_once(VIEWS_PATH . "home-guardian.php");
             }
         } else {
             require_once(VIEWS_PATH . "home.php");
@@ -49,13 +49,13 @@ class HomeController
                 $duenio->setPassword(NULL);
                 $_SESSION["loggedUser"] = $duenio;
 
-                require_once(VIEWS_PATH . "duenioHome.php");
+                require_once(VIEWS_PATH . "home-duenio.php");
             } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
                 $guardian->setPassword(NULL);
                 $_SESSION["loggedUser"] = $guardian;
 
-                require_once(VIEWS_PATH . "guardianHome.php");
+                require_once(VIEWS_PATH . "home-guardian.php");
             } else {
                 $alert = "Usuario o contraseña incorrectos. Ingrese sus datos nuevamente.";
                 $this->Index($alert);
