@@ -523,13 +523,12 @@ class ReservaDAO implements IReservaDAO
     }
 
 
-    public function HistorialReservasDuenio($idDuenio)
+    public function GetListaReservasDuenioEstado($idDuenio, $estado)
     {
         try {
             $reservasList = array();
-            $estado = "Finalizada";
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio AND estado = :estado) ORDER BY idReserva desc;";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio AND estado = :estado) ORDER BY fechaInicio desc;";
 
             $parameters["fk_idDuenio"] = $idDuenio;
             $parameters["estado"] = $estado;
@@ -567,13 +566,12 @@ class ReservaDAO implements IReservaDAO
     }
 
 
-    public function HistorialReservasGuardian($idGuardian)
+    public function GetListaReservasGuardianEstado($idGuardian, $estado)
     {
         try {
             $reservasList = array();
-            $estado = "Finalizada";
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idGuardian = :fk_idGuardian AND estado = :estado) ORDER BY idReserva desc;";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idGuardian = :fk_idGuardian AND estado = :estado) ORDER BY fechaInicio desc;";
 
             $parameters["fk_idGuardian"] = $idGuardian;
             $parameters["estado"] = $estado;
@@ -609,5 +607,4 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
-
 }

@@ -43,7 +43,7 @@ class GuardianController
     public function ShowProfileView(){
         if ($this->validateSession()) {
             $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->HistorialReservasGuardian($_SESSION["loggedUser"]->getId());
+            $listaReservas = $reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
             require_once(VIEWS_PATH . "profile-usuario.php");
         }
     }

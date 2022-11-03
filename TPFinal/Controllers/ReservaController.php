@@ -52,9 +52,21 @@ class ReservaController
         if (isset($_SESSION["loggedUser"])) {
             try {
                 if ($_SESSION["loggedUser"]->getTipo() == 1) {
-                    $listaReservas = $this->reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getId());
+                    $listaReservas = array();
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "En curso"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "En espera de pago"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "Confirmada"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "Solicitada"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "Finalizada"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "Cancelada"));
                 } else {
-                    $listaReservas = $this->reservaDAO->ListaReservasGuardian($_SESSION["loggedUser"]->getId());
+                    $listaReservas = array();
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "En curso"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Solicitada"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "En espera de pago"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Confirmada"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Finalizada"));
+                    $listaReservas = array_merge($listaReservas, $this->reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Cancelada"));
                 }
 
                 require_once(VIEWS_PATH . "list-reservas.php");
@@ -218,7 +230,8 @@ class ReservaController
         }
     }
 
-    public function PagarCupon($metodoPago, $nombre, $numero, $vencimiento, $cvv, $idReserva, $estado){
+    public function PagarCupon($metodoPago, $nombre, $numero, $vencimiento, $cvv, $idReserva, $estado)
+    {
         //Los datos de pago no son utilizados ya que esto es solo una simulacion de pago
         if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
             try {
