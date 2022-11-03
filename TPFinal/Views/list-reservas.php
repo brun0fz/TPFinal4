@@ -10,7 +10,7 @@ use Models\Mascota;
 use Models\EstadoReserva;
 
 include("header.php");
-include("navBar.php");
+include("nav-bar.php");
 ?>
 
 <div class="container">

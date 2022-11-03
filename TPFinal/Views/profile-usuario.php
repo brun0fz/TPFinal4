@@ -5,7 +5,7 @@ use DAO\MascotaDAO;
 use DAO\ReservaDAO;
 
 include('header.php');
-include('navBar.php');
+include('nav-bar.php');
 ?>
 
 <div class="container">
