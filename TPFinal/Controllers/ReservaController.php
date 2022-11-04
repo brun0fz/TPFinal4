@@ -13,6 +13,14 @@ use Models\EstadoReserva;
 use Models\Reserva;
 use Models\Review;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+use PHPMailer\PHPMailer\SMTP;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 class ReservaController
 {
 
@@ -50,6 +58,7 @@ class ReservaController
     public function ShowListReservasView($alert = "")
     {
         if (isset($_SESSION["loggedUser"])) {
+            $this->MandarMail();
             try {
                 if ($_SESSION["loggedUser"]->getTipo() == 1) {
                     $listaReservas = array();
@@ -212,7 +221,6 @@ class ReservaController
 
                 ///EMAIL
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
-
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -271,5 +279,48 @@ class ReservaController
         } else {
             HomeController::Index();
         }
+    }
+
+    private function MandarMail($duenioMail="", $idReserva = 0)
+    {
+        try{
+            $mail = new PHPMailer();
+
+            $mail->isSMTP();
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 465;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->SMTPAuth = true;
+    
+            $mail->Username = 'app.pethero@gmail.com';
+            $mail->Password = 'bmplfijszyvepomr';
+    
+            $mail->setFrom('app.pethero@gmail.com');
+            $mail->addAddress("sadads@gmail.com");
+            $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $idReserva;
+    
+            $mail->msgHTML($this->mailBody());
+    
+            $mail->AltBody = 'Cupon de pago';
+    
+            /*//Attach an image file
+            $mail->addAttachment('images/phpmailer_mini.png');*/
+    
+            if ($mail->send()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }catch(PHPMailerException $ex){
+            
+        }
+    }
+
+    private function mailBody()
+    {
+        $body = '<i>hola</i>';
+
+        return $body;
     }
 }
