@@ -58,7 +58,6 @@ class ReservaController
     public function ShowListReservasView($alert = "")
     {
         if (isset($_SESSION["loggedUser"])) {
-            $this->MandarMail();
             try {
                 if ($_SESSION["loggedUser"]->getTipo() == 1) {
                     $listaReservas = array();
@@ -221,6 +220,9 @@ class ReservaController
 
                 ///EMAIL
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
+                $guardian = $this->guardianDAO->BuscarId($reservaConfirmada->getFkIdGuardian());
+
+                $this->MandarMail($duenio->getEmail(), $reservaConfirmada, $guardian);
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -281,7 +283,7 @@ class ReservaController
         }
     }
 
-    private function MandarMail($duenioMail = "", $idReserva = 0)
+    private function MandarMail($duenioEmail, $reserva, $guardian)
     {
         try {
             $mail = new PHPMailer();
@@ -297,11 +299,9 @@ class ReservaController
             $mail->Password = 'bmplfijszyvepomr';
 
             $mail->setFrom('app.pethero@gmail.com');
-            $mail->addAddress("sadads@gmail.com");
-            $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $idReserva;
-
-            $mail->msgHTML($this->mailBody());
-
+            $mail->addAddress($duenioEmail);
+            $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $reserva->getIdReserva();
+            $mail->msgHTML($this->MailBody());
             $mail->AltBody = 'Cupon de pago';
 
             if ($mail->send()) {
@@ -314,7 +314,7 @@ class ReservaController
         }
     }
 
-    private function mailBody()
+    private function MailBody()
     {
         $body = '<i>hola</i>';
 
