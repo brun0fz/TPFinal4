@@ -58,7 +58,6 @@ class ReservaController
     public function ShowListReservasView($alert = "")
     {
         if (isset($_SESSION["loggedUser"])) {
-            $this->MandarMail();
             try {
                 if ($_SESSION["loggedUser"]->getTipo() == 1) {
                     $listaReservas = array();
@@ -221,6 +220,9 @@ class ReservaController
 
                 ///EMAIL
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
+                $guardian = $this->guardianDAO->BuscarId($reservaConfirmada->getFkIdGuardian());
+
+                $this->MandarMail($duenio->getEmail(), $reservaConfirmada, $guardian);
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -281,43 +283,38 @@ class ReservaController
         }
     }
 
-    private function MandarMail($duenioMail="", $idReserva = 0)
+    private function MandarMail($duenioEmail, $reserva, $guardian)
     {
-        try{
+        try {
             $mail = new PHPMailer();
 
             $mail->isSMTP();
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;
             $mail->Host = 'smtp.gmail.com';
             $mail->Port = 465;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->SMTPAuth = true;
-    
+
             $mail->Username = 'app.pethero@gmail.com';
             $mail->Password = 'bmplfijszyvepomr';
-    
+
             $mail->setFrom('app.pethero@gmail.com');
-            $mail->addAddress("sadads@gmail.com");
-            $mail->Subject = 'PET-HERO: Cup$oacute;n de pago - Reserva #' . $idReserva;
-    
-            $mail->msgHTML($this->mailBody());
-    
+            $mail->addAddress($duenioEmail);
+            $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $reserva->getIdReserva();
+            $mail->msgHTML($this->MailBody());
             $mail->AltBody = 'Cupon de pago';
-    
-            /*//Attach an image file
-            $mail->addAttachment('images/phpmailer_mini.png');*/
-    
+
             if ($mail->send()) {
                 return 1;
             } else {
                 return 0;
             }
-        }catch(PHPMailerException $ex){
-            
+        } catch (PHPMailerException $ex) {
+            echo $ex;
         }
     }
 
-    private function mailBody()
+    private function MailBody()
     {
         $body = '
         <div style="border:1px solid red">
