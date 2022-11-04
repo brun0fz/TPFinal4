@@ -330,7 +330,7 @@ class ReservaController
             </ul>
         </div>
         ';
-
+ 
         return $body;
-    }
+    } 
 }
