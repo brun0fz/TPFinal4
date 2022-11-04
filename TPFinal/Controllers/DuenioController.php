@@ -219,7 +219,6 @@ class DuenioController
 
     private function FiltrarGuardianesPorRaza($listaGuardianes, $animal, $raza, $fechaInicio, $fechaFin)
     {
-
         try {
 
             $reservaDAO = new ReservaDAO();

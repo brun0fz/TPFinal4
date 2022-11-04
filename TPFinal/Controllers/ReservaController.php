@@ -183,14 +183,24 @@ class ReservaController
 
                 $mascotaConfirmada = $this->mascotaDAO->GetMascotaById($reservaConfirmada->getFkIdMascota());
 
-                $reservasList = $this->reservaDAO->GetListaReservasByEstado($_SESSION["loggedUser"]->getId(), "Solicitada");
+                $reservasSolicitadas = $this->reservaDAO->GetListaReservasByEstado($_SESSION["loggedUser"]->getId(), "Solicitada");
 
-                foreach ($reservasList as $reserva) {
+                $diasReservaConfirmada = $this->GetDiasReserva($reservaConfirmada->getFechaInicio(), $reservaConfirmada->getFechaFin());
+
+                foreach ($reservasSolicitadas as $reserva) {
+
+                    $interseccionDias = array();
 
                     $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
 
-                    if ($mascota->getAnimal() != $mascotaConfirmada->getAnimal() || $mascota->getRaza() != $mascotaConfirmada->getRaza()) {
-                        $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), "Cancelada");
+                    $diasReserva = $this->GetDiasReserva($reserva->getFechaInicio(), $reserva->getFechaFin());
+
+                    $interseccionDias = array_intersect($diasReservaConfirmada, $diasReserva);
+
+                    if (!empty($interseccionDias)) {
+                        if ($mascota->getAnimal() != $mascotaConfirmada->getAnimal() || $mascota->getRaza() != $mascotaConfirmada->getRaza()) {
+                            $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), "Cancelada");
+                        }
                     }
                 }
 
@@ -203,9 +213,6 @@ class ReservaController
                 ///EMAIL
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
 
-                mail($duenio->getEmail(), "PET-HERO: Cupon de Pago", "holaa",);
-
-                
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -214,6 +221,23 @@ class ReservaController
         } else {
             HomeController::Index();
         }
+    }
+
+
+    private function GetDiasReserva($fechaInicio, $fechaFin)
+    {
+
+        $timeInicio = strtotime($fechaInicio);
+        $timeFin = strtotime($fechaFin);
+
+        while ($timeInicio <= $timeFin) {
+
+            $dias[] = (date("Y-m-d", $timeInicio));
+
+            $timeInicio += 86400;
+        }
+
+        return $dias;
     }
 
     public function AddReview($comentario, $puntaje, $idReserva)
