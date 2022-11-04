@@ -222,7 +222,7 @@ class ReservaController
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
                 $guardian = $this->guardianDAO->BuscarId($reservaConfirmada->getFkIdGuardian());
 
-                $this->MandarMail($duenio->getEmail(), $reservaConfirmada, $guardian);
+                $this->MandarMail($duenio->getEmail(), $reservaConfirmada, $mascotaConfirmada, $guardian);
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -283,7 +283,7 @@ class ReservaController
         }
     }
 
-    private function MandarMail($duenioEmail, $reserva, $guardian)
+    private function MandarMail($duenioEmail, $reserva, $mascota, $guardian)
     {
         try {
             $mail = new PHPMailer();
@@ -301,7 +301,7 @@ class ReservaController
             $mail->setFrom('app.pethero@gmail.com');
             $mail->addAddress($duenioEmail);
             $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $reserva->getIdReserva();
-            $mail->msgHTML($this->MailBody());
+            $mail->msgHTML($this->MailBody($reserva, $mascota, $guardian));
             $mail->AltBody = 'Cupon de pago';
 
             if ($mail->send()) {
@@ -314,20 +314,20 @@ class ReservaController
         }
     }
 
-    private function MailBody()
+    private function MailBody($reserva, $mascota, $guardian)
     {
 
         $body = '
-        <div style="border:1px solid red">
-            <h1>Cup$oacute;n de Pago - Reserva #3</h1>
+        <div style="border:1px solid black">
+            <h1>Cupón de Pago - Reserva # ' ?> <?php echo $reserva->getIdReserva() ?> <?php '</h1>
             <ul>
-                <li>Reserva #3</li>
-                <li>Mascota: Sasha</li>
-                <li>Guardian: Messi</li>
-                <li>Fecha de Entrada: 2022-11-14</li>
-                <li>Fecha de Salida: 2022-11-15</li>
-                <li>Precio total de la Reserva: $15000</li>
-                <li>Total Cup$oacute;n de Pago: $7500</li>
+                <li>Reserva #' ?> <?php echo $reserva->getIdReserva() ?> <?php '</li>
+                <li>Mascota: ' ?> <?php echo $mascota->getNombre() ?> <?php '</li>
+                <li>Guardian: ' ?> <?php echo $guardian->getNombre() ?> <?php '</li>
+                <li>Fecha de Entrada: ' ?> <?php echo $reserva->getFechaInicio() ?> <?php '</li>
+                <li>Fecha de Salida: ' ?> <?php echo $reserva->getFechaFin() ?> <?php '</li>
+                <li>Precio total de la Reserva: $' ?> <?php echo $reserva->getPrecioTotal() ?> <?php '</li>
+                <li>Total Cupón de Pago: $' ?> <?php echo ($reserva->getPrecioTotal() * 0.5) ?> <?php '</li>
             </ul>
         </div>
         ';
