@@ -319,19 +319,19 @@ class ReservaController
 
         $body = '
         <div style="border:1px solid black">
-            <h1>Cupón de Pago - Reserva # ' ?> <?php echo $reserva->getIdReserva() ?> <?php '</h1>
+            <h1>Cupón de Pago - Reserva # ' . $reserva->getIdReserva() .  '</h1>
             <ul>
-                <li>Reserva #' ?> <?php echo $reserva->getIdReserva() ?> <?php '</li>
-                <li>Mascota: ' ?> <?php echo $mascota->getNombre() ?> <?php '</li>
-                <li>Guardian: ' ?> <?php echo $guardian->getNombre() ?> <?php '</li>
-                <li>Fecha de Entrada: ' ?> <?php echo $reserva->getFechaInicio() ?> <?php '</li>
-                <li>Fecha de Salida: ' ?> <?php echo $reserva->getFechaFin() ?> <?php '</li>
-                <li>Precio total de la Reserva: $' ?> <?php echo $reserva->getPrecioTotal() ?> <?php '</li>
-                <li>Total Cupón de Pago: $' ?> <?php echo ($reserva->getPrecioTotal() * 0.5) ?> <?php '</li>
+                <li>Reserva #' . $reserva->getIdReserva() . '</li>
+                <li>Mascota: ' . $mascota->getNombre() . '</li>
+                <li>Guardian: ' . $guardian->getNombre() . '</li>
+                <li>Fecha de Entrada: ' . $reserva->getFechaInicio() . '</li>
+                <li>Fecha de Salida: ' . $reserva->getFechaFin() . '</li>
+                <li>Precio total de la Reserva: $' . $reserva->getPrecioTotal() . '</li>
+                <li>Total Cupón de Pago: $' . ($reserva->getPrecioTotal() * 0.5) . '</li>
             </ul>
         </div>
         ';
- 
+
         return $body;
-    } 
+    }
 }
