@@ -298,7 +298,7 @@ class ReservaController
     
             $mail->setFrom('app.pethero@gmail.com');
             $mail->addAddress("sadads@gmail.com");
-            $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $idReserva;
+            $mail->Subject = 'PET-HERO: Cup$oacute;n de pago - Reserva #' . $idReserva;
     
             $mail->msgHTML($this->mailBody());
     
@@ -319,7 +319,20 @@ class ReservaController
 
     private function mailBody()
     {
-        $body = '<i>hola</i>';
+        $body = '
+        <div style="border:1px solid red">
+            <h1>Cup$oacute;n de Pago - Reserva #3</h1>
+            <ul>
+                <li>Reserva #3</li>
+                <li>Mascota: Sasha</li>
+                <li>Guardian: Messi</li>
+                <li>Fecha de Entrada: 2022-11-14</li>
+                <li>Fecha de Salida: 2022-11-15</li>
+                <li>Precio total de la Reserva: $15000</li>
+                <li>Total Cup$oacute;n de Pago: $7500</li>
+            </ul>
+        </div>
+        ';
 
         return $body;
     }
