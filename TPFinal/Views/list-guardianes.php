@@ -42,7 +42,7 @@ include("nav-bar.php");
                                                                             echo "Sin definir.";
                                                                         } ?></b></p>
                                 <p class="card-text">Tama&ntilde;o de Mascota: <b><?php if ($guardian->getTamanioMascotaCuidar()) {
-                                                                                echo implode(", ", $guardian->getTamanioMascotaCuidar());
+                                                                                echo implode(", ", $guardian->getTamanioDescripcion());
                                                                             } else {
                                                                                 echo "Sin definir.";
                                                                             } ?></b></p>

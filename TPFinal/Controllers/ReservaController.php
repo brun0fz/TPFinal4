@@ -316,6 +316,7 @@ class ReservaController
 
     private function MailBody()
     {
+
         $body = '
         <div style="border:1px solid red">
             <h1>Cup$oacute;n de Pago - Reserva #3</h1>

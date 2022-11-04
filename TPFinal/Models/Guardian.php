@@ -1,6 +1,9 @@
-<?php namespace Models;
+<?php
 
-class Guardian extends Usuario{
+namespace Models;
+
+class Guardian extends Usuario
+{
 
     private $aliasCBU;
     private $calle;
@@ -31,6 +34,20 @@ class Guardian extends Usuario{
     public function getTamanioMascotaCuidar()
     {
         return $this->tamanioMascotaCuidar;
+    }
+
+    public function getTamanioDescripcion()
+    {
+        $aux = array();
+
+        foreach ($this->tamanioMascotaCuidar as $tamanio) {
+            if ($tamanio == "Pequeño") {
+                $tamanio = "Peque&ntilde;o";
+            }
+            array_push($aux, $tamanio);
+        }
+
+        return $aux;
     }
 
     /**
