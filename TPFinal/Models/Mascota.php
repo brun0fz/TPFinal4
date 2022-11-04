@@ -47,7 +47,7 @@ class Mascota
         $tamanioDescripcion = '';
         switch ($this->tamanio) {
             case "S":
-                $tamanioDescripcion = 'Pequeño';
+                $tamanioDescripcion = 'Peque&ntilde;o';
                 break;
             case "M":
                 $tamanioDescripcion = 'Mediano';

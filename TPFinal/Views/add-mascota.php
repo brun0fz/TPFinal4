@@ -33,12 +33,12 @@ include("nav-bar.php");
             </div>
             <div class="form-floating">
                 <select class="form-select form-select-sm" name="tamanio" required>
-                    <option disabled selected value>(Seleccione un tamaño)</option>
-                    <option value="S">Pequeño</option>
+                    <option disabled selected value>(Seleccione un tama&ntilde;o)</option>
+                    <option value="S">Peque&ntilde;o</option>
                     <option value="M">Mediano</option>
                     <option value="L">Grande</option>
                 </select>
-                <label for="floatingInput">Tamaño</label>
+                <label for="floatingInput">Tama&ntilde;o</label>
             </div>
             <div class="form-floating">
                 <input type="textarea" name="observaciones" class="form-control" id="floatingInput" placeholder="observaciones" required>
@@ -57,7 +57,7 @@ include("nav-bar.php");
                 <label for="floatingInput">Video</label>
             </div>
             <br>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Añadir</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">A&ntilde;adir</button>
         </form>
     </main>
 </div>

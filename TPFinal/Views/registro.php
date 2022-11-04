@@ -12,20 +12,22 @@ include('header.php');
         </div>
     </div>
     <div class="col-md-12 d-flex justify-content-center">
-        <h1>Nuevo Usuario</h1>  
+        <h1>Nuevo Usuario</h1>
     </div>
 
     <!-- Registro Form -->
     <div class="col-md-12">
-    <?php if ($type == 1) { ?>
-        <form class="" action="<?php echo FRONT_ROOT . "Duenio/Add" ?>" method="Post" enctype="multipart/form-data">
-    <?php } else { ?>
-        <form class="" action="<?php echo FRONT_ROOT . "Guardian/Add" ?>" method="Post" enctype="multipart/form-data">
-    <?php } ?>
-        <?php if ($alert != "") { ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $alert ?>
-            </div>
+        <?php if ($type == 1) { ?>
+            <form class="" action="<?php echo FRONT_ROOT . "Duenio/Add" ?>" method="Post" enctype="multipart/form-data">
+            <?php } else { ?>
+                <form class="" action="<?php echo FRONT_ROOT . "Guardian/Add" ?>" method="Post" enctype="multipart/form-data">
+                <?php } ?>
+                <?php if ($alert != "") { ?>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <div class="alert alert-danger" role="alert" style="width: fit-content;">
+                            <?php echo $alert ?>
+                        </div>
+                    </div>
                 <?php } ?>
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="col-md-4 m-2 form-floating">
@@ -49,11 +51,11 @@ include('header.php');
                 </div>
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="col-md-4 m-2 form-floating">
-                        <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" class="form-control" id="floatingPassword" placeholder="contraseña" required>
-                        <label for="floatingPassword">Contraseña</label>
+                        <input type="password" name="password" pattern="(?=.*\d)(?=.*[a-z]).{8,}" class="form-control" id="floatingPassword" placeholder="contrase&ntilde;a" required>
+                        <label for="floatingPassword">Contrase&ntilde;a</label>
                     </div>
                     <div class="col-md-4 ms-3 my-auto">
-                        <small id="passwordHelpBlock" class="form-text text-muted"> Su contraseña debe tener al menos un número, una letra y un mínimo de 8 caracteres.</small>
+                        <small id="passwordHelpBlock" class="form-text text-muted"> Su contrase&ntilde;a debe tener al menos un n&uacute;mero, una letra y un m&iacute;nimo de 8 caracteres.</small>
                     </div>
                 </div>
 
@@ -85,10 +87,10 @@ include('header.php');
                         </div>
                         <div class="col-md-2 my-2 mx-1 form-floating">
                             <input type="text" name="codigoPostal" class="form-control" id="floatingInput" placeholder="codigo postal" required>
-                            <label for="floatingPassword">Código Postal</label>
+                            <label for="floatingPassword">C&oacute;digo Postal</label>
                         </div>
                     </div>
-                    
+
                 <?php } ?>
 
                 <div class="d-flex justify-content-center">
@@ -97,7 +99,9 @@ include('header.php');
 
                 <div class="d-flex justify-content-center">
                     <div class="col-md-8 my-2 mx-auto d-flex justify-content-center form-floating">
-                        <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" <?php if ($type == 2) {echo "required";} ?>>
+                        <input type="file" name="rutaFoto" class="form-control form-control-sm" id="floatingInput" placeholder="Foto" accept=".png, .jpg, .jpeg" <?php if ($type == 2) {
+                                                                                                                                                                        echo "required";
+                                                                                                                                                                    } ?>>
                         <label for="floatingInput">Foto de Perfil</label>
                     </div>
                 </div>
@@ -113,14 +117,14 @@ include('header.php');
                         <?php if ($type == 1) { ?>
                             <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/2" ?>">Registrarse como Guardian</a>
                         <?php } else { ?>
-                            <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Dueño</a>
+                            <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Due&ntilde;o</a>
                         <?php } ?>
                         <span class="text-muted mx-1"> - </span>
                         <a href="<?php echo  FRONT_ROOT . "Home/Index" ?>">Iniciar Sesion</a>
                     </div>
-                </div>    
+                </div>
 
-            </form>
+                </form>
     </div>
 </div>
 

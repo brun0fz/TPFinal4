@@ -5,7 +5,7 @@ include("nav-bar.php");
 
 <div class="container">
     <div class="row g-5">
-        <h2 id="list-title">Cupón de Pago - Reserva #<?php echo $reserva->getIdReserva() ?></h2><br>
+        <h2 id="list-title">Cup&oacute;n de Pago - Reserva #<?php echo $reserva->getIdReserva() ?></h2><br>
 
         <!---- Datos Reserva ----------------------------------------------------------------------------------->
         <div class="col-md-5 order-md-last">
@@ -44,7 +44,7 @@ include("nav-bar.php");
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between lh-sm">
-                    <h6 class="my-2 text-primary">Total Cupón de Pago (50%)</h6>
+                    <h6 class="my-2 text-primary">Total Cup&oacute;n de Pago (50%)</h6>
                     <span class="my-2 text-primary">$<?php echo $cupon->getTotal() ?></span>
                 </li>
             </ul>
@@ -58,11 +58,11 @@ include("nav-bar.php");
                 <div class="my-3">
                     <div class="form-check">
                         <input id="credit" name="metodoPago" type="radio" class="form-check-input" checked required>
-                        <label class="form-check-label" for="credit">Tarjeta de Crédito</label>
+                        <label class="form-check-label" for="credit">Tarjeta de Cr&eacute;dito</label>
                     </div>
                     <div class="form-check">
                         <input id="debit" name="metodoPago" type="radio" class="form-check-input" required>
-                        <label class="form-check-label" for="debit">Tarjeta de Débito</label>
+                        <label class="form-check-label" for="debit">Tarjeta de D&eacute;bito</label>
                     </div>
                 </div>
                 <div class="row gy-3">
@@ -89,7 +89,7 @@ include("nav-bar.php");
 
                 <input type="hidden" name="idReserva" value="<?php echo $cupon->getFkIdReserva(); ?>">
                 <input type="hidden" name="estado" value="Confirmada">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar Cupón</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar Cup&oacute;n</button>
             </form>
         </div>
     </div>

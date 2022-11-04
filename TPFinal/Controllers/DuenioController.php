@@ -78,7 +78,7 @@ class DuenioController
             $reservaDAO = new ReservaDAO();
 
             $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-            $listaReservas = $reservaDAO->HistorialReservasDuenio($_SESSION["loggedUser"]->getId());
+            $listaReservas = $reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
 
             require_once(VIEWS_PATH . "profile-usuario.php");
         }
@@ -219,7 +219,6 @@ class DuenioController
 
     private function FiltrarGuardianesPorRaza($listaGuardianes, $animal, $raza, $fechaInicio, $fechaFin)
     {
-
         try {
 
             $reservaDAO = new ReservaDAO();

@@ -129,7 +129,7 @@ class GuardianDAO implements IGuardianDAO
 
                 $TamanioMascota = array();
 
-                if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                if ($row["pequenia"]) $TamanioMascota[] = "Peque&ntilde;o";
                 if ($row["mediana"]) $TamanioMascota[] = "Mediano";
                 if ($row["grande"]) $TamanioMascota[] = "Grande";
 
@@ -201,7 +201,7 @@ class GuardianDAO implements IGuardianDAO
 
                     $TamanioMascota = array();
 
-                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                    if ($row["pequenia"]) $TamanioMascota[] = "Peque&ntilde;o";
                     if ($row["mediana"]) $TamanioMascota[] = "Mediano";
                     if ($row["grande"]) $TamanioMascota[] = "Grande";
 
@@ -276,7 +276,7 @@ class GuardianDAO implements IGuardianDAO
 
                     $TamanioMascota = array();
 
-                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
+                    if ($row["pequenia"]) $TamanioMascota[] = "Peque&ntilde;o";
                     if ($row["mediana"]) $TamanioMascota[] = "Mediano";
                     if ($row["grande"]) $TamanioMascota[] = "Grande";
 

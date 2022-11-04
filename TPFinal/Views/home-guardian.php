@@ -19,14 +19,14 @@ include("nav-bar.php");
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
                 <img class="img-unselect" src="<?php echo IMG_PATH . "disponibilidadIcon.png" ?>" alt="" width="40" height="40">
             </div>
-            <h3 class="fs-2">Configuración</h3>
-            <p>Selecciona los días en que estás disponible y el tamaño de las mascotas a cuidar. Establece el precio que cobras por día.</p>
-            <a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView" ?>">Establecer configuración</a>
+            <h3 class="fs-2">Configuraci&oacute;n</h3>
+            <p>Selecciona los d&iacute;as en que est&aacute;s disponible y el tama&ntilde;o de las mascotas a cuidar. Establece el precio que cobras por d&iacute;a.</p>
+            <a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView" ?>">Establecer configuraci&oacute;n</a>
         </div>
     </div>
     <?php if ((!$_SESSION["loggedUser"]->getDisponibilidad()) || (!$_SESSION["loggedUser"]->getTamanioMascotaCuidar()) || (!$_SESSION["loggedUser"]->getPrecioXDia())) { ?>
         <div class="alert alert-danger" style="width: fit-content;">
-            <span class="mx-4"><b>(!)</b> Recuerda completar tus opciones de configuración para poder comenzar a recibir reservas.</span>
+            <span class="mx-4"><b>(!)</b> Recuerda completar tus opciones de configuraci&oacute;n para poder comenzar a recibir reservas.</span>
         </div>
     <?php } ?>
     <img class="background-img img-unselect" src="<?php echo IMG_PATH . "background.png" ?>" alt="">

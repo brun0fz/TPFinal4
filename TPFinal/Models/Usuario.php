@@ -27,7 +27,7 @@ abstract class Usuario
 
     public function getTipoDescripcion(){
         if($this->tipo == 1){
-            return "Dueño";
+            return "Due&ntilde;o";
         } else{
             return "Guardian";
         }

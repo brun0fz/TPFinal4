@@ -5,12 +5,12 @@ include("nav-bar.php");
 
 <div class="container">
     <br>
-    <h1>Configuración</h1><br><br>
+    <h1>Configuraci&oacute;n</h1><br><br>
     <div class="row justify-content-start">
         <form class="formcheck" action="<?php echo FRONT_ROOT ?>Guardian/setConfig" method="Post">
             <div class="col-12">
                 <label class="formcheck label" for="checkbox">
-                    <h3>Días disponibles</h3>
+                    <h3>D&iacute;as disponibles</h3>
                 </label><br>
                 <div class="formcheck form-switch items">
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Lunes" <?php if (in_array("Lunes", $disponibilidad)) {
@@ -21,7 +21,7 @@ include("nav-bar.php");
                                                                                                                     } ?>> Martes
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Miercoles" <?php if (in_array("Miercoles", $disponibilidad)) {
                                                                                                                             echo 'checked="checked"';
-                                                                                                                        } ?>> Miercoles
+                                                                                                                        } ?>> Mi&eacute;rcoles
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Jueves" <?php if (in_array("Jueves", $disponibilidad)) {
                                                                                                                         echo 'checked="checked"';
                                                                                                                     } ?>> Jueves
@@ -30,7 +30,7 @@ include("nav-bar.php");
                                                                                                                     } ?>> Viernes
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Sabado" <?php if (in_array("Sabado", $disponibilidad)) {
                                                                                                                         echo 'checked="checked"';
-                                                                                                                    } ?>> Sabado
+                                                                                                                    } ?>> S&aacute;bado
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="dias[]" value="Domingo" <?php if (in_array("Domingo", $disponibilidad)) {
                                                                                                                         echo 'checked="checked"';
                                                                                                                     } ?>> Domingo
@@ -39,12 +39,12 @@ include("nav-bar.php");
             <hr class="my-5" />
             <div class="col-12">
                 <label class="formcheck label" for="checkbox">
-                    <h3>Tamaño de Mascotas</h3>
+                    <h3>Tama&ntilde;o de Mascotas</h3>
                 </label><br>
                 <div class="formcheck form-switch items">
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Pequeño" <?php if (in_array("Pequeño", $tamanioArray)) {
                                                                                                                             echo 'checked="checked"';
-                                                                                                                        } ?>> Pequeño
+                                                                                                                        } ?>> Peque&ntilde;o
                     <input class="form-check-input align-middle ms-3" type="checkbox" name="tamanios[]" value="Mediano" <?php if (in_array("Mediano", $tamanioArray)) {
                                                                                                                             echo 'checked="checked"';
                                                                                                                         } ?>> Mediano
@@ -56,7 +56,7 @@ include("nav-bar.php");
             </div>
             <hr class="my-5" />
             <div class="col-sm-12 col-md-6 col-lg-3">
-                <h3>Precio por día</h3>
+                <h3>Precio por d&iacute;a</h3>
                 <div class="form-floating mx-5 row">
                     <input type="text" name="precio" class="form-control" id="floatingInput" value="<?php echo $_SESSION["loggedUser"]->getPrecioXDia() ?>" placeholder="precio" required>
                     <label for="floatingInput">Precio($)</label>

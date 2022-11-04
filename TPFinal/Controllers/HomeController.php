@@ -62,7 +62,7 @@ class HomeController
 
                 require_once(VIEWS_PATH . "home-guardian.php");
             } else {
-                $alert = "Usuario o contraseña incorrectos. Ingrese sus datos nuevamente.";
+                $alert = "Usuario o contrase&ntilde;a incorrectos. Ingrese sus datos nuevamente.";
                 $this->Index($alert);
             }
         } catch (Exception $ex) {
