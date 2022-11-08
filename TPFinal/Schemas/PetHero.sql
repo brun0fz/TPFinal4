@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com:3306
--- Generation Time: Nov 08, 2022 at 03:52 AM
--- Server version: 8.0.22-13
--- PHP Version: 7.2.34
+-- Host: localhost
+-- Generation Time: Nov 08, 2022 at 06:45 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bumivsrscryp1fqpzsmn`
+-- Database: `PetHero`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Animales` (
-  `idAnimal` int NOT NULL,
-  `animal` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `raza` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idAnimal` int(11) NOT NULL,
+  `animal` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `raza` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Animales`
@@ -72,30 +71,18 @@ INSERT INTO `Animales` (`idAnimal`, `animal`, `raza`) VALUES
 --
 
 CREATE TABLE `Cupones` (
-  `idCupon` int NOT NULL,
+  `idCupon` int(11) NOT NULL,
   `total` float NOT NULL,
-  `fk_idReserva` int NOT NULL,
-  `aliasGuardian` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `fk_idReserva` int(11) NOT NULL,
+  `aliasGuardian` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Cupones`
 --
 
 INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`, `aliasGuardian`) VALUES
-(8, 7500, 32, 'messi.rve'),
-(9, 15000, 33, 'messi.rve'),
-(10, 449.5, 34, ''),
-(11, 449.5, 34, ''),
-(12, 7500, 32, 'messi.rve'),
-(13, 7500, 36, 'messi.rve'),
-(14, 7500, 32, 'messi.rve'),
-(15, 7500, 32, 'messi.rve'),
-(16, 7500, 36, ''),
-(18, 449.5, 34, ''),
-(20, 299.5, 37, ''),
-(21, 299.5, 38, ''),
-(22, 299.5, 38, '');
+(23, 898.5, 39, '');
 
 -- --------------------------------------------------------
 
@@ -104,13 +91,13 @@ INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`, `aliasGuardian`) VALU
 --
 
 CREATE TABLE `Direcciones` (
-  `idDireccion` int NOT NULL,
-  `calle` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `numero` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  `piso` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  `departamento` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  `codigoPostal` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idDireccion` int(11) NOT NULL,
+  `calle` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `numero` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `piso` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `departamento` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `codigoPostal` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Direcciones`
@@ -118,7 +105,8 @@ CREATE TABLE `Direcciones` (
 
 INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamento`, `codigoPostal`) VALUES
 (5, 'Luro', '2365', '2', 'C', '7600'),
-(7, 'San Martin', '2365', '6', 'C', '7600');
+(7, 'San Martin', '2365', '6', 'C', '7600'),
+(8, 'Independencia', '1225', '', '', '7600');
 
 -- --------------------------------------------------------
 
@@ -127,15 +115,15 @@ INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamen
 --
 
 CREATE TABLE `Disponibilidades` (
-  `idDisponibilidad` int NOT NULL,
-  `lunes` tinyint(1) DEFAULT '0',
-  `martes` tinyint(1) DEFAULT '0',
-  `miercoles` tinyint(1) DEFAULT '0',
-  `jueves` tinyint(1) DEFAULT '0',
-  `viernes` tinyint(1) DEFAULT '0',
-  `sabado` tinyint(1) DEFAULT '0',
-  `domingo` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idDisponibilidad` int(11) NOT NULL,
+  `lunes` tinyint(1) DEFAULT 0,
+  `martes` tinyint(1) DEFAULT 0,
+  `miercoles` tinyint(1) DEFAULT 0,
+  `jueves` tinyint(1) DEFAULT 0,
+  `viernes` tinyint(1) DEFAULT 0,
+  `sabado` tinyint(1) DEFAULT 0,
+  `domingo` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Disponibilidades`
@@ -143,7 +131,8 @@ CREATE TABLE `Disponibilidades` (
 
 INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `domingo`) VALUES
 (3, 1, 1, 1, 1, 1, 0, 0),
-(5, 1, 1, 1, 1, 1, 0, 0);
+(5, 0, 0, 0, 0, 0, 1, 1),
+(6, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -152,16 +141,16 @@ INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercole
 --
 
 CREATE TABLE `Duenios` (
-  `idDuenio` int NOT NULL,
-  `nombre` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `apellido` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `tipo` tinyint NOT NULL DEFAULT '1',
-  `rutaFoto` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idDuenio` int(11) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `apellido` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `telefono` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `tipo` tinyint(4) NOT NULL DEFAULT 1,
+  `rutaFoto` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `alta` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Duenios`
@@ -178,22 +167,22 @@ INSERT INTO `Duenios` (`idDuenio`, `nombre`, `apellido`, `telefono`, `email`, `p
 --
 
 CREATE TABLE `Guardianes` (
-  `idGuardian` int NOT NULL,
-  `nombre` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `apellido` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `aliasCBU` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  `tipo` tinyint NOT NULL DEFAULT '2',
-  `rutaFoto` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT '1',
-  `reputacion` float DEFAULT '2.5',
-  `precioXDia` float DEFAULT '0',
-  `fk_idDireccion` int DEFAULT NULL,
-  `fk_idDisponibilidad` int DEFAULT NULL,
-  `fk_idTamanioMascota` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idGuardian` int(11) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `apellido` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `telefono` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `aliasCBU` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `tipo` tinyint(4) NOT NULL DEFAULT 2,
+  `rutaFoto` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `alta` tinyint(1) NOT NULL DEFAULT 1,
+  `reputacion` float DEFAULT 2.5,
+  `precioXDia` float DEFAULT 0,
+  `fk_idDireccion` int(11) DEFAULT NULL,
+  `fk_idDisponibilidad` int(11) DEFAULT NULL,
+  `fk_idTamanioMascota` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Guardianes`
@@ -201,7 +190,8 @@ CREATE TABLE `Guardianes` (
 
 INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `aliasCBU`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
 (5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', '123', '', 2, 'belen@gmail.com.png', 1, 2.5, 599, 5, 3, 4),
-(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', '123', '', 2, 'messi@gmail.com.jpeg', 1, 4, 15000, 7, 5, 6);
+(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', '123', '', 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
+(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', '123', '', 2, 'emma@gmail.com.jpeg', 1, 2.5, 899, 8, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -210,17 +200,17 @@ INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email
 --
 
 CREATE TABLE `Mascotas` (
-  `idMascota` int NOT NULL,
-  `nombre` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `tamanio` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `observaciones` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `rutaFoto` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `rutaPlanVacunas` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `rutaVideo` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT 'undefinedVideo',
-  `fk_idDuenio` int NOT NULL,
-  `fk_idAnimal` int NOT NULL,
-  `alta` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idMascota` int(11) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `tamanio` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `observaciones` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `rutaFoto` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `rutaPlanVacunas` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `rutaVideo` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT 'undefinedVideo',
+  `fk_idDuenio` int(11) NOT NULL,
+  `fk_idAnimal` int(11) NOT NULL,
+  `alta` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Mascotas`
@@ -230,7 +220,9 @@ INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `ruta
 (3, 'Sasha', 'M', 'Dormilona', '1-Sasha.jpeg', '1-Sasha-Vacunas.png', 'undefinedVideo', 1, 5, 1),
 (8, 'Pepa', 'M', 'Muy enojona', '2-Pepa.jpeg', '2-Pepa-Vacunas.png', '2-Pepa-Video.mp4', 2, 30, 1),
 (10, 'Pompon', 'M', 'Le gusta el pollito', '2-Pompon.jpeg', '2-Pompon-Vacunas.jpeg', 'undefinedVideo', 2, 30, 1),
-(11, 'Yuumi', 'S', 'Muy bonita', '1-Yuumi.jpeg', '1-Yuumi-Vacunas.jpeg', 'undefinedVideo', 1, 30, 1);
+(11, 'Yuumi', 'S', 'Muy bonita', '1-Yuumi.jpeg', '1-Yuumi-Vacunas.jpeg', '1-Yuumi-Video.mp4', 1, 30, 1),
+(12, 'Kiba', 'L', 'Muy valiente', '1-Kiba.jpeg', '1-Kiba-Vacunas.png', '1-Kiba-Video.mp4', 1, 18, 1),
+(13, 'Lisa', 'M', 'Juguetona', '1-Lisa.png', '1-Lisa-Vacunas.png', 'undefinedVideo', 1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -239,12 +231,12 @@ INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `ruta
 --
 
 CREATE TABLE `Mensajes` (
-  `idMensaje` int NOT NULL,
-  `idEmisor` int NOT NULL,
-  `idReceptor` int NOT NULL,
-  `mensaje` varchar(1000) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `idMensaje` int(11) NOT NULL,
+  `idEmisor` int(11) NOT NULL,
+  `idReceptor` int(11) NOT NULL,
+  `mensaje` varchar(1000) COLLATE utf8mb4_spanish_ci NOT NULL,
   `fecha` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -253,29 +245,26 @@ CREATE TABLE `Mensajes` (
 --
 
 CREATE TABLE `Reservas` (
-  `idReserva` int NOT NULL,
+  `idReserva` int(11) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
   `precioTotal` float NOT NULL,
-  `estado` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL DEFAULT 'Solicitada',
-  `fk_idMascota` int NOT NULL,
-  `fk_idDuenio` int NOT NULL,
-  `fk_idGuardian` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `estado` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'Solicitada',
+  `fk_idMascota` int(11) NOT NULL,
+  `fk_idDuenio` int(11) NOT NULL,
+  `fk_idGuardian` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Reservas`
 --
 
 INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
-(31, '2022-11-07', '2022-11-09', 2697, 'Cancelada', 11, 1, 5),
-(32, '2022-11-15', '2022-11-17', 15000, 'En espera de pago', 3, 1, 7),
-(33, '2022-10-20', '2022-10-21', 30000, 'Finalizada', 11, 1, 7),
-(34, '2022-11-10', '2022-11-10', 899, 'En espera de pago', 3, 1, 5),
-(35, '2022-11-14', '2022-11-18', 75000, 'Cancelada', 11, 1, 7),
-(36, '2022-12-05', '2022-12-05', 15000, 'En espera de pago', 11, 1, 7),
-(37, '2022-11-28', '2022-11-28', 599, 'En espera de pago', 11, 1, 5),
-(38, '2022-12-26', '2022-12-26', 599, 'En espera de pago', 3, 1, 5);
+(39, '2022-11-09', '2022-11-11', 1797, 'Confirmada', 11, 1, 5),
+(40, '2022-11-01', '2022-11-01', 899, 'Finalizada', 12, 1, 8),
+(41, '2022-11-21', '2022-11-23', 1797, 'Solicitada', 3, 1, 5),
+(42, '2022-11-21', '2022-11-23', 1797, 'Solicitada', 13, 1, 5),
+(43, '2022-11-22', '2022-11-24', 1797, 'Solicitada', 11, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -284,18 +273,11 @@ INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `
 --
 
 CREATE TABLE `Reviews` (
-  `idReview` int NOT NULL,
-  `comentario` varchar(144) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  `puntaje` int NOT NULL,
-  `fk_idReserva` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Dumping data for table `Reviews`
---
-
-INSERT INTO `Reviews` (`idReview`, `comentario`, `puntaje`, `fk_idReserva`) VALUES
-(15, 'Muy buena atencion', 4, 33);
+  `idReview` int(11) NOT NULL,
+  `comentario` varchar(144) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `puntaje` int(11) NOT NULL,
+  `fk_idReserva` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -304,19 +286,20 @@ INSERT INTO `Reviews` (`idReview`, `comentario`, `puntaje`, `fk_idReserva`) VALU
 --
 
 CREATE TABLE `TamaniosMascota` (
-  `idTamanioMascota` int NOT NULL,
-  `pequenia` tinyint(1) DEFAULT '0',
-  `mediana` tinyint(1) DEFAULT '0',
-  `grande` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idTamanioMascota` int(11) NOT NULL,
+  `pequenia` tinyint(1) DEFAULT 0,
+  `mediana` tinyint(1) DEFAULT 0,
+  `grande` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `TamaniosMascota`
 --
 
 INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grande`) VALUES
-(4, 1, 1, 1),
-(6, 1, 1, 0);
+(4, 1, 1, 0),
+(6, 0, 0, 1),
+(7, 1, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -406,67 +389,67 @@ ALTER TABLE `TamaniosMascota`
 -- AUTO_INCREMENT for table `Animales`
 --
 ALTER TABLE `Animales`
-  MODIFY `idAnimal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idAnimal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `Cupones`
 --
 ALTER TABLE `Cupones`
-  MODIFY `idCupon` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
 --
 ALTER TABLE `Direcciones`
-  MODIFY `idDireccion` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idDireccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `Disponibilidades`
 --
 ALTER TABLE `Disponibilidades`
-  MODIFY `idDisponibilidad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idDisponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `idDuenio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  MODIFY `idGuardian` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idGuardian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `idMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `Mensajes`
 --
 ALTER TABLE `Mensajes`
-  MODIFY `idMensaje` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  MODIFY `idReview` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
-  MODIFY `idTamanioMascota` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idTamanioMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
