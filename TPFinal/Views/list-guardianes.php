@@ -42,10 +42,10 @@ include("nav-bar.php");
                                                                             echo "Sin definir.";
                                                                         } ?></b></p>
                                 <p class="card-text">Tama&ntilde;o de Mascota: <b><?php if ($guardian->getTamanioMascotaCuidar()) {
-                                                                                echo implode(", ", $guardian->getTamanioMascotaCuidar());
-                                                                            } else {
-                                                                                echo "Sin definir.";
-                                                                            } ?></b></p>
+                                                                                        echo implode(", ", $guardian->getTamanioDescripcion());
+                                                                                    } else {
+                                                                                        echo "Sin definir.";
+                                                                                    } ?></b></p>
                                 <div class="text-end">
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/ShowAddReservaView" method="Post">
                                         <input type="hidden" name="idGuardian" value="<?php echo $guardian->getId(); ?>">

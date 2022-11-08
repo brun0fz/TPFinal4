@@ -44,6 +44,7 @@ class DuenioController
                     $cont++;
                 }
             }
+
             require_once(VIEWS_PATH . "home-duenio.php");
         }
     }
@@ -141,7 +142,7 @@ class DuenioController
                     $listaGuardianes = $this->FiltrarGuardianesPorFecha($listaGuardianes, $fechaInicio, $fechaFin);
 
                     $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-                    $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcion());
+                    $listaGuardianes = $this->FiltrarGuardianesPorTamanio($listaGuardianes, $mascota->getTamanioDescripcionComp());
 
                     $listaGuardianes = $this->FiltrarGuardianesPorRaza($listaGuardianes, $mascota->getAnimal(), $mascota->getRaza(), $fechaInicio, $fechaFin);
 
