@@ -44,6 +44,7 @@ class DuenioController
                     $cont++;
                 }
             }
+            
             require_once(VIEWS_PATH . "home-duenio.php");
         }
     }
