@@ -10,20 +10,21 @@ define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
 define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
 
 //DATABASE LOCAL
-/*
-define("DB_HOST", "localhost");
+
+define("DB_HOST", "localhost:3307");
 define("DB_NAME", "PetHero");
 define("DB_USER", "root");
-define("DB_PASS", "");*/
+define("DB_PASS", "");
+
 
 
 //DATABASE ONLINE
-
+/*
 define("DB_HOST", "bumivsrscryp1fqpzsmn-mysql.services.clever-cloud.com");
 define("DB_NAME", "bumivsrscryp1fqpzsmn");
 define("DB_USER", "u1x4he9n7ufecekv");
 define("DB_PASS", "0ILV8Bkh48BjAsMBlf7E");
-
+*/
 ?>
 
 

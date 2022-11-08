@@ -318,7 +318,7 @@ class ReservaController
     {
         $body = '
         <div style="border:1px solid black">
-            <h1>Cupón de Pago - Reserva # ' ?> <?php echo $reserva->getIdReserva() ?> <?php '</h1>
+            <h1>Cupón de Pago - Reserva # ' ?> <?php echo $reserva->getIdReserva() ?> <?php $body += '</h1>
             <ul>
                 <li>Reserva #' ?> <?php echo $reserva->getIdReserva() ?> <?php '</li>
                 <li>Mascota: ' ?> <?php echo $mascota->getNombre() ?> <?php '</li>
