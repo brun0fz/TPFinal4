@@ -12,7 +12,7 @@ include('nav-bar.php');
     <div class="row pt-4">
         <div class="col-md-12 col-lg-3 d-flex justify-content-center">
             <div class="rounded-circle overflow-hidden profile-picture position-relative border border-5 border-primary shadow-sm">
-                <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" alt="profilePic" width="auto" height="250" class="profile-picture-img position-absolute top-50 start-50 translate-middle">
+                <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" alt="profilePic" width="auto" height="250" class="profile-picture-img img-unselect position-absolute top-50 start-50 translate-middle">
             </div>
         </div>
         <div class="col-9 my-auto">
