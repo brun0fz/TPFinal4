@@ -6,6 +6,7 @@ use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\IReservaDAO as IReservaDAO;
 use Models\Cupon;
+use Models\EstadoReserva;
 use Models\Reserva;
 use Models\Review;
 
