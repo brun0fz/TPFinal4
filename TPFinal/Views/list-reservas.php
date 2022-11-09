@@ -48,7 +48,9 @@ include("nav-bar.php");
             <div class="card mb-3 shadow-sm">
                 <div class="row g-0">
                     <div class="col-md-4 card-img-reserva position-relative">
-                        <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="rounded-start img-reserva img-unselect position-absolute top-50 start-50 translate-middle">
+                        <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>">
+                            <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" class="rounded-start img-reserva img-unselect position-absolute top-50 start-50 translate-middle">
+                        </a>
                     </div>
                     <div class="col-md-8 p-1 position-relative">
                         <div class="card-body">
