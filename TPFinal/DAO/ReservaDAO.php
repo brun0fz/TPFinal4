@@ -608,4 +608,46 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
+
+    public function GetListaReservasMascotaEstado($idMascota, $estado)
+    {
+        try {
+            $reservasList = array();
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idMascota = :fk_idMascota AND estado = :estado) ORDER BY fechaInicio desc;";
+
+            $parameters["fk_idMascota"] = $idMascota;
+            $parameters["estado"] = $estado;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $reserva->setIdReserva($row["idReserva"]);
+                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
+                    $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
+                    $reserva->setFechaInicio($row["fechaInicio"]);
+                    $reserva->setFechaFin($row["fechaFin"]);
+                    $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
+
+                    array_push($reservasList, $reserva);
+                }
+
+                return $reservasList;
+            } else {
+
+                return null;
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
 }

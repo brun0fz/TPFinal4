@@ -3,8 +3,10 @@
 namespace Controllers;
 
 use DAO\MascotaDAO;
+use DAO\ReservaDAO;
 use Exception;
 use Models\Mascota;
+use Models\EstadoReserva;
 
 class MascotaController
 {
@@ -54,7 +56,9 @@ class MascotaController
     {
         if ($this->validateSession()) {
             try {
+                $reservaDAO = new ReservaDAO();
                 $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
+                $listaReservas = $reservaDAO->GetListaReservasMascotaEstado($mascota->getId(), EstadoReserva::FINALIZADA->value);
                 require_once(VIEWS_PATH . "profile-mascota.php");
             } catch (Exception $ex) {
                 echo $ex;

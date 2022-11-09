@@ -8,6 +8,7 @@ use DAO\MascotaDAO;
 use DAO\ReservaDAO;
 use Exception;
 use Models\Duenio;
+use Models\EstadoReserva;
 use Models\Mascota;
 
 class DuenioController
@@ -79,7 +80,7 @@ class DuenioController
             $reservaDAO = new ReservaDAO();
 
             $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-            $listaReservas = $reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
+            $listaReservas = $reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
 
             require_once(VIEWS_PATH . "profile-usuario.php");
         }
