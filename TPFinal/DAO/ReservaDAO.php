@@ -400,11 +400,10 @@ class ReservaDAO implements IReservaDAO
     public function AddCupon($cupon)
     {
         try {
-            $query = "INSERT INTO Cupones (total, fk_idReserva, aliasGuardian) VALUES (:total, :fk_idReserva, :aliasGuardian);";
+            $query = "INSERT INTO Cupones (total, fk_idReserva) VALUES (:total, :fk_idReserva);";
 
             $parameters["total"] = $cupon->getTotal();
             $parameters["fk_idReserva"] = $cupon->getFkIdReserva();
-            $parameters["aliasGuardian"] = $cupon->getAliasGuardian();
 
             $this->connection = Connection::GetInstance();
 
@@ -436,7 +435,6 @@ class ReservaDAO implements IReservaDAO
                     $cupon->setIdCupon($row["idCupon"]);
                     $cupon->setTotal($row["total"]);
                     $cupon->setFkIdReserva($row["fk_idReserva"]);
-                    $cupon->setAliasGuardian($row["aliasGuardian"]);
                 }
             }
 

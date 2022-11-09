@@ -13,6 +13,5 @@ interface IGuardianDAO
     function UpdateDisponibilidad($idGuardian, $disponibilidad);
     function UpdateTamanios($idGuardian, $tamanios);
     function UpdatePrecio($idGuardian, $precioXDia);
-    function UpdateAliasCBU($idGuardian, $aliasCBU);
     function UpdateReputacion($idReserva);
 }

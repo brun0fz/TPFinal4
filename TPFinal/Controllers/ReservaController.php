@@ -215,7 +215,7 @@ class ReservaController
                 ///Cupon de pago
                 $precioParcial = ($reservaConfirmada->getPrecioTotal() * 0.5);
 
-                $cupon = new Cupon($idReserva, $_SESSION["loggedUser"]->getAliasCBU(), $precioParcial);
+                $cupon = new Cupon($idReserva, $precioParcial);
                 $this->reservaDAO->AddCupon($cupon);
 
                 ///EMAIL

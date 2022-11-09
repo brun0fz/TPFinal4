@@ -114,7 +114,6 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setTelefono($row["telefono"]);
                 $guardian->setEmail($row["email"]);
                 $guardian->setPassword($row["password"]);
-                $guardian->setAliasCBU($row["aliasCBU"]);
                 $guardian->setPrecioXDia($row["precioXDia"]);
                 $guardian->setReputacion($row["reputacion"]);
                 $guardian->setAlta($row["alta"]);
@@ -186,7 +185,6 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
                     $guardian->setPassword($row["password"]);
-                    $guardian->setAliasCBU($row["aliasCBU"]);
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
@@ -261,7 +259,6 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
                     $guardian->setPassword($row["password"]);
-                    $guardian->setAliasCBU($row["aliasCBU"]);
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
@@ -367,23 +364,6 @@ class GuardianDAO implements IGuardianDAO
             throw $ex;
         }
     }
-
-    public function UpdateAliasCBU($idGuardian, $aliasCBU)
-    {
-        try {
-            $query = "UPDATE " . $this->tableName . " SET aliasCBU = :aliasCBU WHERE idGuardian = :idGuardian;";
-
-            $parameters["aliasCBU"] = $aliasCBU;
-            $parameters["idGuardian"] = $idGuardian;
-
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-
 
     public function UpdateReputacion($idReserva)
     {

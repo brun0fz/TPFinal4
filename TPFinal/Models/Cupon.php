@@ -7,13 +7,11 @@ class Cupon
 
     private $idCupon;
     private $fk_idReserva;
-    private $aliasGuardian;
     private $total;
 
-    public function __construct($fk_idReserva, $aliasGuardian, $total)
+    public function __construct($fk_idReserva, $total)
     {
         $this->fk_idReserva = $fk_idReserva;
-        $this->aliasGuardian = $aliasGuardian;
         $this->total = $total;
     }
 
@@ -49,24 +47,6 @@ class Cupon
     public function setFkIdReserva($fk_idReserva): self
     {
         $this->fk_idReserva = $fk_idReserva;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of aliasGuardian
-     */
-    public function getAliasGuardian()
-    {
-        return $this->aliasGuardian;
-    }
-
-    /**
-     * Set the value of aliasGuardian
-     */
-    public function setAliasGuardian($aliasGuardian): self
-    {
-        $this->aliasGuardian = $aliasGuardian;
 
         return $this;
     }
