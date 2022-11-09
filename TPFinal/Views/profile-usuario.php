@@ -14,7 +14,7 @@ include('nav-bar.php');
     <div class="row pt-4">
         <div class="col-md-12 col-lg-3 d-flex justify-content-center">
             <div class="rounded-circle overflow-hidden profile-picture position-relative border border-5 border-primary shadow-sm">
-                <img src="<?php echo IMG_PATH . $_SESSION["loggedUser"]->getRutaFoto() ?>" alt="profilePic" width="auto" height="250" class="profile-picture-img position-absolute top-50 start-50 translate-middle">
+                <img src="<?php echo IMG_PATH . $_SESSION["loggedUser"]->getRutaFoto() ?>" alt="profilePic" width="auto" height="250" class="profile-picture-img img-unselect position-absolute top-50 start-50 translate-middle">
             </div>
         </div>
         <div class="col-9 my-auto">
@@ -27,16 +27,16 @@ include('nav-bar.php');
             <?php 
             $n = 0;
             for ($i = 1; $i <= (int)$guardian->getReputacion(); $i++) {?>
-                <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
+                <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="img-unselect p-1" width="30" height="30" alt=""><?php
                 $n = $i;
             }
             if (($guardian->getReputacion() - (int)$guardian->getReputacion()) >= 0.5) {?>
-                <img src="<?php echo IMG_PATH . "pawHalf.png"; ?>" class="p-1" width="30" height="30" alt=""><?php
+                <img src="<?php echo IMG_PATH . "pawHalf.png"; ?>" class="img-unselect p-1" width="30" height="30" alt=""><?php
                 $n++;
             }
             if ($i <= 5) {
                 for ($i = $n + 1; $i <= 5; $i++) {?>
-                <img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="p-1" width="30" height="30" alt="">
+                <img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="img-unselect p-1" width="30" height="30" alt="">
                 <?php } 
             } } ?>
         </div>
@@ -54,7 +54,7 @@ include('nav-bar.php');
                     <a href="<?php echo FRONT_ROOT . "Mascota/ShowMascotaProfile/" . $mascota->getId() ?>">
                     <div class="col m-3">
                         <div class="rounded-circle overflow-hidden profile-picture-small position-relative shadow-sm">
-                            <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" alt="profilePic" width="auto" height="150" class="profile-picture-img position-absolute top-50 start-50 translate-middle">
+                            <img src="<?php echo IMG_PATH . $mascota->getRutaFoto() ?>" alt="profilePic" width="auto" height="150" class="profile-picture-img img-unselect position-absolute top-50 start-50 translate-middle">
                         </div>
                         <h5 class="d-flex justify-content-center my-1"><?php echo $mascota->getNombre() ?></h5>
                     </div>
