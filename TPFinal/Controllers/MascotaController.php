@@ -54,7 +54,7 @@ class MascotaController
 
     public function ShowMascotaProfile($idMascota)
     {
-        if ($this->validateSession()) {
+        if (isset($_SESSION["loggedUser"])){
             try {
                 $reservaDAO = new ReservaDAO();
                 $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
@@ -63,6 +63,8 @@ class MascotaController
             } catch (Exception $ex) {
                 echo $ex;
             }
+        } else {
+            HomeController::Index();
         }
     }
 
