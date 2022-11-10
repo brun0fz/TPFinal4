@@ -34,19 +34,24 @@ class DuenioController
     public function ShowDuenioHome()
     {
         if ($this->validateSession()) {
-            $flag = 0;
-            $cont = 0;
-            $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->GetListaReservasByDuenio($_SESSION["loggedUser"]->getID());
+            try {
+                $flag = 0;
+                $cont = 0;
+                $reservaDAO = new ReservaDAO();
+                $listaReservas = $reservaDAO->GetListaReservasByDuenio($_SESSION["loggedUser"]->getID());
 
-            foreach ($listaReservas as $reserva) {
-                if ($reserva->getEstado() == EstadoReserva::ESPERA->value) {
-                    $flag = 1;
-                    $cont++;
+                foreach ($listaReservas as $reserva) {
+                    if ($reserva->getEstado() == EstadoReserva::ESPERA->value) {
+                        $flag = 1;
+                        $cont++;
+                    }
                 }
-            }
 
-            require_once(VIEWS_PATH . "home-duenio.php");
+                require_once(VIEWS_PATH . "home-duenio.php");
+            } catch (Exception $ex) {
+
+                require_once(VIEWS_PATH . "home-duenio.php");
+            }
         }
     }
 
@@ -69,7 +74,8 @@ class DuenioController
                 $mascotaList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
                 require_once(VIEWS_PATH . "filtrar-guardianes.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         }
     }
@@ -77,12 +83,17 @@ class DuenioController
     public function ShowProfileView()
     {
         if ($this->validateSession()) {
-            $reservaDAO = new ReservaDAO();
+            try {
+                $reservaDAO = new ReservaDAO();
 
-            $mascotaList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
-            $listaReservas = $reservaDAO->GetListaReservasDuenioByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
+                $mascotaList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
+                $listaReservas = $reservaDAO->GetListaReservasDuenioByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
 
-            require_once(VIEWS_PATH . "profile-usuario.php");
+                require_once(VIEWS_PATH . "profile-usuario.php");
+            } catch (Exception $ex) {
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
+            }
         }
     }
 
@@ -125,7 +136,8 @@ class DuenioController
                 $homeController->ShowRegisterView($type, $alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 
@@ -150,11 +162,12 @@ class DuenioController
                     if (!empty($listaGuardianes)) {
                         $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
                     } else {
-                        $alert = "No hay guardianes disponibles.";
+                        $alert = "No hay guardianes disponibles para las fechas y mascota seleccionadas.";
                         $this->ShowFiltrarGuardianesView($alert);
                     }
                 } catch (Exception $ex) {
-                    echo $ex;
+                    echo "Se produjo un error. Intente mas tarde.";
+                    HomeController::Index();
                 }
             } else {
                 $this->ShowFiltrarGuardianesView();
@@ -197,7 +210,8 @@ class DuenioController
 
             return $listaGuardianesDisponibles;
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 
@@ -215,7 +229,8 @@ class DuenioController
 
             return $listaFiltrada;
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 
@@ -257,7 +272,8 @@ class DuenioController
 
             return $listaFiltrada;
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 

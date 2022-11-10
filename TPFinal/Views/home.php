@@ -25,7 +25,7 @@ include('header.php');
         <label for="floatingPassword">Contrase&ntilde;a</label>
       </div>
       <br>
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesion</button><br><br>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesi&oacute;n</button><br><br>
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRecuperarContraseniaView" ?>">Olvide mi contraseña</a><br><br>
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Due&ntilde;o</a><br>
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/2" ?>">Registrarse como Guardian</a>

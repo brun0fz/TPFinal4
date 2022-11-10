@@ -2,6 +2,7 @@
 
 namespace DAO;
 
+use Controllers\HomeController;
 use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\IReservaDAO as IReservaDAO;
@@ -17,37 +18,44 @@ class ReservaDAO implements IReservaDAO
 
     public function __construct()
     {
-        $this->ControlReservas();
+        try {
+            $this->ControlReservas();
+        } catch (Exception $ex) {
+        }
     }
 
     private function ControlReservas()
     {
-        $reservas = $this->getAllByStatus(EstadoReserva::EN_CURSO->value);
+        try {
+            $reservas = $this->getAllByStatus(EstadoReserva::EN_CURSO->value);
 
-        foreach ($reservas as $reserva) {
-            if ($reserva->getFechaFin() < date("Y-m-d")) {
-                $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::FINALIZADA->value);
-            }
-        }
-
-        $reservas = $this->getAllByStatus(EstadoReserva::CONFIRMADA->value);
-
-        foreach ($reservas as $reserva) {
-            if ($reserva->getFechaInicio() <= date("Y-m-d")) {
+            foreach ($reservas as $reserva) {
                 if ($reserva->getFechaFin() < date("Y-m-d")) {
                     $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::FINALIZADA->value);
-                } else {
-                    $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::EN_CURSO->value);
                 }
             }
-        }
 
-        $reservas = $this->getAllByStatus(EstadoReserva::ESPERA->value);
+            $reservas = $this->getAllByStatus(EstadoReserva::CONFIRMADA->value);
 
-        foreach ($reservas as $reserva) {
-            if ($reserva->getFechaInicio() <= date("Y-m-d")) {
-                $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::CANCELADA->value);
+            foreach ($reservas as $reserva) {
+                if ($reserva->getFechaInicio() <= date("Y-m-d")) {
+                    if ($reserva->getFechaFin() < date("Y-m-d")) {
+                        $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::FINALIZADA->value);
+                    } else {
+                        $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::EN_CURSO->value);
+                    }
+                }
             }
+
+            $reservas = $this->getAllByStatus(EstadoReserva::ESPERA->value);
+
+            foreach ($reservas as $reserva) {
+                if ($reserva->getFechaInicio() <= date("Y-m-d")) {
+                    $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::CANCELADA->value);
+                }
+            }
+        } catch (Exception $ex) {
+            throw $ex;
         }
     }
 
@@ -395,7 +403,7 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
-    
+
 
     public function GetListaReservasDuenioByEstado($idDuenio, $estado)
     {

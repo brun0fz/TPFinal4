@@ -41,11 +41,17 @@ class GuardianController
         }
     }
 
-    public function ShowProfileView(){
+    public function ShowProfileView()
+    {
         if ($this->validateSession()) {
-            $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
-            require_once(VIEWS_PATH . "profile-usuario.php");
+            try {
+                $reservaDAO = new ReservaDAO();
+                $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
+                require_once(VIEWS_PATH . "profile-usuario.php");
+            } catch (Exception $ex) {
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
+            }
         }
     }
 
@@ -89,7 +95,8 @@ class GuardianController
                 $homeController->ShowRegisterView($type, $alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 

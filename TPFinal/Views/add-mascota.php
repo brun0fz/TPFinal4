@@ -63,18 +63,6 @@ include("nav-bar.php");
 </div>
 
 <script>
-    <?php
-    $perros = array();
-    $gatos = array();
-    foreach ($animalesList as $animal) {
-        if ($animal["animal"] == "Perro") {
-            $perros[] = $animal["raza"];
-        } else {
-            $gatos[] = $animal["raza"];
-        }
-    }
-    ?>
-
     let perros = <?php echo json_encode($perros) ?>;
     let gatos = <?php echo json_encode($gatos) ?>;
 
