@@ -159,8 +159,14 @@ class ReservaController
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, $estado);
 
+                $reserva = $this->reservaDAO->GetReservaById($idReserva);
+                $duenioMail = $this->duenioDAO->BuscarId($reserva->getFkIdDuenio())->getEmail();
+
                 switch ($estado) {
                     case "Cancelada":
+                        if($_SESSION["loggedUser"]->getTipo() == 2){
+                            $this->MandarMail($duenioMail, "Reserva cancelada", "Lo sentimos. Se ha cancelado su reserva", "");
+                        }
                         $alert = "La reserva ha sido cancelada.";
                         break;
                     case "Confirmada":
@@ -283,7 +289,7 @@ class ReservaController
         }
     }
 
-    private function MandarMail($duenioEmail, $subject, $msgHTML, $altBody)
+    private function MandarMail($email, $subject, $msgHTML, $altBody)
     {
         try {
             $mail = new PHPMailer();
@@ -299,7 +305,7 @@ class ReservaController
             $mail->Password = 'bmplfijszyvepomr';
 
             $mail->setFrom('app.pethero@gmail.com');
-            $mail->addAddress($duenioEmail);
+            $mail->addAddress($email);
             $mail->Subject = $subject;
             $mail->msgHTML($msgHTML);
             $mail->AltBody = $altBody;
