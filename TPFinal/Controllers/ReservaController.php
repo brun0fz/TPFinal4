@@ -159,14 +159,8 @@ class ReservaController
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, $estado);
 
-                $reserva = $this->reservaDAO->GetReservaById($idReserva);
-                $duenioMail = $this->duenioDAO->BuscarId($reserva->getFkIdDuenio())->getEmail();
-
                 switch ($estado) {
                     case "Cancelada":
-                        if($_SESSION["loggedUser"]->getTipo() == 2){
-                            $this->MandarMail($duenioMail, "Reserva cancelada", "Lo sentimos. Se ha cancelado su reserva", "");
-                        }
                         $alert = "La reserva ha sido cancelada.";
                         break;
                     case "Confirmada":
