@@ -9,14 +9,14 @@ define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
 define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
 
-//DATABASE LOCAL
 
+//DATABASE LOCAL
 define("DB_HOST", "localhost");
 define("DB_NAME", "PetHero");
 define("DB_USER", "root");
 define("DB_PASS", "");
 
-
+define("ENCRYPTPASS", "0e253a4119d31e6bf2021696f3d61729");
 
 //DATABASE ONLINE
 /*
