@@ -5,6 +5,8 @@ namespace DAO;
 use \Exception as Exception;
 use DAO\Connection as Connection;
 use DAO\IReservaDAO as IReservaDAO;
+use Models\Cupon;
+use Models\EstadoReserva;
 use Models\Reserva;
 
 class ReservaDAO implements IReservaDAO
@@ -389,6 +391,258 @@ class ReservaDAO implements IReservaDAO
                 }
             }
             return $reserva;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function AddCupon($cupon)
+    {
+        try {
+            $query = "INSERT INTO Cupones (total, fk_idReserva) VALUES (:total, :fk_idReserva);";
+
+            $parameters["total"] = $cupon->getTotal();
+            $parameters["fk_idReserva"] = $cupon->getFkIdReserva();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function GetCuponByIdReserva($idReserva)
+    {
+        try {
+            $cupon = null;
+
+            $query = "SELECT * FROM Cupones WHERE (fk_idReserva = :fk_idReserva)";
+
+            $parameters["fk_idReserva"] = $idReserva;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $cupon = new Cupon(NULL, NULL, NULL);
+
+                    $cupon->setIdCupon($row["idCupon"]);
+                    $cupon->setTotal($row["total"]);
+                    $cupon->setFkIdReserva($row["fk_idReserva"]);
+                }
+            }
+
+            return $cupon;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function AddReview($review)
+    {
+        try {
+            $query = "INSERT INTO Reviews (comentario, puntaje, fk_idReserva) VALUES (:comentario, :puntaje, :fk_idReserva);";
+
+            $parameters["comentario"] = $review->getComentario();
+            $parameters["puntaje"] = $review->getPuntaje();
+            $parameters["fk_idReserva"] = $review->getFkIdReserva();
+
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query, $parameters);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function GetReviewByIdReserva($idReserva)
+    {
+        try {
+            $review = null;
+
+            $query = "SELECT * FROM Reviews WHERE (fk_idReserva = :fk_idReserva)";
+
+            $parameters["fk_idReserva"] = $idReserva;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $review = new Review(NULL, NULL, NULL);
+
+                    $review->setIdReview($row["idReview"]);
+                    $review->setComentario($row["comentario"]);
+                    $review->setPuntaje($row["puntaje"]);
+                    $review->setFkIdReserva($row["fk_idReserva"]);
+                }
+            }
+
+            return $review;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+
+    public function getGuardianByReserva($idReserva)
+    {
+
+        try {
+            $idGuardian = null;
+
+            $query = "SELECT fk_idGuardian FROM Reservas WHERE (fk_idReserva = :fk_idReserva)";
+
+            $parameters["fk_idReserva"] = $idReserva;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $idGuardian = $row["fk_idGuardian"];
+                }
+            }
+            return $idGuardian;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+
+    public function GetListaReservasDuenioEstado($idDuenio, $estado)
+    {
+        try {
+            $reservasList = array();
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio AND estado = :estado) ORDER BY fechaInicio desc;";
+
+            $parameters["fk_idDuenio"] = $idDuenio;
+            $parameters["estado"] = $estado;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $reserva->setIdReserva($row["idReserva"]);
+                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
+                    $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
+                    $reserva->setFechaInicio($row["fechaInicio"]);
+                    $reserva->setFechaFin($row["fechaFin"]);
+                    $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
+
+                    array_push($reservasList, $reserva);
+                }
+
+                return $reservasList;
+            } else {
+
+                return null;
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+
+    public function GetListaReservasGuardianEstado($idGuardian, $estado)
+    {
+        try {
+            $reservasList = array();
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idGuardian = :fk_idGuardian AND estado = :estado) ORDER BY fechaInicio desc;";
+
+            $parameters["fk_idGuardian"] = $idGuardian;
+            $parameters["estado"] = $estado;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $reserva->setIdReserva($row["idReserva"]);
+                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
+                    $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
+                    $reserva->setFechaInicio($row["fechaInicio"]);
+                    $reserva->setFechaFin($row["fechaFin"]);
+                    $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
+
+                    array_push($reservasList, $reserva);
+                }
+
+                return $reservasList;
+            } else {
+
+                return null;
+            }
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function GetListaReservasMascotaEstado($idMascota, $estado)
+    {
+        try {
+            $reservasList = array();
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idMascota = :fk_idMascota AND estado = :estado) ORDER BY fechaInicio desc;";
+
+            $parameters["fk_idMascota"] = $idMascota;
+            $parameters["estado"] = $estado;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            if (isset($resultSet)) {
+
+                foreach ($resultSet as $row) {
+
+                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
+
+                    $reserva->setIdReserva($row["idReserva"]);
+                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
+                    $reserva->setFkIdMascota($row["fk_idMascota"]);
+                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
+                    $reserva->setFechaInicio($row["fechaInicio"]);
+                    $reserva->setFechaFin($row["fechaFin"]);
+                    $reserva->setPrecioTotal($row["precioTotal"]);
+                    $reserva->setEstado($row["estado"]);
+
+                    array_push($reservasList, $reserva);
+                }
+
+                return $reservasList;
+            } else {
+
+                return null;
+            }
         } catch (Exception $ex) {
             throw $ex;
         }

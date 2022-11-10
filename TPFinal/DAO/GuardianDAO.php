@@ -33,7 +33,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, 'encryptpass'), :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
 
             $parameters["nombre"] = $guardian->getNombre();
             $parameters["apellido"] = $guardian->getApellido();
@@ -113,8 +113,6 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setApellido($row["apellido"]);
                 $guardian->setTelefono($row["telefono"]);
                 $guardian->setEmail($row["email"]);
-                $guardian->setPassword($row["password"]);
-                $guardian->setAliasCBU($row["aliasCBU"]);
                 $guardian->setPrecioXDia($row["precioXDia"]);
                 $guardian->setReputacion($row["reputacion"]);
                 $guardian->setAlta($row["alta"]);
@@ -166,7 +164,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
+            $query = "SELECT *, aes_decrypt(password, 'encryptpass') as password FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
 
             $parameters["email"] = $email;
 
@@ -185,8 +183,7 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setApellido($row["apellido"]);
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
-                    $guardian->setPassword($row["password"]);
-                    $guardian->setAliasCBU($row["aliasCBU"]);
+                    $guardian->setPassword($row["password"]); //Se usa para el login
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
@@ -260,8 +257,6 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setApellido($row["apellido"]);
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
-                    $guardian->setPassword($row["password"]);
-                    $guardian->setAliasCBU($row["aliasCBU"]);
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
@@ -367,23 +362,6 @@ class GuardianDAO implements IGuardianDAO
             throw $ex;
         }
     }
-
-    public function UpdateAliasCBU($idGuardian, $aliasCBU)
-    {
-        try {
-            $query = "UPDATE " . $this->tableName . " SET aliasCBU = :aliasCBU WHERE idGuardian = :idGuardian;";
-
-            $parameters["aliasCBU"] = $aliasCBU;
-            $parameters["idGuardian"] = $idGuardian;
-
-            $this->connection = Connection::GetInstance();
-
-            $this->connection->ExecuteNonQuery($query, $parameters);
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-
 
     public function UpdateReputacion($idReserva)
     {

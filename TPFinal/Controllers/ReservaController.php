@@ -215,14 +215,14 @@ class ReservaController
                 ///Cupon de pago
                 $precioParcial = ($reservaConfirmada->getPrecioTotal() * 0.5);
 
-                $cupon = new Cupon($idReserva, $_SESSION["loggedUser"]->getAliasCBU(), $precioParcial);
+                $cupon = new Cupon($idReserva, $precioParcial);
                 $this->reservaDAO->AddCupon($cupon);
 
                 ///EMAIL
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
                 $guardian = $this->guardianDAO->BuscarId($reservaConfirmada->getFkIdGuardian());
 
-                $this->MandarMail($duenio->getEmail(), $reservaConfirmada, $mascotaConfirmada, $guardian);
+                $this->MandarMail($duenio->getEmail(), 'PET-HERO: Cupon de pago - Reserva ' . $reservaConfirmada->getIdReserva(), $this->MailBodyCupon($reservaConfirmada, $mascotaConfirmada, $guardian), "Cupon de pago");
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -283,7 +283,7 @@ class ReservaController
         }
     }
 
-    private function MandarMail($duenioEmail, $reserva, $mascota, $guardian)
+    private function MandarMail($duenioEmail, $subject, $msgHTML, $altBody)
     {
         try {
             $mail = new PHPMailer();
@@ -300,9 +300,9 @@ class ReservaController
 
             $mail->setFrom('app.pethero@gmail.com');
             $mail->addAddress($duenioEmail);
-            $mail->Subject = 'PET-HERO: Cupon de pago - Reserva ' . $reserva->getIdReserva();
-            $mail->msgHTML($this->MailBody($reserva, $mascota, $guardian));
-            $mail->AltBody = 'Cupon de pago';
+            $mail->Subject = $subject;
+            $mail->msgHTML($msgHTML);
+            $mail->AltBody = $altBody;
 
             if ($mail->send()) {
                 return 1;
@@ -314,7 +314,7 @@ class ReservaController
         }
     }
 
-    private function MailBody($reserva, $mascota, $guardian)
+    private function MailBodyCupon($reserva, $mascota, $guardian)
     {
 
         $body = '

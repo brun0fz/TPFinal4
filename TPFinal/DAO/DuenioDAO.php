@@ -15,7 +15,7 @@ class DuenioDAO implements IDuenioDAO
     public function Add(Duenio $duenio)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta);";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, 'encryptpass'), :tipo, :rutaFoto, :alta);";
 
             $parameters["nombre"] = $duenio->getNombre();
             $parameters["apellido"] = $duenio->getApellido();
@@ -55,7 +55,6 @@ class DuenioDAO implements IDuenioDAO
                 $duenio->setApellido($row["apellido"]);
                 $duenio->setTelefono($row["telefono"]);
                 $duenio->setEmail($row["email"]);
-                $duenio->setPassword($row["password"]);
                 $duenio->setTipo($row["tipo"]);
                 $duenio->setRutaFoto($row["rutaFoto"]);
                 $duenio->setAlta($row["alta"]);
@@ -75,7 +74,7 @@ class DuenioDAO implements IDuenioDAO
         try {
             $duenio = NULL;
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
+            $query = "SELECT *, aes_decrypt(password, 'encryptpass') as password FROM " . $this->tableName . " WHERE (email = :email)";
 
             $parameters["email"] = $email;
 
@@ -94,7 +93,7 @@ class DuenioDAO implements IDuenioDAO
                     $duenio->setApellido($row["apellido"]);
                     $duenio->setTelefono($row["telefono"]);
                     $duenio->setEmail($row["email"]);
-                    $duenio->setPassword($row["password"]);
+                    $duenio->setPassword($row["password"]); //Se usa para el login
                     $duenio->setTipo($row["tipo"]);
                     $duenio->setRutaFoto($row["rutaFoto"]);
                     $duenio->setAlta($row["alta"]);
@@ -134,7 +133,6 @@ class DuenioDAO implements IDuenioDAO
                     $duenio->setApellido($row["apellido"]);
                     $duenio->setTelefono($row["telefono"]);
                     $duenio->setEmail($row["email"]);
-                    $duenio->setPassword($row["password"]);
                     $duenio->setTipo($row["tipo"]);
                     $duenio->setRutaFoto($row["rutaFoto"]);
                     $duenio->setAlta($row["alta"]);
