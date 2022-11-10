@@ -33,7 +33,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, :password, :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, 'encryptpass'), :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
 
             $parameters["nombre"] = $guardian->getNombre();
             $parameters["apellido"] = $guardian->getApellido();
@@ -164,7 +164,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
+            $query = "SELECT *, aes_decrypt(password, 'encryptpass') as password FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
 
             $parameters["email"] = $email;
 
