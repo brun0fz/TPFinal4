@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 08, 2022 at 06:45 PM
+-- Generation Time: Nov 10, 2022 at 01:49 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.6
 
@@ -73,16 +73,18 @@ INSERT INTO `Animales` (`idAnimal`, `animal`, `raza`) VALUES
 CREATE TABLE `Cupones` (
   `idCupon` int(11) NOT NULL,
   `total` float NOT NULL,
-  `fk_idReserva` int(11) NOT NULL,
-  `aliasGuardian` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL
+  `fk_idReserva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Dumping data for table `Cupones`
 --
 
-INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`, `aliasGuardian`) VALUES
-(23, 898.5, 39, '');
+INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`) VALUES
+(23, 898.5, 39),
+(26, 899, 44),
+(27, 898.5, 41),
+(28, 898.5, 42);
 
 -- --------------------------------------------------------
 
@@ -146,7 +148,7 @@ CREATE TABLE `Duenios` (
   `apellido` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `telefono` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `password` varbinary(150) NOT NULL,
   `tipo` tinyint(4) NOT NULL DEFAULT 1,
   `rutaFoto` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `alta` tinyint(1) NOT NULL DEFAULT 1
@@ -157,8 +159,9 @@ CREATE TABLE `Duenios` (
 --
 
 INSERT INTO `Duenios` (`idDuenio`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`) VALUES
-(1, 'Bruno', 'Fabrizio', '2236698574', 'brunofabrizio15@gmail.com', '123', 1, 'bruno@gmail.com.jpg', 1),
-(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', '123', 1, 'clara@gmail.com.png', 1);
+(1, 'Bruno', 'Fabrizio', '2236698574', 'brunofabrizio15@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 1, 'bruno@gmail.com.jpg', 1),
+(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 1, 'clara@gmail.com.png', 1),
+(10, 'asd', 'asd', '123123123', 'asd@gmail.com', 0x7678a9bd9e2d158962318b0d25ccdcf0, 1, 'undefinedProfile.png', 1);
 
 -- --------------------------------------------------------
 
@@ -172,8 +175,7 @@ CREATE TABLE `Guardianes` (
   `apellido` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `telefono` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `aliasCBU` varchar(100) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `password` varbinary(150) NOT NULL,
   `tipo` tinyint(4) NOT NULL DEFAULT 2,
   `rutaFoto` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `alta` tinyint(1) NOT NULL DEFAULT 1,
@@ -188,10 +190,10 @@ CREATE TABLE `Guardianes` (
 -- Dumping data for table `Guardianes`
 --
 
-INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `aliasCBU`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
-(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', '123', '', 2, 'belen@gmail.com.png', 1, 2.5, 599, 5, 3, 4),
-(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', '123', '', 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
-(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', '123', '', 2, 'emma@gmail.com.jpeg', 1, 2.5, 899, 8, 6, 7);
+INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
+(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 2, 'belen@gmail.com.png', 1, 2.5, 599, 5, 3, 4),
+(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
+(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 2, 'emma@gmail.com.jpeg', 1, 3, 899, 8, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -220,23 +222,10 @@ INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `ruta
 (3, 'Sasha', 'M', 'Dormilona', '1-Sasha.jpeg', '1-Sasha-Vacunas.png', 'undefinedVideo', 1, 5, 1),
 (8, 'Pepa', 'M', 'Muy enojona', '2-Pepa.jpeg', '2-Pepa-Vacunas.png', '2-Pepa-Video.mp4', 2, 30, 1),
 (10, 'Pompon', 'M', 'Le gusta el pollito', '2-Pompon.jpeg', '2-Pompon-Vacunas.jpeg', 'undefinedVideo', 2, 30, 1),
-(11, 'Yuumi', 'S', 'Muy bonita', '1-Yuumi.jpeg', '1-Yuumi-Vacunas.jpeg', '1-Yuumi-Video.mp4', 1, 30, 1),
+(11, 'Yuumi', 'S', 'Muy bonita', '1-Yuumi.jpeg', '1-Yuumi-Vacunas.jpeg', 'undefinedVideo', 1, 30, 1),
 (12, 'Kiba', 'L', 'Muy valiente', '1-Kiba.jpeg', '1-Kiba-Vacunas.png', '1-Kiba-Video.mp4', 1, 18, 1),
-(13, 'Lisa', 'M', 'Juguetona', '1-Lisa.png', '1-Lisa-Vacunas.png', 'undefinedVideo', 1, 5, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Mensajes`
---
-
-CREATE TABLE `Mensajes` (
-  `idMensaje` int(11) NOT NULL,
-  `idEmisor` int(11) NOT NULL,
-  `idReceptor` int(11) NOT NULL,
-  `mensaje` varchar(1000) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `fecha` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+(13, 'Lisa', 'M', 'Juguetona', '1-Lisa.png', '1-Lisa-Vacunas.png', 'undefinedVideo', 1, 5, 1),
+(14, 'Michi', 'M', 'Jugueton', '1-Michi.png', '1-Michi-Vacunas.png', 'undefinedVideo', 1, 30, 1);
 
 -- --------------------------------------------------------
 
@@ -260,11 +249,12 @@ CREATE TABLE `Reservas` (
 --
 
 INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
-(39, '2022-11-09', '2022-11-11', 1797, 'Confirmada', 11, 1, 5),
+(39, '2022-11-09', '2022-11-11', 1797, 'En curso', 11, 1, 5),
 (40, '2022-11-01', '2022-11-01', 899, 'Finalizada', 12, 1, 8),
-(41, '2022-11-21', '2022-11-23', 1797, 'Solicitada', 3, 1, 5),
-(42, '2022-11-21', '2022-11-23', 1797, 'Solicitada', 13, 1, 5),
-(43, '2022-11-22', '2022-11-24', 1797, 'Solicitada', 11, 1, 5);
+(41, '2022-11-21', '2022-11-23', 1797, 'Confirmada', 3, 1, 5),
+(42, '2022-11-21', '2022-11-23', 1797, 'Cancelada', 13, 1, 5),
+(43, '2022-11-22', '2022-11-24', 1797, 'Cancelada', 11, 1, 5),
+(44, '2022-11-12', '2022-11-13', 1798, 'Confirmada', 14, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -278,6 +268,13 @@ CREATE TABLE `Reviews` (
   `puntaje` int(11) NOT NULL,
   `fk_idReserva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Dumping data for table `Reviews`
+--
+
+INSERT INTO `Reviews` (`idReview`, `comentario`, `puntaje`, `fk_idReserva`) VALUES
+(23, 'ñ', 3, 40);
 
 -- --------------------------------------------------------
 
@@ -354,12 +351,6 @@ ALTER TABLE `Mascotas`
   ADD KEY `fk_id_animal` (`fk_idAnimal`);
 
 --
--- Indexes for table `Mensajes`
---
-ALTER TABLE `Mensajes`
-  ADD PRIMARY KEY (`idMensaje`);
-
---
 -- Indexes for table `Reservas`
 --
 ALTER TABLE `Reservas`
@@ -395,7 +386,7 @@ ALTER TABLE `Animales`
 -- AUTO_INCREMENT for table `Cupones`
 --
 ALTER TABLE `Cupones`
-  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
@@ -413,7 +404,7 @@ ALTER TABLE `Disponibilidades`
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Guardianes`
@@ -425,25 +416,19 @@ ALTER TABLE `Guardianes`
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `idMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `Mensajes`
---
-ALTER TABLE `Mensajes`
-  MODIFY `idMensaje` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
