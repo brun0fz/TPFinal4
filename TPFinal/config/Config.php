@@ -7,6 +7,7 @@ define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "layout/styles/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
+define("ASSETS_PATH", FRONT_ROOT.VIEWS_PATH . "img/assets/");
 define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
 
 //DATABASE LOCAL
@@ -16,7 +17,7 @@ define("DB_NAME", "PetHero");
 define("DB_USER", "root");
 define("DB_PASS", "");
 
-
+define("ENCRYPTPASS", "0e253a4119d31e6bf2021696f3d61729");
 
 //DATABASE ONLINE
 /*

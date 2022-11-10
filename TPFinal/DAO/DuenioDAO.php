@@ -15,8 +15,9 @@ class DuenioDAO implements IDuenioDAO
     public function Add(Duenio $duenio)
     {
         try {
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, 'encryptpass'), :tipo, :rutaFoto, :alta);";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, :encryptpass), :tipo, :rutaFoto, :alta);";
 
+            $parameters["encryptpass"] = ENCRYPTPASS;
             $parameters["nombre"] = $duenio->getNombre();
             $parameters["apellido"] = $duenio->getApellido();
             $parameters["telefono"] = $duenio->getTelefono();
@@ -69,14 +70,15 @@ class DuenioDAO implements IDuenioDAO
     }
 
 
-    public function Buscar($email)
+    public function GetDuenioByEmail($email)
     {
         try {
             $duenio = NULL;
 
-            $query = "SELECT *, aes_decrypt(password, 'encryptpass') as password FROM " . $this->tableName . " WHERE (email = :email)";
+            $query = "SELECT *, aes_decrypt(password, :encryptpass) as password FROM " . $this->tableName . " WHERE (email = :email)";
 
             $parameters["email"] = $email;
+            $parameters["encryptpass"] = ENCRYPTPASS;
 
             $this->connection = Connection::GetInstance();
 
@@ -109,7 +111,7 @@ class DuenioDAO implements IDuenioDAO
         }
     }
 
-    public function BuscarId($idDuenio)
+    public function GetDuenioById($idDuenio)
     {
         try {
             $duenio = NULL;

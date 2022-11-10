@@ -1,4 +1,7 @@
 <?php
+
+use Models\EstadoReserva;
+
 include("header.php");
 include("nav-bar.php");
 ?>
@@ -12,7 +15,7 @@ include("nav-bar.php");
                 </div>
                 <div class="col-md-8 p-1 position-relative">
                     <div class="card-body">
-                        <h3 class="card-title"><b><?php echo "Reserva para " . $mascota->getNombre(); ?></b><span class="<?php echo ($reserva->getEstado() == "En curso") ? "text-primary" : "" ?>"> (<?php echo $reserva->getEstado(); ?>)</span></h3>
+                        <h3 class="card-title"><b><?php echo "Reserva para " . $mascota->getNombre(); ?></b><span class="<?php echo ($reserva->getEstado() == EstadoReserva::EN_CURSO->value) ? "text-primary" : "" ?>"> (<?php echo $reserva->getEstado(); ?>)</span></h3>
                         <h5><small class="card-text">desde el <b><?php echo $reserva->getFechaInicio() ?></b> hasta el <b><?php echo $reserva->getFechaFin(); ?></b></small></h5>
                         <hr class="my-3" />
                         <?php if ($_SESSION["loggedUser"]->getTipo() == 1) { ?>

@@ -1,4 +1,7 @@
 <?php
+
+use Models\EstadoReserva;
+
 include("header.php");
 include("nav-bar.php");
 ?>
@@ -88,7 +91,7 @@ include("nav-bar.php");
                 <hr class="my-5">
 
                 <input type="hidden" name="idReserva" value="<?php echo $cupon->getFkIdReserva(); ?>">
-                <input type="hidden" name="estado" value="Confirmada">
+                <input type="hidden" name="estado" value=<?php echo EstadoReserva::CONFIRMADA->value ?>>
                 <button class="w-100 btn btn-primary btn-lg" type="submit">Pagar Cup&oacute;n</button>
             </form>
         </div>

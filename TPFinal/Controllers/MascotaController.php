@@ -32,7 +32,7 @@ class MascotaController
     {
         if ($this->validateSession()) {
             try {
-                $mascotasList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+                $mascotasList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
                 require_once(VIEWS_PATH . "list-mascotas.php");
             } catch (Exception $ex) {
                 echo $ex;
@@ -58,7 +58,7 @@ class MascotaController
             try {
                 $reservaDAO = new ReservaDAO();
                 $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-                $listaReservas = $reservaDAO->GetListaReservasMascotaEstado($mascota->getId(), EstadoReserva::FINALIZADA->value);
+                $listaReservas = $reservaDAO->GetListaReservasMascotaByEstado($mascota->getId(), EstadoReserva::FINALIZADA->value);
                 require_once(VIEWS_PATH . "profile-mascota.php");
             } catch (Exception $ex) {
                 echo $ex;

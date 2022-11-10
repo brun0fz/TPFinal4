@@ -33,8 +33,9 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, 'encryptpass'), :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
+            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, :encryptpass), :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
 
+            $parameters["encryptpass"] = ENCRYPTPASS;
             $parameters["nombre"] = $guardian->getNombre();
             $parameters["apellido"] = $guardian->getApellido();
             $parameters["telefono"] = $guardian->getTelefono();
@@ -145,10 +146,6 @@ class GuardianDAO implements IGuardianDAO
 
                 $guardian->setDisponibilidad($disponibilidad);
 
-                /*
-                $guardian->setDiasOcupados($row["diasOcupados"]);
-                */
-
                 array_push($guardianesList, $guardian);
             }
 
@@ -159,14 +156,15 @@ class GuardianDAO implements IGuardianDAO
     }
 
 
-    public function Buscar($email)
+    public function GetGuardianByEmail($email)
     {
         try {
             $guardian = null;
 
-            $query = "SELECT *, aes_decrypt(password, 'encryptpass') as password FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
+            $query = "SELECT *, aes_decrypt(password, :encryptpass) as password FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
 
             $parameters["email"] = $email;
+            $parameters["encryptpass"] = ENCRYPTPASS;
 
             $this->connection = Connection::GetInstance();
 
@@ -215,12 +213,6 @@ class GuardianDAO implements IGuardianDAO
                     if ($row["domingo"]) $disponibilidad[] = "Domingo";
 
                     $guardian->setDisponibilidad($disponibilidad);
-
-
-                    /*
-                    $guardian->setDiasOcupados($row["diasOcupados"]);
-                    
-                    */
                 }
 
                 return $guardian;
@@ -233,7 +225,7 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function BuscarId($idGuardian)
+    public function GetGuardianById($idGuardian)
     {
         try {
             $guardian = null;
@@ -288,11 +280,6 @@ class GuardianDAO implements IGuardianDAO
                     if ($row["domingo"]) $disponibilidad[] = "Domingo";
 
                     $guardian->setDisponibilidad($disponibilidad);
-
-                    /*
-                    $guardian->setDiasOcupados($row["diasOcupados"]);
-                    
-                    */
                 }
 
                 return $guardian;
@@ -374,14 +361,12 @@ class GuardianDAO implements IGuardianDAO
 
             $reserva = $reservaDAO->GetReservaById($idReserva);
 
-            $listaReservas = $reservaDAO->ListaReservasGuardian($reserva->getFkIdGuardian());
+            $listaReservas = $reservaDAO->GetListaReservasByGuardian($reserva->getFkIdGuardian());
 
             foreach ($listaReservas as $reserva) {
 
-                if ($reserva->getEstado() == "Finalizada") {
+                if ($reserva->getEstado() == EstadoReserva::FINALIZADA->value) {
                     $review = $reservaDAO->GetReviewByIdReserva($reserva->getIdReserva());
-
-
 
                     if ($review) {
                         $suma += $review->getPuntaje();
