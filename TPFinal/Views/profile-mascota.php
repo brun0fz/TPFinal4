@@ -80,7 +80,7 @@ include('nav-bar.php');
                                 <div class="alert alert-dark" style="width: fit-content;">
                                     <span class="card-text">Review: <b><i><?php echo $review->getComentario(); ?></i></b></span>
                                     <b class="ms-1"><?php echo "- " . $review->getPuntaje(); ?></b>
-                                    <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
+                                    <img src="<?php echo ASSETS_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
                                 </div>
                             <?php } ?>
                         </div>

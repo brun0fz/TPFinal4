@@ -27,16 +27,16 @@ include('nav-bar.php');
             <?php 
             $n = 0;
             for ($i = 1; $i <= (int)$guardian->getReputacion(); $i++) {?>
-                <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="img-unselect p-1" width="30" height="30" alt=""><?php
+                <img src="<?php echo ASSETS_PATH . "pawFull.png"; ?>" class="img-unselect p-1" width="30" height="30" alt=""><?php
                 $n = $i;
             }
             if (($guardian->getReputacion() - (int)$guardian->getReputacion()) >= 0.5) {?>
-                <img src="<?php echo IMG_PATH . "pawHalf.png"; ?>" class="img-unselect p-1" width="30" height="30" alt=""><?php
+                <img src="<?php echo ASSETS_PATH . "pawHalf.png"; ?>" class="img-unselect p-1" width="30" height="30" alt=""><?php
                 $n++;
             }
             if ($i <= 5) {
                 for ($i = $n + 1; $i <= 5; $i++) {?>
-                <img src="<?php echo IMG_PATH . "pawEmpty.png"; ?>" class="img-unselect p-1" width="30" height="30" alt="">
+                <img src="<?php echo ASSETS_PATH . "pawEmpty.png"; ?>" class="img-unselect p-1" width="30" height="30" alt="">
                 <?php } 
             } } ?>
         </div>
@@ -108,7 +108,7 @@ include('nav-bar.php');
                                 <div class="alert alert-dark" style="width: fit-content;">
                                     <span class="card-text">Review: <b><i><?php echo $review->getComentario(); ?></i></b></span>
                                     <b class="ms-1"><?php echo "- " . $review->getPuntaje(); ?></b>
-                                    <img src="<?php echo IMG_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
+                                    <img src="<?php echo ASSETS_PATH . "pawFull.png"; ?>" class="my-auto mb-1 py-1 pe-1" width="26" height="26" alt="">
                                 </div>
                             <?php } ?>
                         </div>
