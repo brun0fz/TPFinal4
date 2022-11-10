@@ -11,7 +11,6 @@ class Guardian extends Usuario
     private $codigoPostal;
     private $tamanioMascotaCuidar = array();
     private $reputacion = 2.5;
-    private $diasOcupados = array();
     private $disponibilidad = array();
     private $precioXDia;
 
@@ -76,23 +75,6 @@ class Guardian extends Usuario
         return $this;
     }
 
-    /**
-     * Get the value of diasOcupados
-     */
-    public function getDiasOcupados()
-    {
-        return $this->diasOcupados;
-    }
-
-    /**
-     * Set the value of diasOcupados
-     */
-    public function setDiasOcupados($diasOcupados): self
-    {
-        $this->diasOcupados = $diasOcupados;
-
-        return $this;
-    }
 
     /**
      * Get the value of precioXDia

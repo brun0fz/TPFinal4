@@ -9,6 +9,7 @@ use DAO\ReservaDAO;
 use DateTime;
 use Exception;
 use Models\Cupon;
+use Models\Duenio;
 use Models\EstadoReserva;
 use Models\Reserva;
 use Models\Review;
@@ -161,6 +162,13 @@ class ReservaController
 
                 switch ($estado) {
                     case "Cancelada":
+
+                        if ($_SESSION["loggedUser"]->getTipo() == 2) {
+                            $reserva = $this->reservaDAO->GetReservaById($idReserva);
+                            $duenio = $this->duenioDAO->BuscarId($reserva->getFkIdDuenio());
+                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reserva->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
+                        }
+
                         $alert = "La reserva ha sido cancelada.";
                         break;
                     case "Confirmada":
@@ -189,6 +197,10 @@ class ReservaController
 
                 $reservaConfirmada = $this->reservaDAO->GetReservaById($idReserva);
 
+                ///EMAIL
+                $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
+                $guardian = $this->guardianDAO->BuscarId($reservaConfirmada->getFkIdGuardian());
+
                 $mascotaConfirmada = $this->mascotaDAO->GetMascotaById($reservaConfirmada->getFkIdMascota());
 
                 $reservasSolicitadas = $this->reservaDAO->GetListaReservasByEstado($_SESSION["loggedUser"]->getId(), "Solicitada");
@@ -208,6 +220,7 @@ class ReservaController
                     if (!empty($interseccionDias)) {
                         if ($mascota->getAnimal() != $mascotaConfirmada->getAnimal() || $mascota->getRaza() != $mascotaConfirmada->getRaza()) {
                             $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), "Cancelada");
+                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reservaConfirmada->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
                         }
                     }
                 }
@@ -222,7 +235,7 @@ class ReservaController
                 $duenio = $this->duenioDAO->BuscarId($reservaConfirmada->getFkIdDuenio());
                 $guardian = $this->guardianDAO->BuscarId($reservaConfirmada->getFkIdGuardian());
 
-                $this->MandarMail($duenio->getEmail(), 'PET-HERO: Cupon de pago - Reserva ' . $reservaConfirmada->getIdReserva(), $this->MailBodyCupon($reservaConfirmada, $mascotaConfirmada, $guardian), "Cupon de pago");
+                $this->EnviarMail($duenio->getEmail(), 'PET-HERO: Cupon de pago - Reserva ' . $reservaConfirmada->getIdReserva(), $this->MailBodyCupon($reservaConfirmada, $mascotaConfirmada, $guardian), "Cupon de pago");
             } catch (Exception $ex) {
                 $alert = $ex;
             } finally {
@@ -283,7 +296,7 @@ class ReservaController
         }
     }
 
-    private function MandarMail($email, $subject, $msgHTML, $altBody)
+    private function EnviarMail($email, $subject, $msgHTML, $altBody)
     {
         try {
             $mail = new PHPMailer();
