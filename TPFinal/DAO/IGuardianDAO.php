@@ -7,9 +7,11 @@ use Models\Guardian;
 interface IGuardianDAO
 {
     function Add(Guardian $guardian);
+    
     function GetAll();
-    function Buscar($email);
-    function BuscarId($idGuardian);
+    function GetGuardianByEmail($email);
+    function GetGuardianById($idGuardian);
+
     function UpdateDisponibilidad($idGuardian, $disponibilidad);
     function UpdateTamanios($idGuardian, $tamanios);
     function UpdatePrecio($idGuardian, $precioXDia);

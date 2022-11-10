@@ -7,7 +7,8 @@
     interface IDuenioDAO
     {
         function Add(Duenio $duenio);
+        
         function GetAll();
-        function Buscar($email);
-        function BuscarId($idDuenio);
+        function GetDuenioByEmail($email);
+        function GetDuenioById($idDuenio);
     }

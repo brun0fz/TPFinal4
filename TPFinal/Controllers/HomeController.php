@@ -44,8 +44,8 @@ class HomeController
     {
         try {
 
-            $duenio = $this->duenioDAO->Buscar($email);
-            $guardian = $this->guardianDAO->Buscar($email);
+            $duenio = $this->duenioDAO->GetDuenioByEmail($email);
+            $guardian = $this->guardianDAO->GetGuardianByEmail($email);
 
             if (isset($duenio) && $duenio->getPassword() == $password) {
 

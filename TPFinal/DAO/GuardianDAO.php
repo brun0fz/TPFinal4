@@ -156,7 +156,7 @@ class GuardianDAO implements IGuardianDAO
     }
 
 
-    public function Buscar($email)
+    public function GetGuardianByEmail($email)
     {
         try {
             $guardian = null;
@@ -225,7 +225,7 @@ class GuardianDAO implements IGuardianDAO
         }
     }
 
-    public function BuscarId($idGuardian)
+    public function GetGuardianById($idGuardian)
     {
         try {
             $guardian = null;
@@ -361,7 +361,7 @@ class GuardianDAO implements IGuardianDAO
 
             $reserva = $reservaDAO->GetReservaById($idReserva);
 
-            $listaReservas = $reservaDAO->ListaReservasGuardian($reserva->getFkIdGuardian());
+            $listaReservas = $reservaDAO->GetListaReservasByGuardian($reserva->getFkIdGuardian());
 
             foreach ($listaReservas as $reserva) {
 

@@ -43,7 +43,7 @@ class GuardianController
     public function ShowProfileView(){
         if ($this->validateSession()) {
             $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
+            $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
             require_once(VIEWS_PATH . "profile-usuario.php");
         }
     }
@@ -54,7 +54,7 @@ class GuardianController
         try {
             $duenioDAO = new DuenioDAO();
 
-            if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
+            if (($duenioDAO->GetDuenioByEmail($email) == null) && ($this->guardianDAO->GetGuardianByEmail($email) == null)) {
 
                 $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso, $departamento, $codigoPostal);
 
@@ -75,7 +75,7 @@ class GuardianController
 
                 $this->guardianDAO->Add($guardian);
 
-                $guardian = $this->guardianDAO->Buscar($guardian->getEmail());
+                $guardian = $this->guardianDAO->GetGuardianByEmail($guardian->getEmail());
 
                 $guardian->setPassword(null);
                 $_SESSION["loggedUser"] = $guardian;

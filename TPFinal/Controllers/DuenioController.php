@@ -37,7 +37,7 @@ class DuenioController
             $flag = 0;
             $cont = 0;
             $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->ListaReservasDuenio($_SESSION["loggedUser"]->getID());
+            $listaReservas = $reservaDAO->GetListaReservasByDuenio($_SESSION["loggedUser"]->getID());
 
             foreach ($listaReservas as $reserva) {
                 if ($reserva->getEstado() == "En espera de pago") {
@@ -66,7 +66,7 @@ class DuenioController
         if ($this->validateSession()) {
             try {
 
-                $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+                $mascotaList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
                 require_once(VIEWS_PATH . "filtrar-guardianes.php");
             } catch (Exception $ex) {
                 echo $ex;
@@ -79,8 +79,8 @@ class DuenioController
         if ($this->validateSession()) {
             $reservaDAO = new ReservaDAO();
 
-            $mascotaList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
-            $listaReservas = $reservaDAO->GetListaReservasDuenioEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
+            $mascotaList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
+            $listaReservas = $reservaDAO->GetListaReservasDuenioByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
 
             require_once(VIEWS_PATH . "profile-usuario.php");
         }
@@ -91,7 +91,7 @@ class DuenioController
         try {
             $guardianDAO = new GuardianDAO();
 
-            if (($this->duenioDAO->Buscar($email) == null) && ($guardianDAO->Buscar($email) == null)) {
+            if (($this->duenioDAO->GetDuenioByEmail($email) == null) && ($guardianDAO->GetGuardianByEmail($email) == null)) {
 
                 $duenio = new Duenio($nombre, $apellido, $telefono, $email, $password);
 
@@ -112,7 +112,7 @@ class DuenioController
 
                 $this->duenioDAO->Add($duenio);
 
-                $duenio = $this->duenioDAO->Buscar($duenio->getEmail());
+                $duenio = $this->duenioDAO->GetDuenioByEmail($duenio->getEmail());
 
                 $duenio->setPassword(null);
                 $_SESSION["loggedUser"] = $duenio;
@@ -239,7 +239,7 @@ class DuenioController
             foreach ($listaGuardianes as $guardian) {
                 foreach ($dias as $dia) {
 
-                    $reserva = $reservaDAO->GetReservaGuardianxDia($guardian->getId(), $dia);
+                    $reserva = $reservaDAO->GetReservaGuardianByDia($guardian->getId(), $dia);
 
                     if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());

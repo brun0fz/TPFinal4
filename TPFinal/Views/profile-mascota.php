@@ -56,8 +56,8 @@ include('nav-bar.php');
             $mascotaDAO = new MascotaDAO();
             $reservaDAO = new ReservaDAO();
 
-            $guardian = $guardianDAO->BuscarId($reserva->getFkIdGuardian());
-            $duenio = $duenioDAO->BuscarId($reserva->getFkIdDuenio());
+            $guardian = $guardianDAO->GetGuardianById($reserva->getFkIdGuardian());
+            $duenio = $duenioDAO->GetDuenioById($reserva->getFkIdDuenio());
             $mascota = $mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
             $review = $reservaDAO->GetReviewByIdReserva($reserva->getIdReserva());
         ?>
