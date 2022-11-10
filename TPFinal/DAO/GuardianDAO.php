@@ -368,8 +368,6 @@ class GuardianDAO implements IGuardianDAO
                 if ($reserva->getEstado() == EstadoReserva::FINALIZADA->value) {
                     $review = $reservaDAO->GetReviewByIdReserva($reserva->getIdReserva());
 
-
-
                     if ($review) {
                         $suma += $review->getPuntaje();
                         $cant++;
