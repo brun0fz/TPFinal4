@@ -8,6 +8,7 @@ use DAO\IReservaDAO as IReservaDAO;
 use Models\Cupon;
 use Models\EstadoReserva;
 use Models\Reserva;
+use Models\Review;
 
 class ReservaDAO implements IReservaDAO
 {
