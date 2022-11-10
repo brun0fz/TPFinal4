@@ -49,7 +49,7 @@ class ReservaController
                 $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
                 require_once(VIEWS_PATH . "add-reserva.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
             }
         } else {
             HomeController::Index();
@@ -80,7 +80,7 @@ class ReservaController
 
                 require_once(VIEWS_PATH . "list-reservas.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
             }
         } else {
             HomeController::Index();
@@ -97,7 +97,7 @@ class ReservaController
                 $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
                 require_once(VIEWS_PATH . "show-cupon.php");
             } catch (Exception $ex) {
-                $alert  = $ex;
+                echo "Se produjo un error. Intente mas tarde.";
             }
         } else {
             HomeController::Index();
@@ -116,7 +116,7 @@ class ReservaController
 
                 require_once(VIEWS_PATH . "add-review.php");
             } catch (Exception $ex) {
-                $alert  = $ex;
+                echo "Se produjo un error. Intente mas tarde.";
             }
         } else {
             HomeController::Index();
@@ -133,7 +133,7 @@ class ReservaController
 
                 $alert = "Reserva realizada con exito.";
             } catch (Exception $ex) {
-                $alert  = $ex;
+                $alert  = "Se produjo un error. Intente mas tarde.";
             } finally {
                 $this->ShowListReservasView($alert);
             }
@@ -179,7 +179,7 @@ class ReservaController
                         break;
                 }
             } catch (Exception $ex) {
-                $alert = $ex;
+                $alert = "Se produjo un error. Intente mas tarde.";
             } finally {
                 $this->ShowListReservasView($alert);
             }
@@ -237,7 +237,7 @@ class ReservaController
 
                 $this->EnviarMail($duenio->getEmail(), 'PET-HERO: Cupon de pago - Reserva ' . $reservaConfirmada->getIdReserva(), $this->MailBodyCupon($reservaConfirmada, $mascotaConfirmada, $guardian), "Cupon de pago");
             } catch (Exception $ex) {
-                $alert = $ex;
+                $alert = "Se produjo un error. Intente mas tarde.";
             } finally {
                 $this->ShowListReservasView($alert);
             }
@@ -273,7 +273,7 @@ class ReservaController
 
             $alert = "Su calificacion ha sido enviada.";
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         } finally {
             $this->ShowListReservasView($alert);
         }
@@ -287,7 +287,7 @@ class ReservaController
                 $this->reservaDAO->UpdateEstado($idReserva, $estado);
                 $alert = "Cup&oacute;n pagado con &eacute;xito. La reserva ha sido confirmada.";
             } catch (Exception $ex) {
-                $alert = $ex;
+                $alert = "Se produjo un error. Intente mas tarde.";
             } finally {
                 $this->ShowListReservasView($alert);
             }
@@ -323,7 +323,7 @@ class ReservaController
                 return 0;
             }
         } catch (PHPMailerException $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 

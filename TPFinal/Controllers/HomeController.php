@@ -77,7 +77,7 @@ class HomeController
                 $this->Index($alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 
@@ -105,7 +105,7 @@ class HomeController
             $this->ShowRecuperarContraseniaView("Si la direccion ingresada es valida, recibira su contrase&ntildea; en su correo electronico.");
 
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }*/
 
@@ -138,7 +138,7 @@ class HomeController
                 return 0;
             }
         } catch (PHPMailerException $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 }

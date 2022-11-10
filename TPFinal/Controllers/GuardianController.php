@@ -41,7 +41,8 @@ class GuardianController
         }
     }
 
-    public function ShowProfileView(){
+    public function ShowProfileView()
+    {
         if ($this->validateSession()) {
             $reservaDAO = new ReservaDAO();
             $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
@@ -89,7 +90,7 @@ class GuardianController
                 $homeController->ShowRegisterView($type, $alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 

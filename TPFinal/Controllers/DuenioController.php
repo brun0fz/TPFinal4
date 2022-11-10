@@ -69,7 +69,7 @@ class DuenioController
                 $mascotaList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
                 require_once(VIEWS_PATH . "filtrar-guardianes.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
             }
         }
     }
@@ -125,7 +125,7 @@ class DuenioController
                 $homeController->ShowRegisterView($type, $alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 
@@ -150,11 +150,11 @@ class DuenioController
                     if (!empty($listaGuardianes)) {
                         $this->ShowListaGuardianesView($fechaInicio, $fechaFin, $idMascota, $listaGuardianes);
                     } else {
-                        $alert = "No hay guardianes disponibles.";
+                        $alert = "No hay guardianes disponibles para las fechas y mascota seleccionadas.";
                         $this->ShowFiltrarGuardianesView($alert);
                     }
                 } catch (Exception $ex) {
-                    echo $ex;
+                    echo "Se produjo un error. Intente mas tarde.";
                 }
             } else {
                 $this->ShowFiltrarGuardianesView();
@@ -197,7 +197,7 @@ class DuenioController
 
             return $listaGuardianesDisponibles;
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 
@@ -215,7 +215,7 @@ class DuenioController
 
             return $listaFiltrada;
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 
@@ -257,7 +257,7 @@ class DuenioController
 
             return $listaFiltrada;
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
         }
     }
 
