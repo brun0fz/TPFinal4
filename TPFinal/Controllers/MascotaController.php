@@ -36,6 +36,7 @@ class MascotaController
                 require_once(VIEWS_PATH . "list-mascotas.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         }
     }
@@ -60,6 +61,7 @@ class MascotaController
                 require_once(VIEWS_PATH . "add-mascota.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         }
     }
@@ -74,6 +76,7 @@ class MascotaController
                 require_once(VIEWS_PATH . "profile-mascota.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         } else {
             HomeController::Index();

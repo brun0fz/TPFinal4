@@ -50,6 +50,7 @@ class ReservaController
                 require_once(VIEWS_PATH . "add-reserva.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         } else {
             HomeController::Index();
@@ -81,6 +82,7 @@ class ReservaController
                 require_once(VIEWS_PATH . "list-reservas.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         } else {
             HomeController::Index();
@@ -98,6 +100,7 @@ class ReservaController
                 require_once(VIEWS_PATH . "show-cupon.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         } else {
             HomeController::Index();
@@ -117,6 +120,7 @@ class ReservaController
                 require_once(VIEWS_PATH . "add-review.php");
             } catch (Exception $ex) {
                 echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         } else {
             HomeController::Index();
@@ -265,17 +269,21 @@ class ReservaController
 
     public function AddReview($comentario, $puntaje, $idReserva)
     {
-        try {
-            $review = new Review($comentario, $puntaje, $idReserva);
-            $this->reservaDAO->AddReview($review);
+        if (isset($_SESSION["loggedUser"]) && ($_SESSION["loggedUser"]->getTipo() == 1)) {
+            try {
+                $review = new Review($comentario, $puntaje, $idReserva);
+                $this->reservaDAO->AddReview($review);
 
-            $this->guardianDAO->UpdateReputacion($idReserva);
+                $this->guardianDAO->UpdateReputacion($idReserva);
 
-            $alert = "Su calificacion ha sido enviada.";
-        } catch (Exception $ex) {
-            echo "Se produjo un error. Intente mas tarde.";
-        } finally {
-            $this->ShowListReservasView($alert);
+                $alert = "Su calificacion ha sido enviada.";
+            } catch (Exception $ex) {
+                echo "Se produjo un error. Intente mas tarde.";
+            } finally {
+                $this->ShowListReservasView($alert);
+            }
+        } else {
+            HomeController::Index();
         }
     }
 
@@ -324,6 +332,7 @@ class ReservaController
             }
         } catch (PHPMailerException $ex) {
             echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 
