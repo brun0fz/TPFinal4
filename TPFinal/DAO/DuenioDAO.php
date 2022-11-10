@@ -70,7 +70,7 @@ class DuenioDAO implements IDuenioDAO
     }
 
 
-    public function Buscar($email)
+    public function GetDuenioByEmail($email)
     {
         try {
             $duenio = NULL;
@@ -111,7 +111,7 @@ class DuenioDAO implements IDuenioDAO
         }
     }
 
-    public function BuscarId($idDuenio)
+    public function GetDuenioById($idDuenio)
     {
         try {
             $duenio = NULL;

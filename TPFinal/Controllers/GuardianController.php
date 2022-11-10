@@ -7,6 +7,7 @@ use DAO\GuardianDAO;
 use DAO\ReservaDAO;
 use Models\Guardian;
 use Exception;
+use Models\EstadoReserva;
 
 class GuardianController
 {
@@ -40,11 +41,17 @@ class GuardianController
         }
     }
 
-    public function ShowProfileView(){
+    public function ShowProfileView()
+    {
         if ($this->validateSession()) {
-            $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->GetListaReservasGuardianEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
-            require_once(VIEWS_PATH . "profile-usuario.php");
+            try {
+                $reservaDAO = new ReservaDAO();
+                $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
+                require_once(VIEWS_PATH . "profile-usuario.php");
+            } catch (Exception $ex) {
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
+            }
         }
     }
 
@@ -54,7 +61,7 @@ class GuardianController
         try {
             $duenioDAO = new DuenioDAO();
 
-            if (($duenioDAO->Buscar($email) == null) && ($this->guardianDAO->Buscar($email) == null)) {
+            if (($duenioDAO->GetDuenioByEmail($email) == null) && ($this->guardianDAO->GetGuardianByEmail($email) == null)) {
 
                 $guardian = new Guardian($nombre, $apellido, $telefono, $email, $password, $calle, $numero, $piso, $departamento, $codigoPostal);
 
@@ -75,7 +82,7 @@ class GuardianController
 
                 $this->guardianDAO->Add($guardian);
 
-                $guardian = $this->guardianDAO->Buscar($guardian->getEmail());
+                $guardian = $this->guardianDAO->GetGuardianByEmail($guardian->getEmail());
 
                 $guardian->setPassword(null);
                 $_SESSION["loggedUser"] = $guardian;
@@ -88,7 +95,8 @@ class GuardianController
                 $homeController->ShowRegisterView($type, $alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            HomeController::Index();
         }
     }
 

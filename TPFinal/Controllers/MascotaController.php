@@ -32,10 +32,11 @@ class MascotaController
     {
         if ($this->validateSession()) {
             try {
-                $mascotasList = $this->mascotaDAO->ListaDuenio($_SESSION["loggedUser"]->getId());
+                $mascotasList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
                 require_once(VIEWS_PATH . "list-mascotas.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         }
     }
@@ -45,23 +46,37 @@ class MascotaController
         if ($this->validateSession()) {
             try {
                 $animalesList = $this->mascotaDAO->GetAnimales();
+
+                $perros = array();
+                $gatos = array();
+
+                foreach ($animalesList as $animal) {
+                    if ($animal["animal"] == "Perro") {
+                        $perros[] = $animal["raza"];
+                    } else {
+                        $gatos[] = $animal["raza"];
+                    }
+                }
+
                 require_once(VIEWS_PATH . "add-mascota.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         }
     }
 
     public function ShowMascotaProfile($idMascota)
     {
-        if (isset($_SESSION["loggedUser"])){
+        if (isset($_SESSION["loggedUser"])) {
             try {
                 $reservaDAO = new ReservaDAO();
                 $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
-                $listaReservas = $reservaDAO->GetListaReservasMascotaEstado($mascota->getId(), EstadoReserva::FINALIZADA->value);
+                $listaReservas = $reservaDAO->GetListaReservasMascotaByEstado($mascota->getId(), EstadoReserva::FINALIZADA->value);
                 require_once(VIEWS_PATH . "profile-mascota.php");
             } catch (Exception $ex) {
-                echo $ex;
+                echo "Se produjo un error. Intente mas tarde.";
+                HomeController::Index();
             }
         } else {
             HomeController::Index();
@@ -120,7 +135,7 @@ class MascotaController
 
                 $alert = "Mascota agregada con exito";
             } catch (Exception $ex) {
-                $alert = $ex;
+                $alert = "Se produjo un error. Intente mas tarde.";
             } finally {
                 $this->ShowMascotaView($alert);
             }

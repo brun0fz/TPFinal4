@@ -7,7 +7,7 @@ include('header.php');
     <div class="col-md-12 d-flex justify-content-center">
         <div class="row d-flex justify-content-center">
             <a href="<?php echo FRONT_ROOT . "Home/Index"; ?>">
-                <img class="mt-3 mb-1" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="150" height="150">
+                <img class="mt-3 mb-1" src=<?php echo ASSETS_PATH . "logo.png" ?> alt="Pet Hero" width="150" height="150">
             </a>
         </div>
     </div>

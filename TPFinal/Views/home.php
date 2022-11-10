@@ -9,7 +9,7 @@ include('header.php');
   <main class="form-signin w-100 m-auto text-center">
     <form class="form-center" action="<?php echo FRONT_ROOT . "Home/Login" ?>" method="POST">
       <a href="<?php echo FRONT_ROOT . "Home/Index"; ?>">
-        <img class="mb-4 img-unselect" src=<?php echo IMG_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
+        <img class="mb-4 img-unselect" src=<?php echo ASSETS_PATH . "logo.png" ?> alt="Pet Hero" width="250" height="250">
       </a>
       <?php if ($alert != "") { ?>
         <div class="alert alert-danger" role="alert" style= "font-size: 14px;">
@@ -25,9 +25,11 @@ include('header.php');
         <label for="floatingPassword">Contrase&ntilde;a</label>
       </div>
       <br>
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesion</button><br><br>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesi&oacute;n</button><br><br>
+      <a href="<?php echo  FRONT_ROOT . "Home/ShowRecuperarContraseniaView" ?>">Olvide mi contraseña</a><br><br>
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/1" ?>">Registrarse como Due&ntilde;o</a><br>
       <a href="<?php echo  FRONT_ROOT . "Home/ShowRegisterView/2" ?>">Registrarse como Guardian</a>
+
     </form>
   </main>
   

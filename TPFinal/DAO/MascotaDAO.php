@@ -25,7 +25,7 @@ class MascotaDAO implements IMascotaDAO
             $parameters["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
             $parameters["rutaVideo"] = $mascota->getRutaVideo();
             $parameters["fk_idDuenio"] = $mascota->getIdDuenio();
-            $parameters["fk_idAnimal"] = $this->BuscarIdAnimal($mascota->getAnimal(), $mascota->getRaza());
+            $parameters["fk_idAnimal"] = $this->GetIdAnimal($mascota->getAnimal(), $mascota->getRaza());
             $parameters["alta"] = $mascota->getAlta();
 
             $this->connection = Connection::GetInstance();
@@ -36,7 +36,7 @@ class MascotaDAO implements IMascotaDAO
         }
     }
 
-    private function BuscarIdAnimal($animal, $raza)
+    private function GetIdAnimal($animal, $raza)
     {
         $query = "SELECT idAnimal FROM Animales WHERE animal = :animal and raza = :raza";
 
@@ -114,7 +114,7 @@ class MascotaDAO implements IMascotaDAO
     }
 
 
-    public function ListaDuenio($idDuenio)
+    public function GetListaMascotasByDuenio($idDuenio)
     {
         try {
             $mascotasList = array();

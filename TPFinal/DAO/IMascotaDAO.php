@@ -7,8 +7,9 @@
     interface IMascotaDAO
     {
         function Add(Mascota $mascota);
+        
         function GetAll();
         function GetAnimales();
-        function ListaDuenio($idDuenio);
+        function GetListaMascotasByDuenio($idDuenio);
         function GetMascotaById($idMascota);
     }

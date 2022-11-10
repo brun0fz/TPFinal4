@@ -9,7 +9,7 @@ include('nav-bar.php');
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
-                <img class="img-unselect" src="<?php echo IMG_PATH . "reservasIcon.png" ?>" alt="" width="40" height="40">
+                <img class="img-unselect" src="<?php echo ASSETS_PATH . "reservasIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Reservas</h3>
             <p>Mira el listado de tus reservas solicitadas, confirmadas, en curso o ya finalizadas. Visualiza el detalle de una reserva. </p>
@@ -17,7 +17,7 @@ include('nav-bar.php');
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
-                <img class="img-unselect" src="<?php echo IMG_PATH . "guardianesIcon.png" ?>" alt="" width="40" height="40">
+                <img class="img-unselect" src="<?php echo ASSETS_PATH . "guardianesIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Guardianes</h3>
             <p>Selecciona tu mascota y fechas de estad&iacute;a y visualiza el listado de guardianes disponibles para ella.</p>
@@ -25,7 +25,7 @@ include('nav-bar.php');
         </div>
         <div class="feature col">
             <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-2">
-                <img class="img-unselect" src="<?php echo IMG_PATH . "mascotasIcon.png" ?>" alt="" width="40" height="40">
+                <img class="img-unselect" src="<?php echo ASSETS_PATH . "mascotasIcon.png" ?>" alt="" width="40" height="40">
             </div>
             <h3 class="fs-2">Mascotas</h3>
             <p>Ve tu listado de mascotas, a&ntilde;ade nuevas mascotas, visualiza sus perfiles y modificalos.</p>
@@ -37,7 +37,7 @@ include('nav-bar.php');
             <span class="mx-4"><b>(!)</b> Usted tiene <?php echo $cont ?> reserva(s) pendiente de pago.</span>
         </div>
     <?php } ?>
-    <img class="img-unselect background-img" src="<?php echo IMG_PATH . "background.png" ?>" alt="">
+    <img class="img-unselect background-img" src="<?php echo ASSETS_PATH . "background.png" ?>" alt="">
 </div>
 
 <?php

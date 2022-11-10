@@ -8,6 +8,14 @@ use DAO\GuardianDAO;
 use Exception;
 use Models\Duenio;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+use PHPMailer\PHPMailer\SMTP;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 class HomeController
 {
     public $duenioDAO;
@@ -25,7 +33,6 @@ class HomeController
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
                 $duenioController = new DuenioController();
                 $duenioController->ShowDuenioHome();
-                //require_once(VIEWS_PATH . "home-duenio.php");
             } else {
                 require_once(VIEWS_PATH . "home-guardian.php");
             }
@@ -39,13 +46,18 @@ class HomeController
         require_once(VIEWS_PATH . "registro.php");
     }
 
+    public function ShowRecuperarContraseniaView($alert = "")
+    {
+        require_once(VIEWS_PATH . "recuperar-contrasenia.php");
+    }
+
 
     public function Login($email, $password)
     {
         try {
 
-            $duenio = $this->duenioDAO->Buscar($email);
-            $guardian = $this->guardianDAO->Buscar($email);
+            $duenio = $this->duenioDAO->GetDuenioByEmail($email);
+            $guardian = $this->guardianDAO->GetGuardianByEmail($email);
 
             if (isset($duenio) && $duenio->getPassword() == $password) {
 
@@ -54,7 +66,6 @@ class HomeController
 
                 $duenioController = new DuenioController();
                 $duenioController->ShowDuenioHome();
-                //require_once(VIEWS_PATH . "home-duenio.php");
             } else if (isset($guardian) && $guardian->getPassword() == $password) {
 
                 $guardian->setPassword(NULL);
@@ -66,7 +77,8 @@ class HomeController
                 $this->Index($alert);
             }
         } catch (Exception $ex) {
-            echo $ex;
+            echo "Se produjo un error. Intente mas tarde.";
+            $this->Index();
         }
     }
 
@@ -75,5 +87,59 @@ class HomeController
         session_unset();
         session_destroy();
         $this->Index();
+    }
+
+    public function RecuperarContrasenia($email)
+    {
+        try {
+
+            $duenio = $this->duenioDAO->GetDuenioByEmail($email);
+            $guardian = $this->guardianDAO->GetGuardianByEmail($email);
+
+            if (isset($duenio)) {
+                $this->EnviarContrasenia($duenio->getEmail(), "PET-HERO: Recuperacion de contrase&ntilde;", "Su contraseña es: " . "'" . $duenio->getPassword() . "'", "");
+            } else if (isset($guardian)) {
+                $this->EnviarContrasenia($guardian->getEmail(), "PET-HERO: Recuperacion de contrase&ntilde;", "Su contraseña es: " . "'" . $guardian->getPassword() . "'", "");
+            }
+
+            $this->ShowRecuperarContraseniaView("Si la direccion ingresada es valida, recibira su contrase&ntilde;a en su correo electronico.");
+        } catch (Exception $ex) {
+            echo "Se produjo un error. Intente mas tarde.";
+            $this->Index();
+        }
+    }
+
+
+
+    private function EnviarContrasenia($email, $subject, $msgHTML, $altBody)
+    {
+        try {
+            $mail = new PHPMailer();
+
+            $mail->isSMTP();
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 465;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->SMTPAuth = true;
+
+            $mail->Username = 'app.pethero@gmail.com';
+            $mail->Password = 'bmplfijszyvepomr';
+
+            $mail->setFrom('app.pethero@gmail.com');
+            $mail->addAddress($email);
+            $mail->Subject = $subject;
+            $mail->msgHTML($msgHTML);
+            $mail->AltBody = $altBody;
+
+            if ($mail->send()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (PHPMailerException $ex) {
+            echo "Se produjo un error. Intente mas tarde.";
+            $this->Index();
+        }
     }
 }
