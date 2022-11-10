@@ -365,7 +365,7 @@ class GuardianDAO implements IGuardianDAO
 
             foreach ($listaReservas as $reserva) {
 
-                if ($reserva->getEstado() == "Finalizada") {
+                if ($reserva->getEstado() == EstadoReserva::FINALIZADA->value) {
                     $review = $reservaDAO->GetReviewByIdReserva($reserva->getIdReserva());
 
 

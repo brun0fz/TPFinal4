@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use clases\Guardian as Guardian;
-
 class Reserva
 {
     private $idReserva;
@@ -16,7 +14,7 @@ class Reserva
     private $fk_idDuenio;
     private $fk_idGuardian;
 
-    private $estado = EstadoReserva::SOLICITADA;
+    private $estado;
     private $puntaje;
 
     public function __construct($fechaInicio, $fechaFin, $precioTotal, $fk_idMascota, $fk_idDuenio, $fk_idGuardian)

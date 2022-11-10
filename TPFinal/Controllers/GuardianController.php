@@ -7,6 +7,7 @@ use DAO\GuardianDAO;
 use DAO\ReservaDAO;
 use Models\Guardian;
 use Exception;
+use Models\EstadoReserva;
 
 class GuardianController
 {
@@ -43,7 +44,7 @@ class GuardianController
     public function ShowProfileView(){
         if ($this->validateSession()) {
             $reservaDAO = new ReservaDAO();
-            $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), "Finalizada");
+            $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
             require_once(VIEWS_PATH . "profile-usuario.php");
         }
     }

@@ -40,7 +40,7 @@ class DuenioController
             $listaReservas = $reservaDAO->GetListaReservasByDuenio($_SESSION["loggedUser"]->getID());
 
             foreach ($listaReservas as $reserva) {
-                if ($reserva->getEstado() == "En espera de pago") {
+                if ($reserva->getEstado() == EstadoReserva::ESPERA->value) {
                     $flag = 1;
                     $cont++;
                 }
@@ -241,7 +241,7 @@ class DuenioController
 
                     $reserva = $reservaDAO->GetReservaGuardianByDia($guardian->getId(), $dia);
 
-                    if ($reserva && ($reserva->getEstado() == "En espera de pago" || $reserva->getEstado() == "Confirmada" || $reserva->getEstado() == "En curso")) {
+                    if ($reserva && ($reserva->getEstado() == EstadoReserva::ESPERA->value || $reserva->getEstado() == EstadoReserva::CONFIRMADA->value || $reserva->getEstado() == EstadoReserva::EN_CURSO->value)) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
 
                         if ($mascota->getAnimal() == $animal && $mascota->getRaza() == $raza) {

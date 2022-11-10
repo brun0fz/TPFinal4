@@ -22,31 +22,31 @@ class ReservaDAO implements IReservaDAO
 
     private function ControlReservas()
     {
-        $reservas = $this->getAllByStatus("En curso");
+        $reservas = $this->getAllByStatus(EstadoReserva::EN_CURSO->value);
 
         foreach ($reservas as $reserva) {
             if ($reserva->getFechaFin() < date("Y-m-d")) {
-                $this->UpdateEstado($reserva->getIdReserva(), "Finalizada");
+                $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::FINALIZADA->value);
             }
         }
 
-        $reservas = $this->getAllByStatus("Confirmada");
+        $reservas = $this->getAllByStatus(EstadoReserva::CONFIRMADA->value);
 
         foreach ($reservas as $reserva) {
             if ($reserva->getFechaInicio() <= date("Y-m-d")) {
                 if ($reserva->getFechaFin() < date("Y-m-d")) {
-                    $this->UpdateEstado($reserva->getIdReserva(), "Finalizada");
+                    $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::FINALIZADA->value);
                 } else {
-                    $this->UpdateEstado($reserva->getIdReserva(), "En curso");
+                    $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::EN_CURSO->value);
                 }
             }
         }
 
-        $reservas = $this->getAllByStatus("En espera de pago");
+        $reservas = $this->getAllByStatus(EstadoReserva::ESPERA->value);
 
         foreach ($reservas as $reserva) {
             if ($reserva->getFechaInicio() <= date("Y-m-d")) {
-                $this->UpdateEstado($reserva->getIdReserva(), "Cancelada");
+                $this->UpdateEstado($reserva->getIdReserva(), EstadoReserva::CANCELADA->value);
             }
         }
     }
