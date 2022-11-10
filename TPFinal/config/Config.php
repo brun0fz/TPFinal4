@@ -11,7 +11,7 @@ define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
 
 
 //DATABASE LOCAL
-define("DB_HOST", "localhost");
+define("DB_HOST", "localhost:3307");
 define("DB_NAME", "PetHero");
 define("DB_USER", "root");
 define("DB_PASS", "");

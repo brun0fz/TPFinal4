@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 10, 2022 at 01:49 AM
+-- Generation Time: Nov 10, 2022 at 06:31 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.6
 
@@ -82,7 +82,6 @@ CREATE TABLE `Cupones` (
 
 INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`) VALUES
 (23, 898.5, 39),
-(26, 899, 44),
 (27, 898.5, 41),
 (28, 898.5, 42);
 
@@ -159,9 +158,9 @@ CREATE TABLE `Duenios` (
 --
 
 INSERT INTO `Duenios` (`idDuenio`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`) VALUES
-(1, 'Bruno', 'Fabrizio', '2236698574', 'brunofabrizio15@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 1, 'bruno@gmail.com.jpg', 1),
-(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 1, 'clara@gmail.com.png', 1),
-(10, 'asd', 'asd', '123123123', 'asd@gmail.com', 0x7678a9bd9e2d158962318b0d25ccdcf0, 1, 'undefinedProfile.png', 1);
+(1, 'Bruno', 'Fabrizio', '2236698574', 'brunofabrizio15@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'bruno@gmail.com.jpg', 1),
+(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'clara@gmail.com.png', 1),
+(10, 'asd', 'asd', '123123123', 'asd@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'undefinedProfile.png', 1);
 
 -- --------------------------------------------------------
 
@@ -191,9 +190,9 @@ CREATE TABLE `Guardianes` (
 --
 
 INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
-(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 2, 'belen@gmail.com.png', 1, 2.5, 599, 5, 3, 4),
-(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
-(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0xbf23020c44dd97bf5aa4f10a3fd9dfda, 2, 'emma@gmail.com.jpeg', 1, 3, 899, 8, 6, 7);
+(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'belen@gmail.com.png', 1, 2.5, 599, 5, 3, 4),
+(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
+(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'emma@gmail.com.jpeg', 1, 3, 899, 8, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -224,8 +223,7 @@ INSERT INTO `Mascotas` (`idMascota`, `nombre`, `tamanio`, `observaciones`, `ruta
 (10, 'Pompon', 'M', 'Le gusta el pollito', '2-Pompon.jpeg', '2-Pompon-Vacunas.jpeg', 'undefinedVideo', 2, 30, 1),
 (11, 'Yuumi', 'S', 'Muy bonita', '1-Yuumi.jpeg', '1-Yuumi-Vacunas.jpeg', 'undefinedVideo', 1, 30, 1),
 (12, 'Kiba', 'L', 'Muy valiente', '1-Kiba.jpeg', '1-Kiba-Vacunas.png', '1-Kiba-Video.mp4', 1, 18, 1),
-(13, 'Lisa', 'M', 'Juguetona', '1-Lisa.png', '1-Lisa-Vacunas.png', 'undefinedVideo', 1, 5, 1),
-(14, 'Michi', 'M', 'Jugueton', '1-Michi.png', '1-Michi-Vacunas.png', 'undefinedVideo', 1, 30, 1);
+(13, 'Lisa', 'M', 'Juguetona', '1-Lisa.png', '1-Lisa-Vacunas.png', 'undefinedVideo', 1, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -253,8 +251,7 @@ INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `
 (40, '2022-11-01', '2022-11-01', 899, 'Finalizada', 12, 1, 8),
 (41, '2022-11-21', '2022-11-23', 1797, 'Confirmada', 3, 1, 5),
 (42, '2022-11-21', '2022-11-23', 1797, 'Cancelada', 13, 1, 5),
-(43, '2022-11-22', '2022-11-24', 1797, 'Cancelada', 11, 1, 5),
-(44, '2022-11-12', '2022-11-13', 1798, 'Confirmada', 14, 1, 8);
+(43, '2022-11-22', '2022-11-24', 1797, 'Cancelada', 11, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -268,13 +265,6 @@ CREATE TABLE `Reviews` (
   `puntaje` int(11) NOT NULL,
   `fk_idReserva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Dumping data for table `Reviews`
---
-
-INSERT INTO `Reviews` (`idReview`, `comentario`, `puntaje`, `fk_idReserva`) VALUES
-(23, 'ñ', 3, 40);
 
 -- --------------------------------------------------------
 
@@ -428,7 +418,7 @@ ALTER TABLE `Reservas`
 -- AUTO_INCREMENT for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
