@@ -113,7 +113,6 @@ class GuardianDAO implements IGuardianDAO
                 $guardian->setApellido($row["apellido"]);
                 $guardian->setTelefono($row["telefono"]);
                 $guardian->setEmail($row["email"]);
-                $guardian->setPassword($row["password"]);
                 $guardian->setPrecioXDia($row["precioXDia"]);
                 $guardian->setReputacion($row["reputacion"]);
                 $guardian->setAlta($row["alta"]);
@@ -184,7 +183,7 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setApellido($row["apellido"]);
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
-                    $guardian->setPassword($row["password"]);
+                    $guardian->setPassword($row["password"]); //Se usa para el login
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
@@ -258,7 +257,6 @@ class GuardianDAO implements IGuardianDAO
                     $guardian->setApellido($row["apellido"]);
                     $guardian->setTelefono($row["telefono"]);
                     $guardian->setEmail($row["email"]);
-                    $guardian->setPassword($row["password"]);
                     $guardian->setAlta($row["alta"]);
                     $guardian->setTipo($row["tipo"]);
                     $guardian->setRutaFoto($row["rutaFoto"]);
