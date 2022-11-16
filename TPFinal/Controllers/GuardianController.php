@@ -102,14 +102,16 @@ class GuardianController
     {
         if ($this->validateSession()) {
             try {
-                $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
                 $this->guardianDAO->UpdateTamanios($_SESSION["loggedUser"]->getId(), $tamanios);
+                $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
 
-                $_SESSION["loggedUser"]->setPrecioXDia($precio);
+
                 $this->guardianDAO->UpdatePrecio($_SESSION["loggedUser"]->getId(), $precio);
+                $_SESSION["loggedUser"]->setPrecioXDia($precio);
 
-                $_SESSION["loggedUser"]->setDisponibilidad($dias);
+
                 $this->guardianDAO->UpdateDisponibilidad($_SESSION["loggedUser"]->getId(), $dias);
+                $_SESSION["loggedUser"]->setDisponibilidad($dias);
 
                 $alert = "Configuracion guardada con exito &check;";
 
