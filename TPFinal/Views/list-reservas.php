@@ -95,7 +95,7 @@ include("nav-bar.php");
                                 <?php if ($_SESSION["loggedUser"]->getTipo() == 1 && !$review && ($reserva->getEstado() == EstadoReserva::FINALIZADA->value)) { ?>
                                     <form action="<?php echo FRONT_ROOT ?>Reserva/ShowReviewView" method="Post">
                                         <input type="hidden" name="idReserva" value="<?php echo $reserva->getIdReserva(); ?>">
-                                        <button type="submit" class="btn btn-lg btn-outline-primary rounded-pill position-absolute bottom-0 end-0 m-2">Calificar</button>
+                                        <button type="submit" class="btn btn-lg btn-outline-dark rounded-pill position-absolute bottom-0 end-0 m-2">Calificar</button>
                                     </form>
                                 <?php } ?>
                             </div>
