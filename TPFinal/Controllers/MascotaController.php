@@ -35,8 +35,7 @@ class MascotaController
                 $mascotasList = $this->mascotaDAO->GetListaMascotasByDuenio($_SESSION["loggedUser"]->getId());
                 require_once(VIEWS_PATH . "list-mascotas.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         }
     }
@@ -60,8 +59,7 @@ class MascotaController
 
                 require_once(VIEWS_PATH . "add-mascota.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         }
     }
@@ -75,8 +73,7 @@ class MascotaController
                 $listaReservas = $reservaDAO->GetListaReservasMascotaByEstado($mascota->getId(), EstadoReserva::FINALIZADA->value);
                 require_once(VIEWS_PATH . "profile-mascota.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -133,11 +130,12 @@ class MascotaController
 
                 $this->mascotaDAO->Add($newMascota);
 
-                $alert = "Mascota agregada con exito";
-            } catch (Exception $ex) {
-                $alert = "Se produjo un error. Intente mas tarde.";
-            } finally {
+                $alert = "Mascota agregada con &eacute;xito.";
+
                 $this->ShowMascotaView($alert);
+            } catch (Exception $ex) {
+
+                HomeController::ShowErrorView();
             }
         }
     }

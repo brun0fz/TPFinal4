@@ -49,8 +49,7 @@ class GuardianController
                 $listaReservas = $reservaDAO->GetListaReservasGuardianByEstado($_SESSION["loggedUser"]->getId(), EstadoReserva::FINALIZADA->value);
                 require_once(VIEWS_PATH . "profile-usuario.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         }
     }
@@ -95,8 +94,7 @@ class GuardianController
                 $homeController->ShowRegisterView($type, $alert);
             }
         } catch (Exception $ex) {
-            echo "Se produjo un error. Intente mas tarde.";
-            HomeController::Index();
+            HomeController::ShowErrorView();
         }
     }
 
@@ -104,21 +102,23 @@ class GuardianController
     {
         if ($this->validateSession()) {
             try {
-                $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
                 $this->guardianDAO->UpdateTamanios($_SESSION["loggedUser"]->getId(), $tamanios);
+                $_SESSION["loggedUser"]->setTamanioMascotaCuidar($tamanios);
 
-                $_SESSION["loggedUser"]->setPrecioXDia($precio);
+
                 $this->guardianDAO->UpdatePrecio($_SESSION["loggedUser"]->getId(), $precio);
+                $_SESSION["loggedUser"]->setPrecioXDia($precio);
 
-                $_SESSION["loggedUser"]->setDisponibilidad($dias);
+
                 $this->guardianDAO->UpdateDisponibilidad($_SESSION["loggedUser"]->getId(), $dias);
+                $_SESSION["loggedUser"]->setDisponibilidad($dias);
 
                 $alert = "Configuracion guardada con exito &check;";
+
+                $this->ShowConfiguracionView($alert);
             } catch (Exception $ex) {
 
-                $alert = "No se pudo guardar la configuracion";
-            } finally {
-                $this->ShowConfiguracionView($alert);
+                HomeController::ShowErrorView();
             }
         }
     }

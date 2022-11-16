@@ -49,8 +49,7 @@ class ReservaController
                 $mascota = $this->mascotaDAO->GetMascotaById($idMascota);
                 require_once(VIEWS_PATH . "add-reserva.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -81,8 +80,7 @@ class ReservaController
 
                 require_once(VIEWS_PATH . "list-reservas.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -99,8 +97,7 @@ class ReservaController
                 $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
                 require_once(VIEWS_PATH . "show-cupon.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -119,8 +116,7 @@ class ReservaController
 
                 require_once(VIEWS_PATH . "add-review.php");
             } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-                HomeController::Index();
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -135,11 +131,11 @@ class ReservaController
 
                 $this->reservaDAO->Add($reserva);
 
-                $alert = "Reserva realizada con exito.";
-            } catch (Exception $ex) {
-                $alert  = "Se produjo un error. Intente mas tarde.";
-            } finally {
+                $alert = "Reserva realizada con &eacute;xito.";
+
                 $this->ShowListReservasView($alert);
+            } catch (Exception $ex) {
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -182,10 +178,10 @@ class ReservaController
                         $alert = "Su reserva ha sido solicitada. Espere confimarcion del Guardian.";
                         break;
                 }
-            } catch (Exception $ex) {
-                $alert = "Se produjo un error. Intente mas tarde.";
-            } finally {
+
                 $this->ShowListReservasView($alert);
+            } catch (Exception $ex) {
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -224,7 +220,7 @@ class ReservaController
                     if (!empty($interseccionDias)) {
                         if ($mascota->getAnimal() != $mascotaConfirmada->getAnimal() || $mascota->getRaza() != $mascotaConfirmada->getRaza()) {
                             $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), EstadoReserva::CANCELADA->value);
-                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reservaConfirmada->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
+                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reserva->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
                         }
                     }
                 }
@@ -240,10 +236,10 @@ class ReservaController
                 $guardian = $this->guardianDAO->GetGuardianById($reservaConfirmada->getFkIdGuardian());
 
                 $this->EnviarMail($duenio->getEmail(), 'PET-HERO: Cupon de pago - Reserva ' . $reservaConfirmada->getIdReserva(), $this->MailBodyCupon($reservaConfirmada, $mascotaConfirmada, $guardian), "Cupon de pago");
-            } catch (Exception $ex) {
-                $alert = "Se produjo un error. Intente mas tarde.";
-            } finally {
+
                 $this->ShowListReservasView($alert);
+            } catch (Exception $ex) {
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -276,11 +272,11 @@ class ReservaController
 
                 $this->guardianDAO->UpdateReputacion($idReserva);
 
-                $alert = "Su calificacion ha sido enviada.";
-            } catch (Exception $ex) {
-                echo "Se produjo un error. Intente mas tarde.";
-            } finally {
+                $alert = "Su calificaci&oacute;n ha sido enviada.";
+
                 $this->ShowListReservasView($alert);
+            } catch (Exception $ex) {
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -294,10 +290,10 @@ class ReservaController
             try {
                 $this->reservaDAO->UpdateEstado($idReserva, $estado);
                 $alert = "Cup&oacute;n pagado con &eacute;xito. La reserva ha sido confirmada.";
-            } catch (Exception $ex) {
-                $alert = "Se produjo un error. Intente mas tarde.";
-            } finally {
+
                 $this->ShowListReservasView($alert);
+            } catch (Exception $ex) {
+                HomeController::ShowErrorView();
             }
         } else {
             HomeController::Index();
@@ -331,8 +327,7 @@ class ReservaController
                 return 0;
             }
         } catch (PHPMailerException $ex) {
-            echo "Se produjo un error. Intente mas tarde.";
-            HomeController::Index();
+            HomeController::ShowErrorView();
         }
     }
 
@@ -340,12 +335,12 @@ class ReservaController
     {
 
         $body = '
-        <div style="border:1px solid black">
+        <div>
             <h1>Cupón de Pago - Reserva # ' . $reserva->getIdReserva() .  '</h1>
             <ul>
                 <li>Reserva #' . $reserva->getIdReserva() . '</li>
                 <li>Mascota: ' . $mascota->getNombre() . '</li>
-                <li>Guardian: ' . $guardian->getNombre() . '</li>
+                <li>Guardián: ' . $guardian->getNombre() . '</li>
                 <li>Fecha de Entrada: ' . $reserva->getFechaInicio() . '</li>
                 <li>Fecha de Salida: ' . $reserva->getFechaFin() . '</li>
                 <li>Precio total de la Reserva: $' . $reserva->getPrecioTotal() . '</li>
