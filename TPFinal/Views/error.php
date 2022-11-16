@@ -1,6 +1,9 @@
 <?php
 include("header.php");
-include("nav-bar.php");
+
+if (!isset($_SESSION)) {
+    include("nav-bar.php");
+}
 ?>
 
 <div class="container">
