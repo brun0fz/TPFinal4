@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 10, 2022 at 06:33 PM
+-- Generation Time: Nov 16, 2022 at 08:59 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.6
 
@@ -81,9 +81,8 @@ CREATE TABLE `Cupones` (
 --
 
 INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`) VALUES
-(23, 898.5, 39),
-(27, 898.5, 41),
-(28, 898.5, 42);
+(30, 899, 47),
+(35, 15000, 51);
 
 -- --------------------------------------------------------
 
@@ -159,8 +158,7 @@ CREATE TABLE `Duenios` (
 
 INSERT INTO `Duenios` (`idDuenio`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`) VALUES
 (1, 'Bruno', 'Fabrizio', '2236698574', 'brunofabrizio15@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'bruno@gmail.com.jpg', 1),
-(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'clara@gmail.com.png', 1),
-(10, 'asd', 'asd', '123123123', 'asd@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'undefinedProfile.png', 1);
+(2, 'Clara', 'Videla', '2235874785', 'clara@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 1, 'clara@gmail.com.png', 1);
 
 -- --------------------------------------------------------
 
@@ -190,9 +188,9 @@ CREATE TABLE `Guardianes` (
 --
 
 INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
-(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'belen@gmail.com.png', 1, 2.5, 599, 5, 3, 4),
+(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'belen@gmail.com.png', 1, 2.5, 899, 5, 3, 4),
 (7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
-(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'emma@gmail.com.jpeg', 1, 3, 899, 8, 6, 7);
+(8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'emma@gmail.com.jpeg', 1, 2.5, 899, 8, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -247,11 +245,11 @@ CREATE TABLE `Reservas` (
 --
 
 INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
-(39, '2022-11-09', '2022-11-11', 1797, 'En curso', 11, 1, 5),
-(40, '2022-11-01', '2022-11-01', 899, 'Finalizada', 12, 1, 8),
-(41, '2022-11-21', '2022-11-23', 1797, 'Confirmada', 3, 1, 5),
-(42, '2022-11-21', '2022-11-23', 1797, 'Cancelada', 13, 1, 5),
-(43, '2022-11-22', '2022-11-24', 1797, 'Cancelada', 11, 1, 5);
+(47, '2022-11-17', '2022-11-18', 1798, 'Confirmada', 3, 1, 5),
+(48, '2022-11-21', '2022-11-23', 2697, 'Solicitada', 11, 1, 5),
+(49, '2022-11-22', '2022-11-25', 3596, 'Solicitada', 13, 1, 5),
+(50, '2022-11-23', '2022-11-25', 2697, 'Solicitada', 3, 1, 5),
+(51, '2022-11-12', '2022-11-13', 30000, 'Finalizada', 12, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -376,55 +374,55 @@ ALTER TABLE `Animales`
 -- AUTO_INCREMENT for table `Cupones`
 --
 ALTER TABLE `Cupones`
-  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
 --
 ALTER TABLE `Direcciones`
-  MODIFY `idDireccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idDireccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `Disponibilidades`
 --
 ALTER TABLE `Disponibilidades`
-  MODIFY `idDisponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idDisponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  MODIFY `idGuardian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idGuardian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
-  MODIFY `idMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
-  MODIFY `idTamanioMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idTamanioMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -440,24 +438,24 @@ ALTER TABLE `Cupones`
 -- Constraints for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  ADD CONSTRAINT `fk_id_direccion` FOREIGN KEY (`fk_idDireccion`) REFERENCES `Direcciones` (`idDireccion`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_id_disponibilidad` FOREIGN KEY (`fk_idDisponibilidad`) REFERENCES `Disponibilidades` (`idDisponibilidad`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_id_tamanioMascota` FOREIGN KEY (`fk_idTamanioMascota`) REFERENCES `TamaniosMascota` (`idTamanioMascota`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_direccion` FOREIGN KEY (`fk_idDireccion`) REFERENCES `Direcciones` (`idDireccion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_id_disponibilidad` FOREIGN KEY (`fk_idDisponibilidad`) REFERENCES `Disponibilidades` (`idDisponibilidad`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_id_tamanioMascota` FOREIGN KEY (`fk_idTamanioMascota`) REFERENCES `TamaniosMascota` (`idTamanioMascota`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Mascotas`
 --
 ALTER TABLE `Mascotas`
   ADD CONSTRAINT `fk_id_animal` FOREIGN KEY (`fk_idAnimal`) REFERENCES `Animales` (`idAnimal`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_id_duenio` FOREIGN KEY (`fk_idDuenio`) REFERENCES `Duenios` (`idDuenio`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_duenio` FOREIGN KEY (`fk_idDuenio`) REFERENCES `Duenios` (`idDuenio`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  ADD CONSTRAINT `fk_id_mascota` FOREIGN KEY (`fk_idMascota`) REFERENCES `Mascotas` (`idMascota`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`fk_idDuenio`) REFERENCES `Duenios` (`idDuenio`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`fk_idGuardian`) REFERENCES `Guardianes` (`idGuardian`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_id_mascota` FOREIGN KEY (`fk_idMascota`) REFERENCES `Mascotas` (`idMascota`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`fk_idDuenio`) REFERENCES `Duenios` (`idDuenio`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`fk_idGuardian`) REFERENCES `Guardianes` (`idGuardian`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Reviews`
