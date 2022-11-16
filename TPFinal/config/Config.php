@@ -10,7 +10,7 @@ define("ASSETS_PATH", FRONT_ROOT.VIEWS_PATH . "img/assets/");
 define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
 
 //LOCAL DATABASE
-define("DB_HOST", "localhosta");
+define("DB_HOST", "localhost");
 define("DB_NAME", "PetHero");
 define("DB_USER", "root");
 define("DB_PASS", "");
