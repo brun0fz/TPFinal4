@@ -51,8 +51,9 @@ class HomeController
         require_once(VIEWS_PATH . "recuperar-contrasenia.php");
     }
 
-    static function ShowErrorView(){
-
+    static function ShowErrorView()
+    {
+        require_once(VIEWS_PATH . "error.php");
     }
 
 
