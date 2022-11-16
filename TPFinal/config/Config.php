@@ -11,7 +11,7 @@ define("ASSETS_PATH", FRONT_ROOT.VIEWS_PATH . "img/assets/");
 define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
 
 //DATABASE LOCAL
-define("DB_HOST", "localhostasd");
+define("DB_HOST", "localhost:3307");
 define("DB_NAME", "PetHero");
 define("DB_USER", "root");
 define("DB_PASS", "");
@@ -26,7 +26,3 @@ define("DB_USER", "u1x4he9n7ufecekv");
 define("DB_PASS", "0ILV8Bkh48BjAsMBlf7E");
 */
 ?>
-
-
-
-

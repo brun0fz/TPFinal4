@@ -220,7 +220,7 @@ class ReservaController
                     if (!empty($interseccionDias)) {
                         if ($mascota->getAnimal() != $mascotaConfirmada->getAnimal() || $mascota->getRaza() != $mascotaConfirmada->getRaza()) {
                             $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), EstadoReserva::CANCELADA->value);
-                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reservaConfirmada->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
+                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reserva->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
                         }
                     }
                 }
