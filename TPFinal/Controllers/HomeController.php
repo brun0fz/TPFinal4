@@ -82,8 +82,7 @@ class HomeController
                 $this->Index($alert);
             }
         } catch (Exception $ex) {
-            echo "Se produjo un error. Intente mas tarde.";
-            $this->Index();
+            HomeController::ShowErrorView();
         }
     }
 
@@ -102,15 +101,14 @@ class HomeController
             $guardian = $this->guardianDAO->GetGuardianByEmail($email);
 
             if (isset($duenio)) {
-                $this->EnviarContrasenia($duenio->getEmail(), "PET-HERO: Recuperacion de contrase&ntilde;", "Su contraseña es: " . "'" . $duenio->getPassword() . "'", "");
+                $this->EnviarContrasenia($duenio->getEmail(), "PET-HERO: Recuperacion de contrasena", "Su contraseña es: " . "'" . $duenio->getPassword() . "'", "");
             } else if (isset($guardian)) {
-                $this->EnviarContrasenia($guardian->getEmail(), "PET-HERO: Recuperacion de contrase&ntilde;", "Su contraseña es: " . "'" . $guardian->getPassword() . "'", "");
+                $this->EnviarContrasenia($guardian->getEmail(), "PET-HERO: Recuperacion de contrasena", "Su contraseña es: " . "'" . $guardian->getPassword() . "'", "");
             }
 
             $this->ShowRecuperarContraseniaView("Si la direccion ingresada es valida, recibira su contrase&ntilde;a en su correo electronico.");
         } catch (Exception $ex) {
-            echo "Se produjo un error. Intente mas tarde.";
-            $this->Index();
+            HomeController::ShowErrorView();
         }
     }
 
@@ -143,8 +141,7 @@ class HomeController
                 return 0;
             }
         } catch (PHPMailerException $ex) {
-            echo "Se produjo un error. Intente mas tarde.";
-            $this->Index();
+            HomeController::ShowErrorView();
         }
     }
 }

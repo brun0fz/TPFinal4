@@ -290,7 +290,7 @@ class ReservaDAO implements IReservaDAO
         try {
             $reserva = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE fechaInicio >= :dia AND fechaFin <= :dia AND fk_idGuardian = :idGuardian";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fechaInicio <= :dia AND fechaFin >= :dia) AND fk_idGuardian = :idGuardian";
 
             $parameters['idGuardian'] = $idGuardian;
             $parameters['dia'] = $dia;
@@ -410,7 +410,7 @@ class ReservaDAO implements IReservaDAO
         try {
             $reservasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio AND estado = :estado) ORDER BY fechaInicio desc;";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idDuenio = :fk_idDuenio AND estado = :estado) ORDER BY fechaInicio asc;";
 
             $parameters["fk_idDuenio"] = $idDuenio;
             $parameters["estado"] = $estado;
@@ -453,7 +453,7 @@ class ReservaDAO implements IReservaDAO
         try {
             $reservasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idGuardian = :fk_idGuardian AND estado = :estado) ORDER BY fechaInicio desc;";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idGuardian = :fk_idGuardian AND estado = :estado) ORDER BY fechaInicio asc;";
 
             $parameters["fk_idGuardian"] = $idGuardian;
             $parameters["estado"] = $estado;
@@ -495,7 +495,7 @@ class ReservaDAO implements IReservaDAO
         try {
             $reservasList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idMascota = :fk_idMascota AND estado = :estado) ORDER BY fechaInicio desc;";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE (fk_idMascota = :fk_idMascota AND estado = :estado) ORDER BY fechaInicio asc;";
 
             $parameters["fk_idMascota"] = $idMascota;
             $parameters["estado"] = $estado;

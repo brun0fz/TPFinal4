@@ -335,12 +335,12 @@ class ReservaController
     {
 
         $body = '
-        <div style="border:1px solid black">
+        <div>
             <h1>Cupón de Pago - Reserva # ' . $reserva->getIdReserva() .  '</h1>
             <ul>
                 <li>Reserva #' . $reserva->getIdReserva() . '</li>
                 <li>Mascota: ' . $mascota->getNombre() . '</li>
-                <li>Guardian: ' . $guardian->getNombre() . '</li>
+                <li>Guardián: ' . $guardian->getNombre() . '</li>
                 <li>Fecha de Entrada: ' . $reserva->getFechaInicio() . '</li>
                 <li>Fecha de Salida: ' . $reserva->getFechaFin() . '</li>
                 <li>Precio total de la Reserva: $' . $reserva->getPrecioTotal() . '</li>
