@@ -5,13 +5,13 @@ namespace DAO;
 use \PDO as PDO;
 use \Exception as Exception;
 use DAO\QueryType as QueryType;
-
+ 
 class Connection
 {
     private $pdo = null;
     private $pdoStatement = null;
     private static $instance = null;
-
+ 
     private function __construct()
     {
         try {
