@@ -246,21 +246,23 @@ class DuenioController
             }
 
             foreach ($listaGuardianes as $guardian) {
-                foreach ($dias as $dia) {
 
+                $flag = 1;
+
+                foreach ($dias as $dia) {
                     $reserva = $reservaDAO->GetReservaGuardianByDia($guardian->getId(), $dia);
 
                     if ($reserva && ($reserva->getEstado() == EstadoReserva::ESPERA->value || $reserva->getEstado() == EstadoReserva::CONFIRMADA->value || $reserva->getEstado() == EstadoReserva::EN_CURSO->value)) {
                         $mascota = $this->mascotaDAO->GetMascotaById($reserva->getFkIdMascota());
 
-                        if ($mascota->getAnimal() == $animal && $mascota->getRaza() == $raza) {
-                            $listaFiltrada[] = $guardian;
-                            break;
+                        if ($mascota->getAnimal() != $animal && $mascota->getRaza() != $raza) {
+                            $flag = 0;
                         }
-                    } else {
-                        $listaFiltrada[] = $guardian;
-                        break;
                     }
+                }
+
+                if ($flag) {
+                    $listaFiltrada[] = $guardian;
                 }
             }
 
