@@ -24,3 +24,7 @@ define("DB_NAME", "bumivsrscryp1fqpzsmn");
 define("DB_USER", "u1x4he9n7ufecekv");
 define("DB_PASS", "0ILV8Bkh48BjAsMBlf7E");
 */
+
+//MAIL
+define ("USERNAMEMAIL","app.pethero@gmail.com");
+define ("PASSWORDMAIL","bmplfijszyvepomr");

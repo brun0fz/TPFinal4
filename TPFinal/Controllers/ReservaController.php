@@ -14,14 +14,6 @@ use Models\EstadoReserva;
 use Models\Reserva;
 use Models\Review;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception as PHPMailerException;
-use PHPMailer\PHPMailer\SMTP;
-
-require_once 'PHPMailer/src/Exception.php';
-require_once 'PHPMailer/src/PHPMailer.php';
-require_once 'PHPMailer/src/SMTP.php';
-
 class ReservaController
 {
 
@@ -166,7 +158,7 @@ class ReservaController
                         if ($_SESSION["loggedUser"]->getTipo() == 2) {
                             $reserva = $this->reservaDAO->GetReservaById($idReserva);
                             $duenio = $this->duenioDAO->GetDuenioById($reserva->getFkIdDuenio());
-                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reserva->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
+                            MailController::MailCancelarReserva($duenio, $reserva);
                         }
 
                         $alert = "La reserva ha sido cancelada.";
@@ -220,7 +212,7 @@ class ReservaController
                     if (!empty($interseccionDias)) {
                         if ($mascota->getAnimal() != $mascotaConfirmada->getAnimal() || $mascota->getRaza() != $mascotaConfirmada->getRaza()) {
                             $this->reservaDAO->UpdateEstado($reserva->getIdReserva(), EstadoReserva::CANCELADA->value);
-                            $this->EnviarMail($duenio->getEmail(), "PET-HERO: Reserva cancelada", "Lo sentimos " . $duenio->getNombre() . ", su reserva #" . $reserva->getIdReserva() . " ha sido cancelada", "Reserva cancelada");
+                            MailController::MailCancelarReserva($duenio, $reserva);
                         }
                     }
                 }
@@ -235,7 +227,7 @@ class ReservaController
                 $duenio = $this->duenioDAO->GetDuenioById($reservaConfirmada->getFkIdDuenio());
                 $guardian = $this->guardianDAO->GetGuardianById($reservaConfirmada->getFkIdGuardian());
 
-                $this->EnviarMail($duenio->getEmail(), 'PET-HERO: Cupon de pago - Reserva ' . $reservaConfirmada->getIdReserva(), $this->MailBodyCupon($reservaConfirmada, $mascotaConfirmada, $guardian), "Cupon de pago");
+                MailController::MailCupon($duenio, $reservaConfirmada, $mascotaConfirmada, $guardian);
 
                 $this->ShowListReservasView($alert);
             } catch (Exception $ex) {
@@ -300,55 +292,4 @@ class ReservaController
         }
     }
 
-    private function EnviarMail($email, $subject, $msgHTML, $altBody)
-    {
-        try {
-            $mail = new PHPMailer();
-
-            $mail->isSMTP();
-            $mail->SMTPDebug = SMTP::DEBUG_OFF;
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 465;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->SMTPAuth = true;
-
-            $mail->Username = 'app.pethero@gmail.com';
-            $mail->Password = 'bmplfijszyvepomr';
-
-            $mail->setFrom('app.pethero@gmail.com');
-            $mail->addAddress($email);
-            $mail->Subject = $subject;
-            $mail->msgHTML($msgHTML);
-            $mail->AltBody = $altBody;
-
-            if ($mail->send()) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } catch (PHPMailerException $ex) {
-            HomeController::ShowErrorView();
-        }
-    }
-
-    private function MailBodyCupon($reserva, $mascota, $guardian)
-    {
-
-        $body = '
-        <div>
-            <h1>Cupón de Pago - Reserva # ' . $reserva->getIdReserva() .  '</h1>
-            <ul>
-                <li>Reserva #' . $reserva->getIdReserva() . '</li>
-                <li>Mascota: ' . $mascota->getNombre() . '</li>
-                <li>Guardián: ' . $guardian->getNombre() . '</li>
-                <li>Fecha de Entrada: ' . $reserva->getFechaInicio() . '</li>
-                <li>Fecha de Salida: ' . $reserva->getFechaFin() . '</li>
-                <li>Precio total de la Reserva: $' . $reserva->getPrecioTotal() . '</li>
-                <li>Total Cupón de Pago: $' . ($reserva->getPrecioTotal() * 0.5) . '</li>
-            </ul>
-        </div>
-        ';
-
-        return $body;
-    }
 }
