@@ -13,6 +13,8 @@ class GuardianDAO implements IGuardianDAO
     private $connection;
     private $tableName = "Guardianes";
 
+
+    //----Adds--------------------------------------------------------------------------------------------------------
     public function Add(Guardian $guardian)
     {
         try {
@@ -93,7 +95,10 @@ class GuardianDAO implements IGuardianDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
+
+    //----Gets--------------------------------------------------------------------------------------------------------
     public function GetAll()
     {
         try {
@@ -107,44 +112,8 @@ class GuardianDAO implements IGuardianDAO
 
             foreach ($resultSet as $row) {
 
-                $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-                $guardian->setId($row["idGuardian"]);
-                $guardian->setNombre($row["nombre"]);
-                $guardian->setApellido($row["apellido"]);
-                $guardian->setTelefono($row["telefono"]);
-                $guardian->setEmail($row["email"]);
-                $guardian->setPrecioXDia($row["precioXDia"]);
-                $guardian->setReputacion($row["reputacion"]);
-                $guardian->setAlta($row["alta"]);
-                $guardian->setTipo($row["tipo"]);
-                $guardian->setRutaFoto($row["rutaFoto"]);
-
-                $guardian->setCalle($row["calle"]);
-                $guardian->setNumero($row["numero"]);
-                $guardian->setPiso($row["piso"]);
-                $guardian->setDepartamento($row["departamento"]);
-                $guardian->setCodigoPostal($row["codigoPostal"]);
-
-                $TamanioMascota = array();
-
-                if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
-                if ($row["mediana"]) $TamanioMascota[] = "Mediano";
-                if ($row["grande"]) $TamanioMascota[] = "Grande";
-
-                $guardian->setTamanioMascotaCuidar($TamanioMascota);
-
-                $disponibilidad = array();
-
-                if ($row["lunes"]) $disponibilidad[] = "Lunes";
-                if ($row["martes"]) $disponibilidad[] = "Martes";
-                if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
-                if ($row["jueves"]) $disponibilidad[] = "Jueves";
-                if ($row["viernes"]) $disponibilidad[] = "Viernes";
-                if ($row["sabado"]) $disponibilidad[] = "Sabado";
-                if ($row["domingo"]) $disponibilidad[] = "Domingo";
-
-                $guardian->setDisponibilidad($disponibilidad);
+                $row["password"] = null;
+                $guardian = $this->ArrayToGuardian($row);
 
                 array_push($guardianesList, $guardian);
             }
@@ -154,7 +123,6 @@ class GuardianDAO implements IGuardianDAO
             throw $ex;
         }
     }
-
 
     public function GetGuardianByEmail($email)
     {
@@ -174,45 +142,7 @@ class GuardianDAO implements IGuardianDAO
 
                 foreach ($resultSet as $row) {
 
-                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $guardian->setId($row["idGuardian"]);
-                    $guardian->setNombre($row["nombre"]);
-                    $guardian->setApellido($row["apellido"]);
-                    $guardian->setTelefono($row["telefono"]);
-                    $guardian->setEmail($row["email"]);
-                    $guardian->setPassword($row["password"]); //Se usa para el login
-                    $guardian->setAlta($row["alta"]);
-                    $guardian->setTipo($row["tipo"]);
-                    $guardian->setRutaFoto($row["rutaFoto"]);
-                    $guardian->setPrecioXDia($row["precioXDia"]);
-                    $guardian->setReputacion($row["reputacion"]);
-
-                    $guardian->setCalle($row["calle"]);
-                    $guardian->setNumero($row["numero"]);
-                    $guardian->setPiso($row["piso"]);
-                    $guardian->setDepartamento($row["departamento"]);
-                    $guardian->setCodigoPostal($row["codigoPostal"]);
-
-                    $TamanioMascota = array();
-
-                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
-                    if ($row["mediana"]) $TamanioMascota[] = "Mediano";
-                    if ($row["grande"]) $TamanioMascota[] = "Grande";
-
-                    $guardian->setTamanioMascotaCuidar($TamanioMascota);
-
-                    $disponibilidad = array();
-
-                    if ($row["lunes"]) $disponibilidad[] = "Lunes";
-                    if ($row["martes"]) $disponibilidad[] = "Martes";
-                    if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
-                    if ($row["jueves"]) $disponibilidad[] = "Jueves";
-                    if ($row["viernes"]) $disponibilidad[] = "Viernes";
-                    if ($row["sabado"]) $disponibilidad[] = "Sabado";
-                    if ($row["domingo"]) $disponibilidad[] = "Domingo";
-
-                    $guardian->setDisponibilidad($disponibilidad);
+                    $guardian = $this->ArrayToGuardian($row);
                 }
 
                 return $guardian;
@@ -242,44 +172,8 @@ class GuardianDAO implements IGuardianDAO
 
                 foreach ($resultSet as $row) {
 
-                    $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $guardian->setId($row["idGuardian"]);
-                    $guardian->setNombre($row["nombre"]);
-                    $guardian->setApellido($row["apellido"]);
-                    $guardian->setTelefono($row["telefono"]);
-                    $guardian->setEmail($row["email"]);
-                    $guardian->setAlta($row["alta"]);
-                    $guardian->setTipo($row["tipo"]);
-                    $guardian->setRutaFoto($row["rutaFoto"]);
-                    $guardian->setPrecioXDia($row["precioXDia"]);
-                    $guardian->setReputacion($row["reputacion"]);
-
-                    $guardian->setCalle($row["calle"]);
-                    $guardian->setNumero($row["numero"]);
-                    $guardian->setPiso($row["piso"]);
-                    $guardian->setDepartamento($row["departamento"]);
-                    $guardian->setCodigoPostal($row["codigoPostal"]);
-
-                    $TamanioMascota = array();
-
-                    if ($row["pequenia"]) $TamanioMascota[] = "Pequeño";
-                    if ($row["mediana"]) $TamanioMascota[] = "Mediano";
-                    if ($row["grande"]) $TamanioMascota[] = "Grande";
-
-                    $guardian->setTamanioMascotaCuidar($TamanioMascota);
-
-                    $disponibilidad = array();
-
-                    if ($row["lunes"]) $disponibilidad[] = "Lunes";
-                    if ($row["martes"]) $disponibilidad[] = "Martes";
-                    if ($row["miercoles"]) $disponibilidad[] = "Miercoles";
-                    if ($row["jueves"]) $disponibilidad[] = "Jueves";
-                    if ($row["viernes"]) $disponibilidad[] = "Viernes";
-                    if ($row["sabado"]) $disponibilidad[] = "Sabado";
-                    if ($row["domingo"]) $disponibilidad[] = "Domingo";
-
-                    $guardian->setDisponibilidad($disponibilidad);
+                    $row["password"] = null;
+                    $guardian = $this->ArrayToGuardian($row);
                 }
 
                 return $guardian;
@@ -291,7 +185,10 @@ class GuardianDAO implements IGuardianDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
+
+    //----Updates-----------------------------------------------------------------------------------------------------
     public function UpdateDisponibilidad($idGuardian, $disponibilidad)
     {
         try {
@@ -392,4 +289,53 @@ class GuardianDAO implements IGuardianDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
+
+
+    //----Array-Object------------------------------------------------------------------------------------------------
+    private function ArrayToGuardian($array)
+    {
+        $guardian = new Guardian(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+        $guardian->setId($array["idGuardian"]);
+        $guardian->setNombre($array["nombre"]);
+        $guardian->setApellido($array["apellido"]);
+        $guardian->setTelefono($array["telefono"]);
+        $guardian->setEmail($array["email"]);
+        $guardian->setPassword($array["password"]); //only login
+        $guardian->setAlta($array["alta"]);
+        $guardian->setTipo($array["tipo"]);
+        $guardian->setRutaFoto($array["rutaFoto"]);
+        $guardian->setPrecioXDia($array["precioXDia"]);
+        $guardian->setReputacion($array["reputacion"]);
+
+        $guardian->setCalle($array["calle"]);
+        $guardian->setNumero($array["numero"]);
+        $guardian->setPiso($array["piso"]);
+        $guardian->setDepartamento($array["departamento"]);
+        $guardian->setCodigoPostal($array["codigoPostal"]);
+
+        $TamanioMascota = array();
+
+        if ($array["pequenia"]) $TamanioMascota[] = "Pequeño";
+        if ($array["mediana"]) $TamanioMascota[] = "Mediano";
+        if ($array["grande"]) $TamanioMascota[] = "Grande";
+
+        $guardian->setTamanioMascotaCuidar($TamanioMascota);
+
+        $disponibilidad = array();
+
+        if ($array["lunes"]) $disponibilidad[] = "Lunes";
+        if ($array["martes"]) $disponibilidad[] = "Martes";
+        if ($array["miercoles"]) $disponibilidad[] = "Miercoles";
+        if ($array["jueves"]) $disponibilidad[] = "Jueves";
+        if ($array["viernes"]) $disponibilidad[] = "Viernes";
+        if ($array["sabado"]) $disponibilidad[] = "Sabado";
+        if ($array["domingo"]) $disponibilidad[] = "Domingo";
+
+        $guardian->setDisponibilidad($disponibilidad);
+
+        return $guardian;
+    }
+    //----------------------------------------------------------------------------------------------------------------
 }

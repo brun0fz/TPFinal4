@@ -11,44 +11,15 @@ class DuenioDAO implements IDuenioDAO
 {
     private $connection;
     private $tableName = "Duenios";
+    
 
-    private function ObjetToarray($duenio)
-    {
-        $array["nombre"] = $duenio->getNombre();
-        $array["apellido"] = $duenio->getApellido();
-        $array["telefono"] = $duenio->getTelefono();
-        $array["email"] = $duenio->getEmail();
-        $array["password"] = $duenio->getPassword();
-        $array["tipo"] = $duenio->getTipo();
-        $array["rutaFoto"] = $duenio->getRutaFoto();
-        $array["alta"] = $duenio->getAlta();
-
-        return $array;
-    }
-
-    private function ArrayToObject($array)
-    {
-        $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
-
-        $duenio->setId($array["idDuenio"]);
-        $duenio->setNombre($array["nombre"]);
-        $duenio->setApellido($array["apellido"]);
-        $duenio->setTelefono($array["telefono"]);
-        $duenio->setEmail($array["email"]);
-        $duenio->setPassword($array["password"]);
-        $duenio->setTipo($array["tipo"]);
-        $duenio->setRutaFoto($array["rutaFoto"]);
-        $duenio->setAlta($array["alta"]);
-
-        return $duenio;
-    }
-
+    //----Adds--------------------------------------------------------------------------------------------------------
     public function Add(Duenio $duenio)
     {
         try {
             $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, :encryptpass), :tipo, :rutaFoto, :alta);";
 
-            $parameters = $this->ObjetToarray($duenio);
+            $parameters = $this->DuenioToArray($duenio);
             $parameters["encryptpass"] = ENCRYPTPASS;
 
             $this->connection = Connection::GetInstance();
@@ -58,8 +29,10 @@ class DuenioDAO implements IDuenioDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
 
+    //----Gets--------------------------------------------------------------------------------------------------------
     public function GetAll()
     {
         try {
@@ -75,7 +48,7 @@ class DuenioDAO implements IDuenioDAO
 
                 $row["password"] = null;
 
-                array_push($dueniosList, $this->ArrayToObject($row));
+                array_push($dueniosList, $this->ArrayToDuenio($row));
             }
 
             return $dueniosList;
@@ -83,7 +56,6 @@ class DuenioDAO implements IDuenioDAO
             throw $ex;
         }
     }
-
 
     public function GetDuenioByEmail($email)
     {
@@ -103,7 +75,7 @@ class DuenioDAO implements IDuenioDAO
 
                 foreach ($resultSet as $row) {
 
-                    $duenio = $this->ArrayToObject($row);
+                    $duenio = $this->ArrayToDuenio($row);
                 }
 
                 return $duenio;
@@ -133,16 +105,8 @@ class DuenioDAO implements IDuenioDAO
 
                 foreach ($resultSet as $row) {
 
-                    $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
-
-                    $duenio->setId($row["idDuenio"]);
-                    $duenio->setNombre($row["nombre"]);
-                    $duenio->setApellido($row["apellido"]);
-                    $duenio->setTelefono($row["telefono"]);
-                    $duenio->setEmail($row["email"]);
-                    $duenio->setTipo($row["tipo"]);
-                    $duenio->setRutaFoto($row["rutaFoto"]);
-                    $duenio->setAlta($row["alta"]);
+                    $row["password"] = null;
+                    $duenio = $this->ArrayToDuenio($row);
                 }
 
                 return $duenio;
@@ -154,4 +118,39 @@ class DuenioDAO implements IDuenioDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
+
+
+    //----Array-Object------------------------------------------------------------------------------------------------
+    private function DuenioToArray($duenio)
+    {
+        $array["nombre"] = $duenio->getNombre();
+        $array["apellido"] = $duenio->getApellido();
+        $array["telefono"] = $duenio->getTelefono();
+        $array["email"] = $duenio->getEmail();
+        $array["password"] = $duenio->getPassword();
+        $array["tipo"] = $duenio->getTipo();
+        $array["rutaFoto"] = $duenio->getRutaFoto();
+        $array["alta"] = $duenio->getAlta();
+
+        return $array;
+    }
+
+    private function ArrayToDuenio($array)
+    {
+        $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
+
+        $duenio->setId($array["idDuenio"]);
+        $duenio->setNombre($array["nombre"]);
+        $duenio->setApellido($array["apellido"]);
+        $duenio->setTelefono($array["telefono"]);
+        $duenio->setEmail($array["email"]);
+        $duenio->setPassword($array["password"]);
+        $duenio->setTipo($array["tipo"]);
+        $duenio->setRutaFoto($array["rutaFoto"]);
+        $duenio->setAlta($array["alta"]);
+
+        return $duenio;
+    }
+    //----------------------------------------------------------------------------------------------------------------
 }

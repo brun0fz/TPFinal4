@@ -60,18 +60,13 @@ class ReservaDAO implements IReservaDAO
     }
 
 
+    //----Adds--------------------------------------------------------------------------------------------------------
     public function Add(Reserva $reserva)
     {
         try {
             $query = "INSERT INTO " . $this->tableName . " (fechaInicio, fechaFin, precioTotal, fk_idMascota, fk_idDuenio, fk_idGuardian) VALUES (:fechaInicio, :fechaFin, :precioTotal, :fk_idMascota, :fk_idDuenio, :fk_idGuardian);";
 
-
-            $parameters["fechaInicio"] = $reserva->getFechaInicio();
-            $parameters["fechaFin"] = $reserva->getFechaFin();
-            $parameters["precioTotal"] = $reserva->getPrecioTotal();
-            $parameters["fk_idMascota"] = $reserva->getFkIdMascota();
-            $parameters["fk_idDuenio"] = $reserva->getFkIdDuenio();
-            $parameters["fk_idGuardian"] = $reserva->getFkIdGuardian();
+            $parameters = $this->ReservaToArray($reserva);
 
             $this->connection = Connection::GetInstance();
 
@@ -86,9 +81,7 @@ class ReservaDAO implements IReservaDAO
         try {
             $query = "INSERT INTO Reviews (comentario, puntaje, fk_idReserva) VALUES (:comentario, :puntaje, :fk_idReserva);";
 
-            $parameters["comentario"] = $review->getComentario();
-            $parameters["puntaje"] = $review->getPuntaje();
-            $parameters["fk_idReserva"] = $review->getFkIdReserva();
+            $parameters = $this->ReviewToArray($review);
 
             $this->connection = Connection::GetInstance();
 
@@ -103,8 +96,7 @@ class ReservaDAO implements IReservaDAO
         try {
             $query = "INSERT INTO Cupones (total, fk_idReserva) VALUES (:total, :fk_idReserva);";
 
-            $parameters["total"] = $cupon->getTotal();
-            $parameters["fk_idReserva"] = $cupon->getFkIdReserva();
+            $parameters = $this->CuponToArray($cupon);
 
             $this->connection = Connection::GetInstance();
 
@@ -113,8 +105,10 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
 
+    //----Gets--------------------------------------------------------------------------------------------------------
     public function GetAll()
     {
         try {
@@ -128,17 +122,7 @@ class ReservaDAO implements IReservaDAO
 
             foreach ($resultSet as $row) {
 
-                $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                $reserva->setIdReserva($row["idReserva"]);
-                $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                $reserva->setFkIdMascota($row["fk_idMascota"]);
-                $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                $reserva->setFechaInicio($row["fechaInicio"]);
-                $reserva->setFechaFin($row["fechaFin"]);
-                $reserva->setPrecioTotal($row["precioTotal"]);
-                $reserva->setEstado($row["estado"]);
-
+                $reserva = $this->ArrayToReserva($row);
                 array_push($reservasList, $reserva);
             }
 
@@ -163,17 +147,7 @@ class ReservaDAO implements IReservaDAO
 
             foreach ($resultSet as $row) {
 
-                $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                $reserva->setIdReserva($row["idReserva"]);
-                $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                $reserva->setFkIdMascota($row["fk_idMascota"]);
-                $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                $reserva->setFechaInicio($row["fechaInicio"]);
-                $reserva->setFechaFin($row["fechaFin"]);
-                $reserva->setPrecioTotal($row["precioTotal"]);
-                $reserva->setEstado($row["estado"]);
-
+                $reserva = $this->ArrayToReserva($row);
                 array_push($reservasList, $reserva);
             }
 
@@ -200,16 +174,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
+                    $reserva = $this->ArrayToReserva($row);
                 }
 
                 return $reserva;
@@ -239,11 +204,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $cupon = new Cupon(NULL, NULL, NULL);
-
-                    $cupon->setIdCupon($row["idCupon"]);
-                    $cupon->setTotal($row["total"]);
-                    $cupon->setFkIdReserva($row["fk_idReserva"]);
+                    $cupon = $this->ArrayToCupon($row);
                 }
             }
 
@@ -270,12 +231,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $review = new Review(NULL, NULL, NULL);
-
-                    $review->setIdReview($row["idReview"]);
-                    $review->setComentario($row["comentario"]);
-                    $review->setPuntaje($row["puntaje"]);
-                    $review->setFkIdReserva($row["fk_idReserva"]);
+                    $review = $this->ArrayToReview($row);
                 }
             }
 
@@ -303,16 +259,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
+                    $reserva = $this->ArrayToReserva($row);
                 }
             }
             return $reserva;
@@ -338,17 +285,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
-
+                    $reserva = $this->ArrayToReserva($row);
                     array_push($reservasList, $reserva);
                 }
 
@@ -361,7 +298,6 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
-
 
     public function GetListaReservasByGuardian($idGuardian)
     {
@@ -380,17 +316,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
-
+                    $reserva = $this->ArrayToReserva($row);
                     array_push($reservasList, $reserva);
                 }
 
@@ -403,7 +329,6 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
-
 
     public function GetListaReservasDuenioByEstado($idDuenio, $estado)
     {
@@ -423,17 +348,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
-
+                    $reserva = $this->ArrayToReserva($row);
                     array_push($reservasList, $reserva);
                 }
 
@@ -446,7 +361,6 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
-
 
     public function GetListaReservasGuardianByEstado($idGuardian, $estado)
     {
@@ -466,17 +380,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
-
+                    $reserva = $this->ArrayToReserva($row);
                     array_push($reservasList, $reserva);
                 }
 
@@ -508,17 +412,7 @@ class ReservaDAO implements IReservaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $reserva->setIdReserva($row["idReserva"]);
-                    $reserva->setFkIdGuardian($row["fk_idGuardian"]);
-                    $reserva->setFkIdMascota($row["fk_idMascota"]);
-                    $reserva->setFkIdDuenio($row["fk_idDuenio"]);
-                    $reserva->setFechaInicio($row["fechaInicio"]);
-                    $reserva->setFechaFin($row["fechaFin"]);
-                    $reserva->setPrecioTotal($row["precioTotal"]);
-                    $reserva->setEstado($row["estado"]);
-
+                    $reserva = $this->ArrayToReserva($row);
                     array_push($reservasList, $reserva);
                 }
 
@@ -531,7 +425,10 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
+
+    //----Updates-----------------------------------------------------------------------------------------------------
     public function UpdateEstado($idReserva, $estado)
     {
         try {
@@ -547,4 +444,76 @@ class ReservaDAO implements IReservaDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
+
+
+    //----Array-Object------------------------------------------------------------------------------------------------
+    private function ReservaToArray(Reserva $reserva)
+    {
+        $array["fechaInicio"] = $reserva->getFechaInicio();
+        $array["fechaFin"] = $reserva->getFechaFin();
+        $array["precioTotal"] = $reserva->getPrecioTotal();
+        $array["fk_idMascota"] = $reserva->getFkIdMascota();
+        $array["fk_idDuenio"] = $reserva->getFkIdDuenio();
+        $array["fk_idGuardian"] = $reserva->getFkIdGuardian();
+
+        return $array;
+    }
+
+    private function ArrayToReserva($array)
+    {
+        $reserva = new reserva(NULL, NULL, NULL, NULL, NULL, NULL);
+
+        $reserva->setIdReserva($array["idReserva"]);
+        $reserva->setFkIdGuardian($array["fk_idGuardian"]);
+        $reserva->setFkIdMascota($array["fk_idMascota"]);
+        $reserva->setFkIdDuenio($array["fk_idDuenio"]);
+        $reserva->setFechaInicio($array["fechaInicio"]);
+        $reserva->setFechaFin($array["fechaFin"]);
+        $reserva->setPrecioTotal($array["precioTotal"]);
+        $reserva->setEstado($array["estado"]);
+
+        return $reserva;
+    }
+
+    private function ReviewToArray(Review $review)
+    {
+        $array["comentario"] = $review->getComentario();
+        $array["puntaje"] = $review->getPuntaje();
+        $array["fk_idReserva"] = $review->getFkIdReserva();
+
+        return $array;
+    }
+
+    private function ArrayToReview($array)
+    {
+        $review = new Review(NULL, NULL, NULL);
+
+        $review->setIdReview($array["idReview"]);
+        $review->setComentario($array["comentario"]);
+        $review->setPuntaje($array["puntaje"]);
+        $review->setFkIdReserva($array["fk_idReserva"]);
+
+        return $review;
+    }
+
+    private function CuponToArray(Cupon $cupon)
+    {
+        $array["total"] = $cupon->getTotal();
+        $array["fk_idReserva"] = $cupon->getFkIdReserva();
+
+        return $array;
+    }
+
+    private function ArrayToCupon($array)
+    {
+        $cupon = new Cupon(NULL, NULL, NULL);
+
+        $cupon->setIdCupon($array["idCupon"]);
+        $cupon->setTotal($array["total"]);
+        $cupon->setFkIdReserva($array["fk_idReserva"]);
+
+        return $cupon;
+    }
+    //----------------------------------------------------------------------------------------------------------------
 }

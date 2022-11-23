@@ -11,6 +11,8 @@ class MascotaDAO implements IMascotaDAO
     private $connection;
     private $tableName = "Mascotas";
 
+
+    //----Adds--------------------------------------------------------------------------------------------------------
     public function Add(Mascota $mascota)
     {
         try {
@@ -18,15 +20,7 @@ class MascotaDAO implements IMascotaDAO
 
             $query = "INSERT INTO " . $this->tableName . " (nombre, tamanio, observaciones, rutaFoto, rutaPlanVacunas, rutaVideo, fk_idDuenio, fk_idAnimal, alta) VALUES (:nombre, :tamanio, :observaciones, :rutaFoto, :rutaPlanVacunas, :rutaVideo, :fk_idDuenio, :fk_idAnimal, :alta);";
 
-            $parameters["nombre"] = $mascota->getNombre();
-            $parameters["tamanio"] = $mascota->getTamanio();
-            $parameters["observaciones"] = $mascota->getObservaciones();
-            $parameters["rutaFoto"] = $mascota->getRutaFoto();
-            $parameters["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
-            $parameters["rutaVideo"] = $mascota->getRutaVideo();
-            $parameters["fk_idDuenio"] = $mascota->getIdDuenio();
-            $parameters["fk_idAnimal"] = $this->GetIdAnimal($mascota->getAnimal(), $mascota->getRaza());
-            $parameters["alta"] = $mascota->getAlta();
+            $parameters = $this->MascotaToArray($mascota);
 
             $this->connection = Connection::GetInstance();
 
@@ -35,7 +29,10 @@ class MascotaDAO implements IMascotaDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
+
+    //----Gets--------------------------------------------------------------------------------------------------------
     private function GetIdAnimal($animal, $raza)
     {
         $query = "SELECT idAnimal FROM Animales WHERE animal = :animal and raza = :raza";
@@ -68,20 +65,7 @@ class MascotaDAO implements IMascotaDAO
 
             foreach ($resultSet as $row) {
 
-                $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-                $mascota->setId($row["idMascota"]);
-                $mascota->setAnimal($row["animal"]);
-                $mascota->setRaza($row["raza"]);
-                $mascota->setNombre($row["nombre"]);
-                $mascota->setTamanio($row["tamanio"]);
-                $mascota->setObservaciones($row["observaciones"]);
-                $mascota->setRutaFoto($row["rutaFoto"]);
-                $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
-                $mascota->setRutaVideo($row["rutaVideo"]);
-                $mascota->setIdDuenio($row["fk_idDuenio"]);
-                $mascota->setAlta($row["alta"]);
-
+                $mascota = $this->ArrayToMascota($row);
                 array_push($mascotasList, $mascota);
             }
 
@@ -113,7 +97,6 @@ class MascotaDAO implements IMascotaDAO
         return $animalesList;
     }
 
-
     public function GetListaMascotasByDuenio($idDuenio)
     {
         try {
@@ -131,21 +114,7 @@ class MascotaDAO implements IMascotaDAO
 
                 foreach ($resultSet as $row) {
 
-                    $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $mascota->setId($row["idMascota"]);
-                    $mascota->setAnimal($row["animal"]);
-                    $mascota->setRaza($row["raza"]);
-                    $mascota->setNombre($row["nombre"]);
-                    $mascota->setTamanio($row["tamanio"]);
-                    $mascota->setObservaciones($row["observaciones"]);
-                    $mascota->setRutaFoto($row["rutaFoto"]);
-                    $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
-                    $mascota->setRutaVideo($row["rutaVideo"]);
-                    $mascota->setIdDuenio($row["fk_idDuenio"]);
-                    $mascota->setAlta($row["alta"]);
-
-
+                    $mascota = $this->ArrayToMascota($row);
                     array_push($mascotasList, $mascota);
                 }
 
@@ -175,19 +144,8 @@ class MascotaDAO implements IMascotaDAO
             if (isset($resultSet)) {
 
                 foreach ($resultSet as $row) {
-                    $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-                    $mascota->setId($row["idMascota"]);
-                    $mascota->setAnimal($row["animal"]);
-                    $mascota->setRaza($row["raza"]);
-                    $mascota->setNombre($row["nombre"]);
-                    $mascota->setTamanio($row["tamanio"]);
-                    $mascota->setObservaciones($row["observaciones"]);
-                    $mascota->setRutaFoto($row["rutaFoto"]);
-                    $mascota->setRutaPlanVacunas($row["rutaPlanVacunas"]);
-                    $mascota->setRutaVideo($row["rutaVideo"]);
-                    $mascota->setIdDuenio($row["fk_idDuenio"]);
-                    $mascota->setAlta($row["alta"]);
+                    
+                    $mascota = $this->ArrayToMascota($row);
                 }
             }
             return $mascota;
@@ -195,4 +153,42 @@ class MascotaDAO implements IMascotaDAO
             throw $ex;
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
+
+
+    //----Array-Object------------------------------------------------------------------------------------------------
+    private function MascotaToArray(Mascota $mascota)
+    {
+        $array["nombre"] = $mascota->getNombre();
+        $array["tamanio"] = $mascota->getTamanio();
+        $array["observaciones"] = $mascota->getObservaciones();
+        $array["rutaFoto"] = $mascota->getRutaFoto();
+        $array["rutaPlanVacunas"] = $mascota->getRutaPlanVacunas();
+        $array["rutaVideo"] = $mascota->getRutaVideo();
+        $array["fk_idDuenio"] = $mascota->getIdDuenio();
+        $array["fk_idAnimal"] = $this->GetIdAnimal($mascota->getAnimal(), $mascota->getRaza());
+        $array["alta"] = $mascota->getAlta();
+
+        return $array;
+    }
+
+    private function ArrayToMascota($array)
+    {
+        $mascota = new Mascota(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+        $mascota->setId($array["idMascota"]);
+        $mascota->setAnimal($array["animal"]);
+        $mascota->setRaza($array["raza"]);
+        $mascota->setNombre($array["nombre"]);
+        $mascota->setTamanio($array["tamanio"]);
+        $mascota->setObservaciones($array["observaciones"]);
+        $mascota->setRutaFoto($array["rutaFoto"]);
+        $mascota->setRutaPlanVacunas($array["rutaPlanVacunas"]);
+        $mascota->setRutaVideo($array["rutaVideo"]);
+        $mascota->setIdDuenio($array["fk_idDuenio"]);
+        $mascota->setAlta($array["alta"]);
+
+        return $mascota;
+    }
+    //----------------------------------------------------------------------------------------------------------------
 }
