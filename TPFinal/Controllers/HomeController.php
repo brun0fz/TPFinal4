@@ -8,14 +8,6 @@ use DAO\GuardianDAO;
 use Exception;
 use Models\Duenio;
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception as PHPMailerException;
-use PHPMailer\PHPMailer\SMTP;
-
-require_once 'PHPMailer/src/Exception.php';
-require_once 'PHPMailer/src/PHPMailer.php';
-require_once 'PHPMailer/src/SMTP.php';
-
 class HomeController
 {
     public $duenioDAO;
@@ -101,46 +93,13 @@ class HomeController
             $guardian = $this->guardianDAO->GetGuardianByEmail($email);
 
             if (isset($duenio)) {
-                $this->EnviarContrasenia($duenio->getEmail(), "PET-HERO: Recuperacion de contrasena", "Su contraseña es: " . "'" . $duenio->getPassword() . "'", "");
+                MAILCONTROLLER::MailRecuperarContrasenia($duenio);
             } else if (isset($guardian)) {
-                $this->EnviarContrasenia($guardian->getEmail(), "PET-HERO: Recuperacion de contrasena", "Su contraseña es: " . "'" . $guardian->getPassword() . "'", "");
+                MAILCONTROLLER::MailRecuperarContrasenia($guardian);
             }
 
             $this->ShowRecuperarContraseniaView("Si la direccion ingresada es valida, recibira su contrase&ntilde;a en su correo electronico.");
         } catch (Exception $ex) {
-            HomeController::ShowErrorView();
-        }
-    }
-
-
-
-    private function EnviarContrasenia($email, $subject, $msgHTML, $altBody)
-    {
-        try {
-            $mail = new PHPMailer();
-
-            $mail->isSMTP();
-            $mail->SMTPDebug = SMTP::DEBUG_OFF;
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 465;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->SMTPAuth = true;
-
-            $mail->Username = 'app.pethero@gmail.com';
-            $mail->Password = 'bmplfijszyvepomr';
-
-            $mail->setFrom('app.pethero@gmail.com');
-            $mail->addAddress($email);
-            $mail->Subject = $subject;
-            $mail->msgHTML($msgHTML);
-            $mail->AltBody = $altBody;
-
-            if ($mail->send()) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } catch (PHPMailerException $ex) {
             HomeController::ShowErrorView();
         }
     }

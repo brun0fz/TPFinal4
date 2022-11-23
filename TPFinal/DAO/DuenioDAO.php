@@ -12,29 +12,53 @@ class DuenioDAO implements IDuenioDAO
     private $connection;
     private $tableName = "Duenios";
 
+    private function ObjetToarray($duenio)
+    {
+        $array["nombre"] = $duenio->getNombre();
+        $array["apellido"] = $duenio->getApellido();
+        $array["telefono"] = $duenio->getTelefono();
+        $array["email"] = $duenio->getEmail();
+        $array["password"] = $duenio->getPassword();
+        $array["tipo"] = $duenio->getTipo();
+        $array["rutaFoto"] = $duenio->getRutaFoto();
+        $array["alta"] = $duenio->getAlta();
+
+        return $array;
+    }
+
+    private function ArrayToObject($array)
+    {
+        $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
+
+        $duenio->setId($array["idDuenio"]);
+        $duenio->setNombre($array["nombre"]);
+        $duenio->setApellido($array["apellido"]);
+        $duenio->setTelefono($array["telefono"]);
+        $duenio->setEmail($array["email"]);
+        $duenio->setPassword($array["password"]);
+        $duenio->setTipo($array["tipo"]);
+        $duenio->setRutaFoto($array["rutaFoto"]);
+        $duenio->setAlta($array["alta"]);
+
+        return $duenio;
+    }
+
     public function Add(Duenio $duenio)
     {
         try {
             $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono,email, password, tipo, rutaFoto, alta) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, :encryptpass), :tipo, :rutaFoto, :alta);";
 
+            $parameters = $this->ObjetToarray($duenio);
             $parameters["encryptpass"] = ENCRYPTPASS;
-            $parameters["nombre"] = $duenio->getNombre();
-            $parameters["apellido"] = $duenio->getApellido();
-            $parameters["telefono"] = $duenio->getTelefono();
-            $parameters["email"] = $duenio->getEmail();
-            $parameters["password"] = $duenio->getPassword();
-            $parameters["tipo"] = $duenio->getTipo();
-            $parameters["rutaFoto"] = $duenio->getRutaFoto();
-            $parameters["alta"] = $duenio->getAlta();
 
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query, $parameters);
-            
         } catch (Exception $ex) {
             throw $ex;
         }
     }
+
 
     public function GetAll()
     {
@@ -49,18 +73,9 @@ class DuenioDAO implements IDuenioDAO
 
             foreach ($resultSet as $row) {
 
-                $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
+                $row["password"] = null;
 
-                $duenio->setId($row["idDuenio"]);
-                $duenio->setNombre($row["nombre"]);
-                $duenio->setApellido($row["apellido"]);
-                $duenio->setTelefono($row["telefono"]);
-                $duenio->setEmail($row["email"]);
-                $duenio->setTipo($row["tipo"]);
-                $duenio->setRutaFoto($row["rutaFoto"]);
-                $duenio->setAlta($row["alta"]);
-
-                array_push($dueniosList, $duenio);
+                array_push($dueniosList, $this->ArrayToObject($row));
             }
 
             return $dueniosList;
@@ -88,17 +103,7 @@ class DuenioDAO implements IDuenioDAO
 
                 foreach ($resultSet as $row) {
 
-                    $duenio = new Duenio(NULL, NULL, NULL, NULL, NULL);
-
-                    $duenio->setId($row["idDuenio"]);
-                    $duenio->setNombre($row["nombre"]);
-                    $duenio->setApellido($row["apellido"]);
-                    $duenio->setTelefono($row["telefono"]);
-                    $duenio->setEmail($row["email"]);
-                    $duenio->setPassword($row["password"]); //Se usa para el login
-                    $duenio->setTipo($row["tipo"]);
-                    $duenio->setRutaFoto($row["rutaFoto"]);
-                    $duenio->setAlta($row["alta"]);
+                    $duenio = $this->ArrayToObject($row);
                 }
 
                 return $duenio;

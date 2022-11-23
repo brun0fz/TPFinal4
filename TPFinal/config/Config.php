@@ -1,13 +1,15 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 define("ROOT", dirname(__DIR__) . "/");
 define("FRONT_ROOT", "/TPFinal4/TPFinal/");
 define("VIEWS_PATH", "Views/");
-define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "layout/styles/");
-define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
-define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
-define("ASSETS_PATH", FRONT_ROOT.VIEWS_PATH . "img/assets/");
-define("VID_PATH", FRONT_ROOT.VIEWS_PATH . "video/");
+define("CSS_PATH", FRONT_ROOT . VIEWS_PATH . "layout/styles/");
+define("JS_PATH", FRONT_ROOT . VIEWS_PATH . "js/");
+define("IMG_PATH", FRONT_ROOT . VIEWS_PATH . "img/");
+define("ASSETS_PATH", FRONT_ROOT . VIEWS_PATH . "img/assets/");
+define("VID_PATH", FRONT_ROOT . VIEWS_PATH . "video/");
 
 //DATABASE LOCAL
 define("DB_HOST", "localhost:3307");
@@ -24,4 +26,7 @@ define("DB_NAME", "bumivsrscryp1fqpzsmn");
 define("DB_USER", "u1x4he9n7ufecekv");
 define("DB_PASS", "0ILV8Bkh48BjAsMBlf7E");
 */
-?>
+
+//MAIL
+define("USERNAMEMAIL", "app.pethero@gmail.com");
+define("PASSWORDMAIL", "bmplfijszyvepomr");
