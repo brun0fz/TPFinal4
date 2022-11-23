@@ -11,7 +11,10 @@ use Models\EstadoReserva;
 class GuardianDAO implements IGuardianDAO
 {
     private $connection;
-    private $tableName = "Guardianes";
+    private $tnGuardianes = "Guardianes";
+    private $tnDirecciones = "Direcciones";
+    private $tnTamanios = "TamaniosMascota";
+    private $tnDisponibilidades = "Disponibilidades";
 
 
     //----Adds--------------------------------------------------------------------------------------------------------
@@ -21,7 +24,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO Direcciones (calle, numero, piso, departamento, codigoPostal) VALUES (:calle, :numero, :piso, :departamento, :codigoPostal);";
+            $query = "INSERT INTO " . $this->tnDirecciones . " (calle, numero, piso, departamento, codigoPostal) VALUES (:calle, :numero, :piso, :departamento, :codigoPostal);";
 
             $parameters["calle"] = $guardian->getCalle();
             $parameters["numero"] = $guardian->getNumero();
@@ -35,7 +38,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO " . $this->tableName . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, :encryptpass), :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
+            $query = "INSERT INTO " . $this->tnGuardianes . " (nombre, apellido, telefono, email, password, tipo, rutaFoto, alta, fk_idDireccion) VALUES (:nombre, :apellido, :telefono, :email, aes_encrypt(:password, :encryptpass), :tipo, :rutaFoto, :alta, LAST_INSERT_ID());";
 
             $parameters["encryptpass"] = ENCRYPTPASS;
             $parameters["nombre"] = $guardian->getNombre();
@@ -53,7 +56,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO TamaniosMascota (pequenia) values (:pequenia);";
+            $query = "INSERT INTO " . $this->tnTamanios . " (pequenia) values (:pequenia);";
 
             $parameters["pequenia"] = 0;
 
@@ -63,7 +66,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "UPDATE Guardianes SET fk_idTamanioMascota = LAST_INSERT_ID() WHERE email = :email";
+            $query = "UPDATE " . $this->tnGuardianes . " SET fk_idTamanioMascota = LAST_INSERT_ID() WHERE email = :email";
 
             $parameters["email"] = $guardian->getEmail();
 
@@ -74,7 +77,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "INSERT INTO Disponibilidades (lunes) values (:lunes);";
+            $query = "INSERT INTO " . $this->tnDisponibilidades . " (lunes) values (:lunes);";
 
             $parameters["lunes"] = 0;
 
@@ -84,7 +87,7 @@ class GuardianDAO implements IGuardianDAO
 
             $parameters = array();
 
-            $query = "UPDATE Guardianes SET fk_idDisponibilidad = LAST_INSERT_ID() WHERE email = :email";
+            $query = "UPDATE " . $this->tnGuardianes . " SET fk_idDisponibilidad = LAST_INSERT_ID() WHERE email = :email";
 
             $parameters["email"] = $guardian->getEmail();
 
@@ -104,7 +107,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardianesList = array();
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad;";
+            $query = "SELECT * FROM " . $this->tnGuardianes . " INNER JOIN " . $this->tnDirecciones . " ON " . $this->tnGuardianes . ".fk_idDireccion = " . $this->tnDirecciones . ".idDireccion INNER JOIN " . $this->tnTamanios . " ON " . $this->tnGuardianes . ".fk_idTamanioMascota = " . $this->tnTamanios . ".idTamanioMascota INNER JOIN " . $this->tnDisponibilidades . " ON " . $this->tnGuardianes . ".fk_idDisponibilidad = " . $this->tnDisponibilidades . ".idDisponibilidad;";
 
             $this->connection = Connection::GetInstance();
 
@@ -129,7 +132,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT *, aes_decrypt(password, :encryptpass) as password FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (email = :email);";
+            $query = "SELECT *, aes_decrypt(password, :encryptpass) as password FROM " . $this->tnGuardianes . " INNER JOIN " . $this->tnDirecciones . " ON " . $this->tnGuardianes . ".fk_idDireccion = " . $this->tnDirecciones . ".idDireccion INNER JOIN " . $this->tnTamanios . " ON " . $this->tnGuardianes . ".fk_idTamanioMascota = " . $this->tnTamanios . ".idTamanioMascota INNER JOIN " . $this->tnDisponibilidades . " ON " . $this->tnGuardianes . ".fk_idDisponibilidad = " . $this->tnDisponibilidades . ".idDisponibilidad WHERE (email = :email);";
 
             $parameters["email"] = $email;
             $parameters["encryptpass"] = ENCRYPTPASS;
@@ -160,7 +163,7 @@ class GuardianDAO implements IGuardianDAO
         try {
             $guardian = null;
 
-            $query = "SELECT * FROM " . $this->tableName . " INNER JOIN Direcciones ON Guardianes.fk_idDireccion = Direcciones.idDireccion INNER JOIN TamaniosMascota ON Guardianes.fk_idTamanioMascota = TamaniosMascota.idTamanioMascota INNER JOIN Disponibilidades ON Guardianes.fk_idDisponibilidad = Disponibilidades.idDisponibilidad WHERE (idGuardian = :idGuardian)";
+            $query = "SELECT * FROM " . $this->tnGuardianes . " INNER JOIN " . $this->tnDirecciones . " ON " . $this->tnGuardianes . ".fk_idDireccion = " . $this->tnDirecciones . ".idDireccion INNER JOIN " . $this->tnTamanios . " ON " . $this->tnGuardianes . ".fk_idTamanioMascota = " . $this->tnTamanios . ".idTamanioMascota INNER JOIN " . $this->tnDisponibilidades . " ON " . $this->tnGuardianes . ".fk_idDisponibilidad = " . $this->tnDisponibilidades . ".idDisponibilidad WHERE (idGuardian = :idGuardian)";
 
             $parameters["idGuardian"] = $idGuardian;
 
@@ -192,7 +195,7 @@ class GuardianDAO implements IGuardianDAO
     public function UpdateDisponibilidad($idGuardian, $disponibilidad)
     {
         try {
-            $query = "UPDATE Disponibilidades INNER JOIN Guardianes ON Disponibilidades.idDisponibilidad = Guardianes.fk_idDisponibilidad SET lunes = :lunes, martes = :martes, miercoles = :miercoles, jueves = :jueves, viernes = :viernes, sabado = :sabado, domingo = :domingo WHERE idGuardian = :idGuardian;";
+            $query = "UPDATE " . $this->tnDisponibilidades . " INNER JOIN " . $this->tnGuardianes . " ON " . $this->tnDisponibilidades . ".idDisponibilidad = " . $this->tnGuardianes . ".fk_idDisponibilidad SET lunes = :lunes, martes = :martes, miercoles = :miercoles, jueves = :jueves, viernes = :viernes, sabado = :sabado, domingo = :domingo WHERE idGuardian = :idGuardian;";
 
             $parameters["lunes"] = in_array("Lunes", $disponibilidad) ? 1 : 0;
             $parameters["martes"] = in_array("Martes", $disponibilidad) ? 1 : 0;
@@ -215,7 +218,7 @@ class GuardianDAO implements IGuardianDAO
     public function UpdateTamanios($idGuardian, $tamanios)
     {
         try {
-            $query = "UPDATE TamaniosMascota INNER JOIN Guardianes ON TamaniosMascota.idTamanioMascota = Guardianes.fk_idTamanioMascota SET pequenia = :pequenia, mediana = :mediana, grande = :grande WHERE idGuardian = :idGuardian;";
+            $query = "UPDATE " . $this->tnTamanios . " INNER JOIN " . $this->tnGuardianes . " ON " . $this->tnTamanios . ".idTamanioMascota = " . $this->tnGuardianes . ".fk_idTamanioMascota SET pequenia = :pequenia, mediana = :mediana, grande = :grande WHERE idGuardian = :idGuardian;";
 
             $parameters["pequenia"] = in_array("Pequeño", $tamanios) ? 1 : 0;
             $parameters["mediana"] = in_array("Mediano", $tamanios) ? 1 : 0;
@@ -234,7 +237,7 @@ class GuardianDAO implements IGuardianDAO
     public function UpdatePrecio($idGuardian, $precioXDia)
     {
         try {
-            $query = "UPDATE " . $this->tableName . " SET precioXDia = :precioXDia WHERE idGuardian = :idGuardian;";
+            $query = "UPDATE " . $this->tnGuardianes . " SET precioXDia = :precioXDia WHERE idGuardian = :idGuardian;";
 
             $parameters["precioXDia"] = $precioXDia;
             $parameters["idGuardian"] = $idGuardian;
@@ -276,7 +279,7 @@ class GuardianDAO implements IGuardianDAO
                 $reputacion = ($suma / $cant);
             }
 
-            $query = "UPDATE " . $this->tableName . " SET reputacion = :reputacion WHERE idGuardian = :idGuardian;";
+            $query = "UPDATE " . $this->tnGuardianes . " SET reputacion = :reputacion WHERE idGuardian = :idGuardian;";
 
             $parameters["reputacion"] = $reputacion;
             $parameters["idGuardian"] = $reserva->getFkIdGuardian();
