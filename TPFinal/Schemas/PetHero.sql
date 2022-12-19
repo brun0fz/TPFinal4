@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2022 at 08:59 PM
+-- Generation Time: Dec 19, 2022 at 10:45 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.6
 
@@ -81,8 +81,7 @@ CREATE TABLE `Cupones` (
 --
 
 INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`) VALUES
-(30, 899, 47),
-(35, 15000, 51);
+(40, 899, 54);
 
 -- --------------------------------------------------------
 
@@ -106,7 +105,8 @@ CREATE TABLE `Direcciones` (
 INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamento`, `codigoPostal`) VALUES
 (5, 'Luro', '2365', '2', 'C', '7600'),
 (7, 'San Martin', '2365', '6', 'C', '7600'),
-(8, 'Independencia', '1225', '', '', '7600');
+(8, 'Independencia', '1225', '', '', '7600'),
+(10, 'Calle 1', '1759', '', '', '7607');
 
 -- --------------------------------------------------------
 
@@ -132,7 +132,8 @@ CREATE TABLE `Disponibilidades` (
 INSERT INTO `Disponibilidades` (`idDisponibilidad`, `lunes`, `martes`, `miercoles`, `jueves`, `viernes`, `sabado`, `domingo`) VALUES
 (3, 1, 1, 1, 1, 1, 0, 0),
 (5, 0, 0, 0, 0, 0, 1, 1),
-(6, 1, 1, 1, 1, 1, 1, 1);
+(6, 1, 1, 1, 1, 1, 1, 1),
+(8, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +190,7 @@ CREATE TABLE `Guardianes` (
 
 INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
 (5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'belen@gmail.com.png', 1, 2.5, 899, 5, 3, 4),
-(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'messi@gmail.com.jpeg', 1, 2.5, 15000, 7, 5, 6),
+(7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'messi@gmail.com.jpeg', 1, 4, 15000, 7, 5, 6),
 (8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'emma@gmail.com.jpeg', 1, 2.5, 899, 8, 6, 7);
 
 -- --------------------------------------------------------
@@ -245,11 +246,13 @@ CREATE TABLE `Reservas` (
 --
 
 INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `estado`, `fk_idMascota`, `fk_idDuenio`, `fk_idGuardian`) VALUES
-(47, '2022-11-17', '2022-11-18', 1798, 'Confirmada', 3, 1, 5),
-(48, '2022-11-21', '2022-11-23', 2697, 'Solicitada', 11, 1, 5),
-(49, '2022-11-22', '2022-11-25', 3596, 'Solicitada', 13, 1, 5),
-(50, '2022-11-23', '2022-11-25', 2697, 'Solicitada', 3, 1, 5),
-(51, '2022-11-12', '2022-11-13', 30000, 'Finalizada', 12, 1, 7);
+(47, '2022-11-17', '2022-11-18', 1798, 'Finalizada', 3, 1, 5),
+(48, '2022-11-21', '2022-11-23', 2697, 'Cancelada', 11, 1, 5),
+(51, '2022-11-12', '2022-11-13', 30000, 'Finalizada', 12, 1, 7),
+(54, '2022-12-20', '2022-12-21', 1798, 'Confirmada', 11, 1, 5),
+(55, '2022-12-22', '2022-12-23', 1798, 'Solicitada', 3, 1, 5),
+(56, '2022-12-22', '2022-12-23', 1798, 'Solicitada', 13, 1, 5),
+(57, '2022-12-22', '2022-12-23', 1798, 'Solicitada', 11, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -263,6 +266,13 @@ CREATE TABLE `Reviews` (
   `puntaje` int(11) NOT NULL,
   `fk_idReserva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Dumping data for table `Reviews`
+--
+
+INSERT INTO `Reviews` (`idReview`, `comentario`, `puntaje`, `fk_idReserva`) VALUES
+(31, 'Muy buena atencion', 4, 51);
 
 -- --------------------------------------------------------
 
@@ -284,7 +294,8 @@ CREATE TABLE `TamaniosMascota` (
 INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grande`) VALUES
 (4, 1, 1, 0),
 (6, 0, 0, 1),
-(7, 1, 1, 1);
+(7, 1, 1, 1),
+(9, 0, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -374,31 +385,31 @@ ALTER TABLE `Animales`
 -- AUTO_INCREMENT for table `Cupones`
 --
 ALTER TABLE `Cupones`
-  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
 --
 ALTER TABLE `Direcciones`
-  MODIFY `idDireccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idDireccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Disponibilidades`
 --
 ALTER TABLE `Disponibilidades`
-  MODIFY `idDisponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idDisponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `Duenios`
 --
 ALTER TABLE `Duenios`
-  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idDuenio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `Guardianes`
 --
 ALTER TABLE `Guardianes`
-  MODIFY `idGuardian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idGuardian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Mascotas`
@@ -410,19 +421,19 @@ ALTER TABLE `Mascotas`
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`
 --
 ALTER TABLE `TamaniosMascota`
-  MODIFY `idTamanioMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idTamanioMascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
