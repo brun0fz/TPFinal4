@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 19, 2022 at 10:45 PM
+-- Generation Time: Feb 01, 2023 at 11:02 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.6
 
@@ -67,6 +67,33 @@ INSERT INTO `Animales` (`idAnimal`, `animal`, `raza`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Chats`
+--
+
+CREATE TABLE `Chats` (
+  `idChat` int(11) NOT NULL,
+  `idEmisor` int(11) NOT NULL,
+  `idReceptor` int(11) NOT NULL,
+  `mensaje` varchar(300) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Dumping data for table `Chats`
+--
+
+INSERT INTO `Chats` (`idChat`, `idEmisor`, `idReceptor`, `mensaje`, `fecha`) VALUES
+(3, 1, 5, 'Hola, como estas?', '2023-02-01 17:40:05'),
+(5, 5, 1, 'Todo bien, y vos?', '2023-02-01 18:40:21'),
+(6, 1, 5, 'asda', '2023-02-01 18:44:16'),
+(7, 1, 5, 'holaaa', '2023-02-01 18:44:52'),
+(8, 1, 5, 'respondeee gila', '2023-02-01 18:44:59'),
+(9, 5, 1, 'holaaaa', '2023-02-01 18:45:38'),
+(10, 1, 7, 'Hola messi gracias por la copa', '2023-02-01 18:49:18');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Cupones`
 --
 
@@ -81,7 +108,8 @@ CREATE TABLE `Cupones` (
 --
 
 INSERT INTO `Cupones` (`idCupon`, `total`, `fk_idReserva`) VALUES
-(40, 899, 54);
+(40, 899, 54),
+(41, 899, 57);
 
 -- --------------------------------------------------------
 
@@ -105,8 +133,7 @@ CREATE TABLE `Direcciones` (
 INSERT INTO `Direcciones` (`idDireccion`, `calle`, `numero`, `piso`, `departamento`, `codigoPostal`) VALUES
 (5, 'Luro', '2365', '2', 'C', '7600'),
 (7, 'San Martin', '2365', '6', 'C', '7600'),
-(8, 'Independencia', '1225', '', '', '7600'),
-(10, 'Calle 1', '1759', '', '', '7607');
+(8, 'Independencia', '1225', '', '', '7600');
 
 -- --------------------------------------------------------
 
@@ -189,7 +216,7 @@ CREATE TABLE `Guardianes` (
 --
 
 INSERT INTO `Guardianes` (`idGuardian`, `nombre`, `apellido`, `telefono`, `email`, `password`, `tipo`, `rutaFoto`, `alta`, `reputacion`, `precioXDia`, `fk_idDireccion`, `fk_idDisponibilidad`, `fk_idTamanioMascota`) VALUES
-(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'belen@gmail.com.png', 1, 2.5, 899, 5, 3, 4),
+(5, 'Belen', 'Robledo', '2235986532', 'belen@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'belen@gmail.com.png', 1, 3, 899, 5, 3, 4),
 (7, 'Lionel', 'Messi', '2235856985', 'messi@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'messi@gmail.com.jpeg', 1, 4, 15000, 7, 5, 6),
 (8, 'Emma', 'Watson', '2236859632', 'emma@gmail.com', 0x18554f9643d38d9945ad7038765c2419, 2, 'emma@gmail.com.jpeg', 1, 2.5, 899, 8, 6, 7);
 
@@ -249,10 +276,11 @@ INSERT INTO `Reservas` (`idReserva`, `fechaInicio`, `fechaFin`, `precioTotal`, `
 (47, '2022-11-17', '2022-11-18', 1798, 'Finalizada', 3, 1, 5),
 (48, '2022-11-21', '2022-11-23', 2697, 'Cancelada', 11, 1, 5),
 (51, '2022-11-12', '2022-11-13', 30000, 'Finalizada', 12, 1, 7),
-(54, '2022-12-20', '2022-12-21', 1798, 'Confirmada', 11, 1, 5),
-(55, '2022-12-22', '2022-12-23', 1798, 'Solicitada', 3, 1, 5),
-(56, '2022-12-22', '2022-12-23', 1798, 'Solicitada', 13, 1, 5),
-(57, '2022-12-22', '2022-12-23', 1798, 'Solicitada', 11, 1, 5);
+(54, '2022-12-20', '2022-12-21', 1798, 'Finalizada', 11, 1, 5),
+(55, '2022-12-22', '2022-12-23', 1798, 'Cancelada', 3, 1, 5),
+(56, '2022-12-22', '2022-12-23', 1798, 'Cancelada', 13, 1, 5),
+(57, '2022-12-22', '2022-12-23', 1798, 'Finalizada', 11, 1, 5),
+(58, '2023-01-02', '2023-01-04', 2697, 'Solicitada', 11, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -272,7 +300,8 @@ CREATE TABLE `Reviews` (
 --
 
 INSERT INTO `Reviews` (`idReview`, `comentario`, `puntaje`, `fk_idReserva`) VALUES
-(31, 'Muy buena atencion', 4, 51);
+(31, 'Muy buena atencion', 4, 51),
+(34, 'Muy bueno todo', 3, 47);
 
 -- --------------------------------------------------------
 
@@ -306,6 +335,12 @@ INSERT INTO `TamaniosMascota` (`idTamanioMascota`, `pequenia`, `mediana`, `grand
 --
 ALTER TABLE `Animales`
   ADD PRIMARY KEY (`idAnimal`);
+
+--
+-- Indexes for table `Chats`
+--
+ALTER TABLE `Chats`
+  ADD PRIMARY KEY (`idChat`);
 
 --
 -- Indexes for table `Cupones`
@@ -382,10 +417,16 @@ ALTER TABLE `Animales`
   MODIFY `idAnimal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `Chats`
+--
+ALTER TABLE `Chats`
+  MODIFY `idChat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `Cupones`
 --
 ALTER TABLE `Cupones`
-  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `idCupon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `Direcciones`
@@ -421,13 +462,13 @@ ALTER TABLE `Mascotas`
 -- AUTO_INCREMENT for table `Reservas`
 --
 ALTER TABLE `Reservas`
-  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `idReserva` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `TamaniosMascota`

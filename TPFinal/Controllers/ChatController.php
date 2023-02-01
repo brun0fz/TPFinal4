@@ -32,34 +32,28 @@ class ChatController
     public function ShowChatView($idChat = -1)
     {
         if ($this->validateSession()) {
-
             $userList = array();
 
             $idList = $this->chatDAO->GetAllIds($_SESSION["loggedUser"]->getId());
-
-            $idChat == -1 && $idChat = $idList[0];
+            if($idChat == -1){
+                $idChat = $idList[0];
+            }
+            else{
+                !in_array($idChat, $idList) && array_unshift($idList, $idChat);
+            }
 
             $chatList = $this->chatDAO->GetChatById($_SESSION["loggedUser"]->getId(), $idChat);
 
             if ($_SESSION["loggedUser"]->getTipo() == 1) {
                 foreach ($idList as $id) {
-                    $guardian = $this->guardianDAO->GetGuardianById($id);
-                    array_push($userList, $guardian);
-
-                    if ($id == $idChat) {
-                        $user2 = $guardian;
-                    }
+                    array_push($userList, $this->guardianDAO->GetGuardianById($id));
                 }
+                $user2 = $this->guardianDAO->GetGuardianById($idChat);
             } else {
                 foreach ($idList as $id) {
-                    $duenio = $this->duenioDAO->GetDuenioById($id);
-
-                    array_push($userList, $duenio);
-
-                    if ($id == $idChat) {
-                        $user2 = $duenio;
-                    }
+                    array_push($userList, $this->duenioDAO->GetDuenioById($id));
                 }
+                $user2 = $this->duenioDAO->GetDuenioById($idChat);
             }
 
             $user1 = $_SESSION["loggedUser"];
