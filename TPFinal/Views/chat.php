@@ -3,6 +3,7 @@ include("header.php");
 include("nav-bar.php");
 ?>
 
+<!-- PAGE -->
 <div class="container">
     <div class="row bg-white">
         <div class="col-12 col-sm-4 border border-secundary border-end-0 p-0">
@@ -54,15 +55,19 @@ include("nav-bar.php");
     </div>
 </div>
 
+<!-- SCRIPTS -->
 <script>
     const msg = document.getElementById('message');
     const submitBtn = document.getElementById('submitBtn');
+    const form = document.getElementById('form');
 
     msg.addEventListener('keydown', function (evt) {
         const keyCode = evt.which || evt.keyCode;
         if (keyCode === 13 && !evt.shiftKey) {
             evt.preventDefault();
-            submitBtn.click();
+            if(msg.value != ""){
+                submitBtn.click();
+            }
         }
     });
 </script>
