@@ -222,6 +222,39 @@ main {
 //--------------------------------------------------------------------------------------------------------------
 
 
+//-----CHAT-----------------------------------------------------------------------------------------------------
+.chat{
+    height: 82vh;
+}
+
+.chat-msgs{
+    height: 76%;
+    width: 100%;
+}
+
+.chat-textarea{
+    height: 62px;
+    resize: none;
+}
+
+.chat-msgs::-webkit-scrollbar {
+    width: 6px;
+}
+  
+.chat-msgs::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    visibility: hidden;
+}
+   
+.chat-msgs::-webkit-scrollbar-thumb {
+    background: #c0c0c0; 
+}
+  
+.chat-msgs::-webkit-scrollbar-thumb:hover {
+    background: #9c9c9c; 
+}
+//--------------------------------------------------------------------------------------------------------------
+
 
 //-----FOOTER---------------------------------------------------------------------------------------------------
 #copyright{
