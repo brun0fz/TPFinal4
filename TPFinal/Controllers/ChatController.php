@@ -35,10 +35,12 @@ class ChatController
             $userList = array();
 
             $idList = $this->chatDAO->GetAllIds($_SESSION["loggedUser"]->getId());
-            if($idChat == -1){
-                $idChat = $idList[0];
-            }
-            else{
+
+            if ($idChat == -1) {
+                if ($idList) {
+                    $idChat = $idList[0];
+                }
+            } else {
                 !in_array($idChat, $idList) && array_unshift($idList, $idChat);
             }
 
