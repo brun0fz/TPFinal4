@@ -17,6 +17,7 @@ include("nav-bar.php");
             </ul>
         </div>
         <div class="col-12 col-sm-8 chat d-flex flex-column border border-secundary">
+            <?php if($idChat !== -1) { ?>
                 <div class="d-flex">
                     <img src="<?php echo IMG_PATH . $user2->getRutaFoto() ?>" alt="profilePic" width="56" height="56" class="rounded-circle img-unselect my-auto me-2">
                     <h2 class="my-4"><?php echo $user2->getNombre() . " " . $user2->getApellido() ?></h2>
@@ -51,6 +52,21 @@ include("nav-bar.php");
                         </button>
                     </form>
                 </div>
+            <?php } else { ?>
+                <div class="d-flex my-3">
+                    <h2 class="my-4 mx-3 text-muted"></h2>
+                </div>
+                <hr class="mt-1 mb-3" />
+                <div class="chat-msgs overflow-auto" id="chatMsgs">
+                    <p class="d-flex justify-content-center text-muted mt-3">Todavía no hay conversaciones para mostrar.</p>
+                </div>
+                <div class="my-2 d-flex">
+                    <textarea class="form-control chat-textarea" name="mensaje" placeholder="Escribe un mensaje" id="message" disabled></textarea>
+                    <button type="submit" class="btn btn-sm btn-primary rounded-circle ms-1 my-1" id="submitBtn" disabled>
+                        <img src="<?php echo ASSETS_PATH . "sendButton.png" ?>" >
+                    </button>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>
