@@ -19,41 +19,56 @@ include("nav-bar.php");
             </ul>
         </div>
         <div class="col-12 col-sm-8 chat d-flex flex-column border border-secundary">
-            <div class="d-flex">
-                <img src="<?php echo IMG_PATH . $user2->getRutaFoto() ?>" alt="profilePic" width="56" height="56" class="rounded-circle img-unselect my-auto me-2">
-                <h2 class="my-4"><?php echo $user2->getNombre() . " " . $user2->getApellido() ?></h2>
-            </div>
-            <hr class="mt-1 mb-3" />
-            <div class="chat-msgs overflow-auto" id="chatMsgs">
-                <?php if (!$chatList) { ?>
-                    <p class="d-flex justify-content-center text-muted mt-3">Todavia no han iniciado una conversación.</p>
-                <?php } else { ?>
-                    <?php foreach ($chatList as $chat) {
-                        if ($chat->getIdEmisor() == $user1->getId()) { ?>
-                            <p class="text-end text-break alert alert-primary ms-auto me-1 rounded-5 rounded-end text-dark p-2" style="width: fit-content">
-                                <span><?php echo $chat->getMensaje(); ?></span>
-                                <span class="text-muted align-bottom"><sub><?php echo date_format(date_create($chat->getFecha()), 'j/n/y H:i') . "hs"; ?></sub></span>
-                            </p>
-                        <?php } else { ?>
-                            <p class="text-start text-break alert alert-secondary ms-1 rounded-5 rounded-start text-dark p-2" style="width: fit-content">
-                                <span><?php echo $chat->getMensaje(); ?></span>
-                                <span class="text-muted"><sub><?php echo date_format(date_create($chat->getFecha()), 'j/n/y H:i') . "hs"; ?></sub></span>
-                            </p>
-                <?php }
-                    }
-                } ?>
-                <span id="scrollToBottom"></span>
-            </div>
-            <div class="my-2">
-                <form action="<?php echo FRONT_ROOT ?>Chat/Add" method="Post" class="d-flex" id="form">
-                    <textarea class="form-control chat-textarea" name="mensaje" placeholder="Escribe un mensaje" id="message"></textarea>
-                    <input type="hidden" name="idEmisor" value="<?php echo $user1->getId() ?>" id="idEmisor">
-                    <input type="hidden" name="idReceptor" value="<?php echo $user2->getId() ?>" id="idReceptor">
-                    <button type="submit" class="btn btn-sm btn-primary rounded-circle ms-1 my-1" id="submitBtn">
-                        <img src="<?php echo ASSETS_PATH . "sendButton.png" ?>">
+            <?php if($idChat !== -1) { ?>
+                <div class="d-flex">
+                    <img src="<?php echo IMG_PATH . $user2->getRutaFoto() ?>" alt="profilePic" width="56" height="56" class="rounded-circle img-unselect my-auto me-2">
+                    <h2 class="my-4"><?php echo $user2->getNombre() . " " . $user2->getApellido() ?></h2>
+                </div>
+                <hr class="mt-1 mb-3" />
+                <div class="chat-msgs overflow-auto" id="chatMsgs">
+                    <?php if (!$chatList) { ?>
+                        <p class="d-flex justify-content-center text-muted mt-3">Todavia no han iniciado una conversación.</p>
+                    <?php } else { ?>
+                        <?php foreach($chatList as $chat){
+                            if($chat->getIdEmisor() == $user1->getId()){ ?>
+                                <p class="text-end text-break alert alert-primary ms-auto me-1 rounded-5 rounded-end text-dark p-2" style="width: fit-content">
+                                    <span><?php echo $chat->getMensaje(); ?></span>
+                                    <span class="text-muted align-bottom"><sub><?php echo date_format(date_create($chat->getFecha()), 'j/n/y H:i') . "hs"; ?></sub></span>
+                                </p>
+                            <?php } else{ ?>
+                                <p class="text-start text-break alert alert-secondary ms-1 rounded-5 rounded-start text-dark p-2" style="width: fit-content">
+                                    <span><?php echo $chat->getMensaje(); ?></span>
+                                    <span class="text-muted"><sub><?php echo date_format(date_create($chat->getFecha()), 'j/n/y H:i') . "hs"; ?></sub></span>
+                                </p>
+                            <?php }
+                        } } ?>
+                    <span id="scrollToBottom"></span>
+                </div>
+                <div class="my-2">
+                    <form action="<?php echo FRONT_ROOT ?>Chat/Add" method="Post" class="d-flex">
+                        <textarea class="form-control chat-textarea" name="mensaje" placeholder="Escribe un mensaje" id="message"></textarea>
+                        <input type="hidden" name="idEmisor" value="<?php echo $user1->getId() ?>">
+                        <input type="hidden" name="idReceptor" value="<?php echo $user2->getId() ?>">
+                        <button type="submit" class="btn btn-sm btn-primary rounded-circle ms-1 my-1" id="submitBtn">
+                            <img src="<?php echo ASSETS_PATH . "sendButton.png" ?>" >
+                        </button>
+                    </form>
+                </div>
+            <?php } else { ?>
+                <div class="d-flex my-3">
+                    <h2 class="my-4 mx-3 text-muted"></h2>
+                </div>
+                <hr class="mt-1 mb-3" />
+                <div class="chat-msgs overflow-auto" id="chatMsgs">
+                    <p class="d-flex justify-content-center text-muted mt-3">Todavía no hay conversaciones para mostrar.</p>
+                </div>
+                <div class="my-2 d-flex">
+                    <textarea class="form-control chat-textarea" name="mensaje" placeholder="Escribe un mensaje" id="message" disabled></textarea>
+                    <button type="submit" class="btn btn-sm btn-primary rounded-circle ms-1 my-1" id="submitBtn" disabled>
+                        <img src="<?php echo ASSETS_PATH . "sendButton.png" ?>" >
                     </button>
-                </form>
-            </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>
