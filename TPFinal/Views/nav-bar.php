@@ -12,7 +12,6 @@
                 <?php } else { ?>
                     <li><a href="<?php echo FRONT_ROOT . "Guardian/ShowConfiguracionView"; ?>" class="nav-link px-2 link-dark">Configuraci&oacute;n</a></li>
                 <?php } ?>
-                <li><a href="<?php echo FRONT_ROOT . "Chat/ShowChatView"; ?>" class="nav-link px-2 link-dark">Mensajes</a></li>
             </ul>
 
             <div class="dropdown text-end">
